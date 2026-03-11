@@ -114,4 +114,313 @@
       margin-top:16px;
       background:linear-gradient(135deg, rgba(240,200,90,.14), rgba(255,255,255,.02));
       border:1px solid rgba(240,200,90,.18);
-      border-radius:18px
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .receiver small{
+      display:block;
+      color:#f8e8b6;
+      margin-bottom:6px;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .receiver-name{
+      font-size:26px;
+      font-weight:900;
+      color:#fff1c4;
+    }
+
+    .receiver-status{
+      margin-top:10px;
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:800;
+      background:rgba(255,107,121,.12);
+      color:#ffdce0;
+      border:1px solid rgba(255,107,121,.2);
+    }
+
+    .receiver-status.done{
+      background:rgba(30,201,138,.14);
+      color:#d7ffee;
+      border-color:rgba(30,201,138,.22);
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    @media (max-width:680px){
+      .grid2{grid-template-columns:1fr;}
+    }
+
+    label{
+      display:block;
+      margin-bottom:8px;
+      font-size:14px;
+      font-weight:700;
+      color:#dbe6ff;
+    }
+
+    input{
+      width:100%;
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+      font-size:16px;
+      outline:none;
+    }
+
+    input::placeholder{color:#98a7c8}
+
+    .divider{
+      height:1px;
+      background:var(--line);
+      margin:18px 0;
+    }
+
+    .member-add{
+      display:grid;
+      grid-template-columns:1fr 1fr auto;
+      gap:10px;
+    }
+
+    @media (max-width:760px){
+      .member-add{grid-template-columns:1fr;}
+    }
+
+    button{
+      border:none;
+      border-radius:14px;
+      padding:13px 16px;
+      font-size:15px;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .btn-blue{
+      background:linear-gradient(135deg, var(--blue), var(--blue2));
+      color:white;
+    }
+
+    .btn-green{
+      background:rgba(30,201,138,.14);
+      color:#d7ffee;
+      border:1px solid rgba(30,201,138,.22);
+    }
+
+    .btn-red{
+      background:rgba(255,107,121,.12);
+      color:#ffdce0;
+      border:1px solid rgba(255,107,121,.22);
+    }
+
+    .btn-soft{
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      border:1px solid var(--line);
+    }
+
+    .list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .item{
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+    }
+
+    .item-top{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
+
+    .name{
+      font-size:17px;
+      font-weight:900;
+    }
+
+    .meta{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:4px;
+      line-height:1.7;
+    }
+
+    .chips{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .chip{
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .chip-paid{
+      background:rgba(30,201,138,.14);
+      color:#d7ffee;
+      border:1px solid rgba(30,201,138,.22);
+    }
+
+    .chip-unpaid{
+      background:rgba(255,107,121,.12);
+      color:#ffdce0;
+      border:1px solid rgba(255,107,121,.22);
+    }
+
+    .chip-receiver{
+      background:rgba(240,200,90,.14);
+      color:#fff1c4;
+      border:1px solid rgba(240,200,90,.22);
+    }
+
+    .item-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:12px;
+    }
+
+    .mini-gold{
+      background:rgba(240,200,90,.14);
+      color:#fff1c4;
+      border:1px solid rgba(240,200,90,.22);
+    }
+
+    .mini-green{
+      background:rgba(30,201,138,.14);
+      color:#d7ffee;
+      border:1px solid rgba(30,201,138,.22);
+    }
+
+    .mini-red{
+      background:rgba(255,107,121,.12);
+      color:#ffdce0;
+      border:1px solid rgba(255,107,121,.22);
+    }
+
+    .empty{
+      padding:18px;
+      text-align:center;
+      color:var(--muted);
+      border:1px dashed var(--line);
+      border-radius:16px;
+      background:rgba(255,255,255,.02);
+    }
+
+    .note{
+      margin-top:12px;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="card">
+      <h1>جمعيتنا</h1>
+      <p>أداة بسيطة لتنظيم الجمعية بين الأهل أو الأصدقاء. تضيف الأعضاء، تحدد مستلم هذا الشهر، تتابع الدفع، وتحفظ السجل.</p>
+
+      <div class="actions-top">
+        <button class="btn-blue" id="saveBtn">حفظ البيانات</button>
+        <button class="btn-green" id="completeBtn">إنهاء هذا الشهر</button>
+        <button class="btn-soft" id="newMonthBtn">فتح شهر جديد</button>
+        <button class="btn-red" id="resetBtn">إعادة ضبط</button>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="num" id="membersCount">0</div>
+          <div class="label">عدد الأعضاء</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="monthlyAmountStat">0</div>
+          <div class="label">مبلغ الاشتراك</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="paidCountStat">0</div>
+          <div class="label">المدفوع هذا الشهر</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="monthsDoneStat">0</div>
+          <div class="label">أشهر مكتملة</div>
+        </div>
+      </div>
+
+      <div class="receiver">
+        <small>مستلم هذا الشهر</small>
+        <div class="receiver-name" id="receiverName">لم يتم التحديد بعد</div>
+        <div class="receiver-status" id="monthStatus">الشهر الحالي قيد المتابعة</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>إعداد الجمعية</h2>
+
+      <div class="grid2">
+        <div>
+          <label for="groupName">اسم الجمعية</label>
+          <input id="groupName" type="text" placeholder="مثال: جمعية الأهل">
+        </div>
+        <div>
+          <label for="monthlyAmount">مبلغ الاشتراك الشهري</label>
+          <input id="monthlyAmount" type="number" placeholder="مثال: 500">
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-top:12px;">
+        <div>
+          <label for="monthName">اسم الشهر الحالي</label>
+          <input id="monthName" type="text" placeholder="مثال: أبريل 2026">
+        </div>
+        <div>
+          <label for="monthNote">ملاحظة اختيارية</label>
+          <input id="monthNote" type="text" placeholder="مثال: جمعية للأهل">
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3>إضافة عضو</h3>
+      <div class="member-add">
+        <input id="memberName" type="text" placeholder="اسم العضو">
+        <input id="memberPhone" type="text" placeholder="رقم الهاتف">
+        <button class="btn-blue" id="addMemberBtn">إضافة عضو</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3>الأعضاء</h3>
+      <div id="membersList" class="list"></div>
+      <div class="note">اختر مستلم هذا الشهر يدويًا من الأعضاء، ثم علّم من دفع، وبعد اكتمال الشهر اضغط "إنهاء هذا الشهر".</div>
+    </section>
+
+    <section class="card">
+      <h2>سجل الأشهر</h2>
+      <div id="historyList" class="list"></div>
+    </section>
+  </div>
+
+  <script>
+    const STORAGE
