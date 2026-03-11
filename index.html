@@ -1,426 +1,606 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>جمعيتنا</title>
   <style>
-    :root{
-      --bg1:#07101f;
-      --bg2:#0a1730;
-      --card:#101c34;
-      --card2:#13213d;
-      --line:rgba(255,255,255,.08);
-      --text:#edf3ff;
-      --muted:#aeb9d3;
-      --blue:#5d98ff;
-      --blue2:#78abff;
-      --green:#1ec98a;
-      --red:#ff6b79;
-      --gold:#f0c85a;
-      --shadow:0 12px 30px rgba(0,0,0,.28);
-      --radius:20px;
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Tahoma, Arial, sans-serif;
+      background: #0b1630;
+      color: #ffffff;
     }
 
-    *{box-sizing:border-box}
-
-    body{
-      margin:0;
-      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at top right, rgba(93,152,255,.18), transparent 25%),
-        radial-gradient(circle at top left, rgba(30,201,138,.08), transparent 22%),
-        linear-gradient(180deg,var(--bg1),var(--bg2));
-      min-height:100vh;
+    .container {
+      width: 92%;
+      max-width: 900px;
+      margin: 20px auto 40px auto;
     }
 
-    .wrap{
-      width:min(960px, 92%);
-      margin:20px auto 50px;
+    .box {
+      background: #12213f;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
     }
 
-    .card{
-      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
-      border:1px solid var(--line);
-      border-radius:24px;
-      box-shadow:var(--shadow);
-      padding:18px;
-      margin-bottom:16px;
+    h1, h2, h3 {
+      margin-top: 0;
     }
 
-    h1{
-      margin:0 0 8px;
-      font-size:34px;
+    p {
+      color: #c7d3ee;
+      line-height: 1.8;
     }
 
-    h2{
-      margin:0 0 14px;
-      font-size:22px;
+    label {
+      display: block;
+      margin-bottom: 6px;
+      margin-top: 12px;
+      font-weight: bold;
+      color: #e8efff;
     }
 
-    h3{
-      margin:0 0 12px;
-      font-size:18px;
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #2d426e;
+      background: #0f1b34;
+      color: #ffffff;
+      font-size: 16px;
+      box-sizing: border-box;
     }
 
-    p{
-      margin:0;
-      line-height:1.8;
-      color:var(--muted);
+    .row {
+      display: block;
     }
 
-    .actions-top{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:16px;
+    .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      margin-left: 6px;
+      margin-bottom: 6px;
     }
 
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:12px;
-      margin-top:18px;
+    .btn-blue {
+      background: #5d98ff;
+      color: #ffffff;
     }
 
-    @media (max-width:800px){
-      .stats{grid-template-columns:repeat(2,1fr);}
+    .btn-green {
+      background: #1fa96e;
+      color: #ffffff;
     }
 
-    @media (max-width:520px){
-      .stats{grid-template-columns:1fr;}
+    .btn-red {
+      background: #d95363;
+      color: #ffffff;
     }
 
-    .stat{
-      background:rgba(255,255,255,.04);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:16px;
+    .btn-gold {
+      background: #d7aa2d;
+      color: #ffffff;
     }
 
-    .stat .num{
-      font-size:28px;
-      font-weight:900;
-      margin-bottom:6px;
+    .stats {
+      display: block;
     }
 
-    .stat .label{
-      color:var(--muted);
-      font-size:14px;
+    .stat {
+      background: #0f1b34;
+      border: 1px solid #25385f;
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 10px;
     }
 
-    .receiver{
-      margin-top:16px;
-      background:linear-gradient(135deg, rgba(240,200,90,.14), rgba(255,255,255,.02));
-      border:1px solid rgba(240,200,90,.18);
-      border-radius:18px;
-      padding:16px;
+    .stat-number {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 4px;
     }
 
-    .receiver small{
-      display:block;
-      color:#f8e8b6;
-      margin-bottom:6px;
-      font-size:13px;
-      font-weight:700;
+    .small {
+      color: #b8c6e6;
+      font-size: 14px;
     }
 
-    .receiver-name{
-      font-size:26px;
-      font-weight:900;
-      color:#fff1c4;
+    .member-card, .history-card {
+      background: #0f1b34;
+      border: 1px solid #25385f;
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 10px;
     }
 
-    .receiver-status{
-      margin-top:10px;
-      display:inline-block;
-      padding:8px 12px;
-      border-radius:999px;
-      font-size:13px;
-      font-weight:800;
-      background:rgba(255,107,121,.12);
-      color:#ffdce0;
-      border:1px solid rgba(255,107,121,.2);
+    .member-name {
+      font-size: 18px;
+      font-weight: bold;
     }
 
-    .receiver-status.done{
-      background:rgba(30,201,138,.14);
-      color:#d7ffee;
-      border-color:rgba(30,201,138,.22);
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-top: 8px;
+      margin-left: 6px;
     }
 
-    .grid2{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
+    .badge-gold {
+      background: #6b5518;
+      color: #ffe39b;
     }
 
-    @media (max-width:680px){
-      .grid2{grid-template-columns:1fr;}
+    .badge-green {
+      background: #144e36;
+      color: #bff0d8;
     }
 
-    label{
-      display:block;
-      margin-bottom:8px;
-      font-size:14px;
-      font-weight:700;
-      color:#dbe6ff;
+    .badge-red {
+      background: #5a2330;
+      color: #ffd4da;
     }
 
-    input{
-      width:100%;
-      background:rgba(255,255,255,.05);
-      color:var(--text);
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
-      font-size:16px;
-      outline:none;
+    .empty {
+      color: #b8c6e6;
+      background: #0f1b34;
+      border: 1px dashed #2d426e;
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 10px;
+      text-align: center;
     }
 
-    input::placeholder{color:#98a7c8}
-
-    .divider{
-      height:1px;
-      background:var(--line);
-      margin:18px 0;
+    .receiver-box {
+      background: #1d2a48;
+      border: 1px solid #3b4f77;
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 14px;
     }
 
-    .member-add{
-      display:grid;
-      grid-template-columns:1fr 1fr auto;
-      gap:10px;
+    .receiver-name {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ffe49c;
+      margin-top: 6px;
     }
 
-    @media (max-width:760px){
-      .member-add{grid-template-columns:1fr;}
+    .section-note {
+      color: #b8c6e6;
+      font-size: 14px;
+      line-height: 1.7;
+      margin-top: 10px;
     }
 
-    button{
-      border:none;
-      border-radius:14px;
-      padding:13px 16px;
-      font-size:15px;
-      font-weight:800;
-      cursor:pointer;
-    }
+    @media (min-width: 700px) {
+      .two-cols {
+        display: flex;
+        gap: 12px;
+      }
 
-    .btn-blue{
-      background:linear-gradient(135deg, var(--blue), var(--blue2));
-      color:white;
-    }
-
-    .btn-green{
-      background:rgba(30,201,138,.14);
-      color:#d7ffee;
-      border:1px solid rgba(30,201,138,.22);
-    }
-
-    .btn-red{
-      background:rgba(255,107,121,.12);
-      color:#ffdce0;
-      border:1px solid rgba(255,107,121,.22);
-    }
-
-    .btn-soft{
-      background:rgba(255,255,255,.06);
-      color:var(--text);
-      border:1px solid var(--line);
-    }
-
-    .list{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      margin-top:10px;
-    }
-
-    .item{
-      background:rgba(255,255,255,.04);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:14px;
-    }
-
-    .item-top{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      align-items:flex-start;
-      flex-wrap:wrap;
-    }
-
-    .name{
-      font-size:17px;
-      font-weight:900;
-    }
-
-    .meta{
-      color:var(--muted);
-      font-size:13px;
-      margin-top:4px;
-      line-height:1.7;
-    }
-
-    .chips{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-
-    .chip{
-      padding:7px 10px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:800;
-    }
-
-    .chip-paid{
-      background:rgba(30,201,138,.14);
-      color:#d7ffee;
-      border:1px solid rgba(30,201,138,.22);
-    }
-
-    .chip-unpaid{
-      background:rgba(255,107,121,.12);
-      color:#ffdce0;
-      border:1px solid rgba(255,107,121,.22);
-    }
-
-    .chip-receiver{
-      background:rgba(240,200,90,.14);
-      color:#fff1c4;
-      border:1px solid rgba(240,200,90,.22);
-    }
-
-    .item-actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:12px;
-    }
-
-    .mini-gold{
-      background:rgba(240,200,90,.14);
-      color:#fff1c4;
-      border:1px solid rgba(240,200,90,.22);
-    }
-
-    .mini-green{
-      background:rgba(30,201,138,.14);
-      color:#d7ffee;
-      border:1px solid rgba(30,201,138,.22);
-    }
-
-    .mini-red{
-      background:rgba(255,107,121,.12);
-      color:#ffdce0;
-      border:1px solid rgba(255,107,121,.22);
-    }
-
-    .empty{
-      padding:18px;
-      text-align:center;
-      color:var(--muted);
-      border:1px dashed var(--line);
-      border-radius:16px;
-      background:rgba(255,255,255,.02);
-    }
-
-    .note{
-      margin-top:12px;
-      font-size:13px;
-      color:var(--muted);
-      line-height:1.8;
+      .two-cols > div {
+        flex: 1;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <section class="card">
-      <h1>جمعيتنا</h1>
-      <p>أداة بسيطة لتنظيم الجمعية بين الأهل أو الأصدقاء. تضيف الأعضاء، تحدد مستلم هذا الشهر، تتابع الدفع، وتحفظ السجل.</p>
+  <div class="container">
 
-      <div class="actions-top">
-        <button class="btn-blue" id="saveBtn">حفظ البيانات</button>
-        <button class="btn-green" id="completeBtn">إنهاء هذا الشهر</button>
-        <button class="btn-soft" id="newMonthBtn">فتح شهر جديد</button>
-        <button class="btn-red" id="resetBtn">إعادة ضبط</button>
-      </div>
+    <div class="box">
+      <h1>جمعيتنا</h1>
+      <p>أداة بسيطة لتنظيم الجمعية بين الأهل أو الأصدقاء. تضيف الأعضاء، تحدد مستلم هذا الشهر، تتابع من دفع، وتحفظ سجل الأشهر.</p>
+
+      <button class="btn btn-blue" onclick="saveData()">حفظ البيانات</button>
+      <button class="btn btn-green" onclick="completeMonth()">إنهاء هذا الشهر</button>
+      <button class="btn btn-gold" onclick="newMonth()">فتح شهر جديد</button>
+      <button class="btn btn-red" onclick="resetAll()">إعادة ضبط</button>
 
       <div class="stats">
         <div class="stat">
-          <div class="num" id="membersCount">0</div>
-          <div class="label">عدد الأعضاء</div>
+          <div class="stat-number" id="membersCount">0</div>
+          <div class="small">عدد الأعضاء</div>
         </div>
+
         <div class="stat">
-          <div class="num" id="monthlyAmountStat">0</div>
-          <div class="label">مبلغ الاشتراك</div>
+          <div class="stat-number" id="amountStat">0</div>
+          <div class="small">مبلغ الاشتراك</div>
         </div>
+
         <div class="stat">
-          <div class="num" id="paidCountStat">0</div>
-          <div class="label">المدفوع هذا الشهر</div>
+          <div class="stat-number" id="paidStat">0</div>
+          <div class="small">المدفوع هذا الشهر</div>
         </div>
+
         <div class="stat">
-          <div class="num" id="monthsDoneStat">0</div>
-          <div class="label">أشهر مكتملة</div>
+          <div class="stat-number" id="historyStat">0</div>
+          <div class="small">أشهر مكتملة</div>
         </div>
       </div>
 
-      <div class="receiver">
-        <small>مستلم هذا الشهر</small>
+      <div class="receiver-box">
+        <div class="small">مستلم هذا الشهر</div>
         <div class="receiver-name" id="receiverName">لم يتم التحديد بعد</div>
-        <div class="receiver-status" id="monthStatus">الشهر الحالي قيد المتابعة</div>
+        <div class="small" id="monthStatus">الشهر الحالي قيد المتابعة</div>
       </div>
-    </section>
+    </div>
 
-    <section class="card">
+    <div class="box">
       <h2>إعداد الجمعية</h2>
 
-      <div class="grid2">
+      <div class="two-cols">
         <div>
           <label for="groupName">اسم الجمعية</label>
-          <input id="groupName" type="text" placeholder="مثال: جمعية الأهل">
+          <input type="text" id="groupName" placeholder="مثال: جمعية الأهل">
         </div>
+
         <div>
           <label for="monthlyAmount">مبلغ الاشتراك الشهري</label>
-          <input id="monthlyAmount" type="number" placeholder="مثال: 500">
+          <input type="number" id="monthlyAmount" placeholder="مثال: 500">
         </div>
       </div>
 
-      <div class="grid2" style="margin-top:12px;">
+      <div class="two-cols">
         <div>
           <label for="monthName">اسم الشهر الحالي</label>
-          <input id="monthName" type="text" placeholder="مثال: أبريل 2026">
+          <input type="text" id="monthName" placeholder="مثال: أبريل 2026">
         </div>
+
         <div>
           <label for="monthNote">ملاحظة اختيارية</label>
-          <input id="monthNote" type="text" placeholder="مثال: جمعية للأهل">
+          <input type="text" id="monthNote" placeholder="مثال: جمعية للأهل">
         </div>
       </div>
 
-      <div class="divider"></div>
+      <h3 style="margin-top:20px;">إضافة عضو</h3>
 
-      <h3>إضافة عضو</h3>
-      <div class="member-add">
-        <input id="memberName" type="text" placeholder="اسم العضو">
-        <input id="memberPhone" type="text" placeholder="رقم الهاتف">
-        <button class="btn-blue" id="addMemberBtn">إضافة عضو</button>
+      <div class="two-cols">
+        <div>
+          <label for="memberName">اسم العضو</label>
+          <input type="text" id="memberName" placeholder="اسم العضو">
+        </div>
+
+        <div>
+          <label for="memberPhone">رقم الهاتف</label>
+          <input type="text" id="memberPhone" placeholder="رقم الهاتف">
+        </div>
       </div>
 
-      <div class="divider"></div>
+      <button class="btn btn-blue" onclick="addMember()">إضافة عضو</button>
 
-      <h3>الأعضاء</h3>
-      <div id="membersList" class="list"></div>
-      <div class="note">اختر مستلم هذا الشهر يدويًا من الأعضاء، ثم علّم من دفع، وبعد اكتمال الشهر اضغط "إنهاء هذا الشهر".</div>
-    </section>
+      <h3 style="margin-top:20px;">الأعضاء</h3>
+      <div id="membersList"></div>
 
-    <section class="card">
+      <div class="section-note">
+        اختر مستلم هذا الشهر يدويًا من الأعضاء، ثم حدّد من دفع، وبعد اكتمال الشهر اضغط "إنهاء هذا الشهر".
+      </div>
+    </div>
+
+    <div class="box">
       <h2>سجل الأشهر</h2>
-      <div id="historyList" class="list"></div>
-    </section>
+      <div id="historyList"></div>
+    </div>
+
   </div>
 
   <script>
-    const STORAGE
+    var STORAGE_KEY = "jam3eyatna_clean_v1";
+
+    var state = {
+      groupName: "",
+      monthlyAmount: "",
+      monthName: "",
+      monthNote: "",
+      members: [],
+      currentReceiverId: "",
+      paidMembers: {},
+      monthCompleted: false,
+      history: []
+    };
+
+    function escapeHtml(text) {
+      if (text === null || text === undefined) return "";
+      return String(text)
+        .split("&").join("&amp;")
+        .split("<").join("&lt;")
+        .split(">").join("&gt;")
+        .split('"').join("&quot;")
+        .split("'").join("&#39;");
+    }
+
+    function saveData(showMessage) {
+      readInputs();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderAll();
+      if (showMessage !== false) {
+        alert("تم حفظ البيانات");
+      }
+    }
+
+    function loadData() {
+      var saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          var parsed = JSON.parse(saved);
+          if (parsed) {
+            state = parsed;
+          }
+        } catch (e) {}
+      }
+      fillInputs();
+      renderAll();
+    }
+
+    function readInputs() {
+      state.groupName = document.getElementById("groupName").value;
+      state.monthlyAmount = document.getElementById("monthlyAmount").value;
+      state.monthName = document.getElementById("monthName").value;
+      state.monthNote = document.getElementById("monthNote").value;
+    }
+
+    function fillInputs() {
+      document.getElementById("groupName").value = state.groupName || "";
+      document.getElementById("monthlyAmount").value = state.monthlyAmount || "";
+      document.getElementById("monthName").value = state.monthName || "";
+      document.getElementById("monthNote").value = state.monthNote || "";
+    }
+
+    function addMember() {
+      readInputs();
+
+      var name = document.getElementById("memberName").value;
+      var phone = document.getElementById("memberPhone").value;
+
+      if (!name || name.replace(/\s/g, "") === "") {
+        alert("اكتب اسم العضو أولًا");
+        return;
+      }
+
+      var member = {
+        id: "m" + new Date().getTime() + Math.floor(Math.random() * 1000),
+        name: name,
+        phone: phone
+      };
+
+      state.members.push(member);
+
+      document.getElementById("memberName").value = "";
+      document.getElementById("memberPhone").value = "";
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderAll();
+    }
+
+    function setReceiver(id) {
+      state.currentReceiverId = id;
+      state.monthCompleted = false;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderAll();
+    }
+
+    function togglePaid(id) {
+      if (state.paidMembers[id]) {
+        delete state.paidMembers[id];
+      } else {
+        state.paidMembers[id] = true;
+      }
+      state.monthCompleted = false;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderAll();
+    }
+
+    function deleteMember(id) {
+      var newMembers = [];
+      var i;
+      for (i = 0; i < state.members.length; i++) {
+        if (state.members[i].id !== id) {
+          newMembers.push(state.members[i]);
+        }
+      }
+      state.members = newMembers;
+
+      if (state.currentReceiverId === id) {
+        state.currentReceiverId = "";
+      }
+
+      if (state.paidMembers[id]) {
+        delete state.paidMembers[id];
+      }
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderAll();
+    }
+
+    function getReceiverName() {
+      var i;
+      for (i = 0; i < state.members.length; i++) {
+        if (state.members[i].id === state.currentReceiverId) {
+          return state.members[i].name;
+        }
+      }
+      return "";
+    }
+
+    function getPaidCount() {
+      var count = 0;
+      var key;
+      for (key in state.paidMembers) {
+        if (state.paidMembers.hasOwnProperty(key) && state.paidMembers[key]) {
+          count++;
+        }
+      }
+      return count;
+    }
+
+    function completeMonth() {
+      readInputs();
+
+      if (!state.monthName || state.monthName.replace(/\s/g, "") === "") {
+        alert("اكتب اسم الشهر الحالي أولًا");
+        return;
+      }
+
+      var receiverName = getReceiverName();
+      if (!receiverName) {
+        alert("حدد مستلم هذا الشهر أولًا");
+        return;
+      }
+
+      var record = {
+        monthName: state.monthName,
+        note: state.monthNote,
+        receiverName: receiverName,
+        paidCount: getPaidCount(),
+        totalMembers: state.members.length,
+        savedAt: new Date().toLocaleString()
+      };
+
+      state.history.unshift(record);
+      state.monthCompleted = true;
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderAll();
+
+      alert("تم إنهاء هذا الشهر وحفظه في السجل");
+    }
+
+    function newMonth() {
+      state.monthName = "";
+      state.monthNote = "";
+      state.currentReceiverId = "";
+      state.paidMembers = {};
+      state.monthCompleted = false;
+
+      fillInputs();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderAll();
+    }
+
+    function resetAll() {
+      var ok = confirm("هل أنت متأكد من حذف جميع البيانات؟");
+      if (!ok) return;
+
+      state = {
+        groupName: "",
+        monthlyAmount: "",
+        monthName: "",
+        monthNote: "",
+        members: [],
+        currentReceiverId: "",
+        paidMembers: {},
+        monthCompleted: false,
+        history: []
+      };
+
+      localStorage.removeItem(STORAGE_KEY);
+      fillInputs();
+      renderAll();
+    }
+
+    function renderMembers() {
+      var box = document.getElementById("membersList");
+      box.innerHTML = "";
+
+      if (!state.members || state.members.length === 0) {
+        box.innerHTML = '<div class="empty">لا يوجد أعضاء بعد.</div>';
+        return;
+      }
+
+      var i;
+      for (i = 0; i < state.members.length; i++) {
+        var member = state.members[i];
+        var isReceiver = state.currentReceiverId === member.id;
+        var isPaid = !!state.paidMembers[member.id];
+
+        var html = '';
+        html += '<div class="member-card">';
+        html += '<div class="member-name">' + escapeHtml(member.name) + '</div>';
+        html += '<div class="small">' + escapeHtml(member.phone || "بدون رقم هاتف") + '</div>';
+
+        if (isReceiver) {
+          html += '<span class="badge badge-gold">مستلم هذا الشهر</span>';
+        }
+
+        if (isPaid) {
+          html += '<span class="badge badge-green">تم الدفع</span>';
+        } else {
+          html += '<span class="badge badge-red">لم يدفع بعد</span>';
+        }
+
+        html += '<div style="margin-top:12px;">';
+        html += '<button class="btn btn-gold" onclick="setReceiver(\'' + member.id + '\')">اجعله مستلم هذا الشهر</button>';
+        html += '<button class="btn btn-green" onclick="togglePaid(\'' + member.id + '\')">' + (isPaid ? 'إلغاء الدفع' : 'تأكيد الدفع') + '</button>';
+        html += '<button class="btn btn-red" onclick="deleteMember(\'' + member.id + '\')">حذف</button>';
+        html += '</div>';
+        html += '</div>';
+
+        box.innerHTML += html;
+      }
+    }
+
+    function renderHistory() {
+      var box = document.getElementById("historyList");
+      box.innerHTML = "";
+
+      if (!state.history || state.history.length === 0) {
+        box.innerHTML = '<div class="empty">لا يوجد سجل بعد.</div>';
+        return;
+      }
+
+      var i;
+      for (i = 0; i < state.history.length; i++) {
+        var row = state.history[i];
+        var html = '';
+        html += '<div class="history-card">';
+        html += '<div class="member-name">' + escapeHtml(row.monthName) + '</div>';
+        html += '<div class="small">المستلم: ' + escapeHtml(row.receiverName) + '</div>';
+        html += '<div class="small">الدفع: ' + row.paidCount + ' / ' + row.totalMembers + '</div>';
+        html += '<div class="small">ملاحظة: ' + escapeHtml(row.note || "بدون ملاحظة") + '</div>';
+        html += '<div class="small">تم الحفظ: ' + escapeHtml(row.savedAt) + '</div>';
+        html += '</div>';
+        box.innerHTML += html;
+      }
+    }
+
+    function renderTop() {
+      document.getElementById("membersCount").innerHTML = state.members ? state.members.length : 0;
+      document.getElementById("amountStat").innerHTML = state.monthlyAmount || 0;
+      document.getElementById("paidStat").innerHTML = getPaidCount();
+      document.getElementById("historyStat").innerHTML = state.history ? state.history.length : 0;
+
+      var receiverName = getReceiverName();
+      document.getElementById("receiverName").innerHTML = receiverName ? escapeHtml(receiverName) : "لم يتم التحديد بعد";
+
+      if (state.monthCompleted) {
+        document.getElementById("monthStatus").innerHTML = "تم إنهاء هذا الشهر";
+        document.getElementById("monthStatus").className = "receiver-status done";
+      } else {
+        document.getElementById("monthStatus").innerHTML = "الشهر الحالي قيد المتابعة";
+        document.getElementById("monthStatus").className = "receiver-status";
+      }
+    }
+
+    function renderAll() {
+      renderTop();
+      renderMembers();
+      renderHistory();
+    }
+
+    window.onload = function () {
+      loadData();
+    };
+  </script>
+</body>
+</html>
