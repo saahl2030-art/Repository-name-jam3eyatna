@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>جمعيتنا</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#121a31;
+      --card2:#18223f;
+      --text:#eef3ff;
+      --muted:#a9b6d3;
+      --line:rgba(255,255,255,.08);
+      --primary:#4f8cff;
+      --primary-2:#73a5ff;
+      --success:#1fc77a;
+      --danger:#ff5f6d;
+      --warning:#f8c14b;
+      --shadow:0 20px 50px rgba(0,0,0,.35);
+      --radius:22px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      padding:0;
+      background:
+        radial-gradient(circle at top right, rgba(79,140,255,.18), transparent 28%),
+        radial-gradient(circle at top left, rgba(31,199,122,.12), transparent 25%),
+        linear-gradient(180deg, #07101f 0%, #0b1020 100%);
+      color:var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
+      min-height:100%;
+    }
+
+    .container{
+      width:min(1150px, 92%);
+      margin:32px auto 60px;
+    }
+
+    .hero{
+      background:linear-gradient(135deg, rgba(79,140,255,.18), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      border-radius:32px;
+      padding:28px 24px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:auto -80px -80px auto;
+      width:240px;
+      height:240px;
+      background:radial-gradient(circle, rgba(115,165,255,.22), transparent 65%);
+      pointer-events:none;
+    }
+
+    h1{
+      margin:0 0 8px;
+      font-size:clamp(28px,4vw,42px);
+      line-height:1.15;
+    }
+
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.8;
+      max-width:780px;
+    }
+
+    .hero-top{
+      display:flex;
+      gap:16px;
+      align-items:flex-start;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
+    .btn{
+      border:none;
+      border-radius:16px;
+      padding:13px 18px;
+      font-size:15px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+
+    .btn:hover{transform:translateY(-1px)}
+    .btn:active{transform:translateY(0)}
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      color:#fff;
+      box-shadow:0 10px 24px rgba(79,140,255,.28);
+    }
+
+    .btn-secondary{
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      border:1px solid var(--line);
+    }
+
+    .btn-danger{
+      background:rgba(255,95,109,.12);
+      color:#ffd7db;
+      border:1px solid rgba(255,95,109,.25);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:18px;
+      margin-top:18px;
+    }
+
+    @media (max-width: 960px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+
+    .card h2{
+      margin:0 0 16px;
+      font-size:20px;
+    }
+
+    .card h3{
+      margin:0 0 12px;
+      font-size:17px;
+    }
+
+    .muted{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+    }
+
+    .form-grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+    }
+
+    @media (max-width: 720px){
+      .form-grid, .form-grid-3{grid-template-columns:1fr}
+    }
+
+    label{
+      display:block;
+      margin-bottom:8px;
+      font-size:14px;
+      color:#dce6ff;
+      font-weight:600;
+    }
+
+    input, select{
+      width:100%;
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      color:var(--text);
+      border-radius:14px;
+      padding:13px 14px;
+      font-size:15px;
+      outline:none;
+    }
+
+    input::placeholder{color:#91a1c4}
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      margin-top:18px;
+    }
+
+    @media (max-width: 900px){
+      .stats{grid-template-columns:repeat(2,1fr)}
+    }
+
+    .stat{
+      background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .stat .num{
+      font-size:24px;
+      font-weight:800;
+      margin-bottom:6px;
+    }
+
+    .stat .label{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .progress-wrap{
+      margin-top:16px;
+    }
+
+    .progress-head{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+      margin-bottom:8px;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    .progress{
+      width:100%;
+      height:14px;
+      background:rgba(255,255,255,.07);
+      border-radius:999px;
+      overflow:hidden;
+      border:1px solid var(--line);
+    }
+
+    .progress-bar{
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg, var(--success), #56e39f);
+      transition:.35s ease;
+      border-radius:999px;
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(31,199,122,.12);
+      color:#b8f5d7;
+      border:1px solid rgba(31,199,122,.22);
+      font-weight:700;
+      margin-top:12px;
+      font-size:14px;
+    }
+
+    .divider{
+      height:1px;
+      background:var(--line);
+      margin:18px 0;
+    }
+
+    .member-row{
+      display:grid;
+      grid-template-columns:1fr 1fr auto;
+      gap:10px;
+      margin-bottom:10px;
+    }
+
+    @media (max-width: 720px){
+      .member-row{grid-template-columns:1fr}
+    }
+
+    .member-list, .schedule-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:10px;
+      max-height:420px;
+      overflow:auto;
+      padding-left:2px;
+    }
+
+    .item{
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+    }
+
+    .item-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .name{
+      font-weight:800;
+      font-size:16px;
+    }
+
+    .phone{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:4px;
+    }
+
+    .chip{
+      padding:7px 11px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      border:1px solid transparent;
+      white-space:nowrap;
+    }
+
+    .chip-paid{
+      background:rgba(31,199,122,.12);
+      color:#bbf3d8;
+      border-color:rgba(31,199,122,.24);
+    }
+
+    .chip-unpaid{
+      background:rgba(255,95,109,.12);
+      color:#ffd4d9;
+      border-color:rgba(255,95,109,.24);
+    }
+
+    .chip-current{
+      background:rgba(248,193,75,.12);
+      color:#ffe7a9;
+      border-color:rgba(248,193,75,.24);
+    }
+
+    .actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
+    .btn-mini{
+      padding:9px 12px;
+      border-radius:12px;
+      font-size:13px;
+      font-weight:700;
+      cursor:pointer;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+    }
+
+    .btn-mini.success{
+      background:rgba(31,199,122,.12);
+      color:#c9f9e0;
+      border-color:rgba(31,199,122,.24);
+    }
+
+    .btn-mini.warn{
+      background:rgba(248,193,75,.12);
+      color:#ffe6a4;
+      border-color:rgba(248,193,75,.22);
+    }
+
+    .btn-mini.danger{
+      background:rgba(255,95,109,.12);
+      color:#ffd5da;
+      border-color:rgba(255,95,109,.24);
+    }
+
+    .empty{
+      padding:18px;
+      text-align:center;
+      color:var(--muted);
+      background:rgba(255,255,255,.03);
+      border:1px dashed var(--line);
+      border-radius:16px;
+    }
+
+    .footer-note{
+      margin-top:14px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.8;
+    }
+
+    .small{
+      font-size:13px;
+      color:var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <h1>جمعيتنا</h1>
+          <p class="sub">
+            موقع بسيط لإدارة جمعية شهرية بين الأهل أو الأصدقاء. 
+            ينظم الأعضاء، الترتيب، الدفع الشهري، والمستلم الحالي. 
+            بدون تحويلات مالية داخل الموقع، فقط تنظيم ومتابعة.
+          </p>
+        </div>
+
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="saveData()">حفظ البيانات</button>
+          <button class="btn btn-secondary" onclick="resetAll()">إعادة ضبط</button>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="num" id="statMembers">0</div>
+          <div class="label">عدد الأعضاء</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="statAmount">0</div>
+          <div class="label">قيمة الاشتراك</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="statMonth">-</div>
+          <div class="label">الشهر الحالي</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="statReceiver">-</div>
+          <div class="label">مستلم هذا الشهر</div>
+        </div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-head">
+          <span>تقدم الجمعية</span>
+          <span id="progressText">0 / 0</span>
+        </div>
+        <div class="progress">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+
+      <div class="tag" id="currentReceiverTag">لا يوجد مستلم حالي بعد</div>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h2>بيانات الجمعية</h2>
+
+        <div class="form-grid">
+          <div>
+            <label for="groupName">اسم الجمعية</label>
+            <input id="groupName" type="text" placeholder="مثال: جمعية العائلة" />
+          </div>
+          <div>
+            <label for="monthlyAmount">مبلغ الاشتراك الشهري</label>
+            <input id="monthlyAmount" type="number" min="1" placeholder="مثال: 1000" />
+          </div>
+        </div>
+
+        <div class="form-grid" style="margin-top:12px;">
+          <div>
+            <label for="startDate">تاريخ البداية</label>
+            <input id="startDate" type="month" />
+          </div>
+          <div>
+            <label for="currentMonthIndex">الشهر الجاري</label>
+            <select id="currentMonthIndex"></select>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3>إضافة عضو</h3>
+        <div class="member-row">
+          <input id="memberName" type="text" placeholder="اسم العضو" />
+          <input id="memberPhone" type="text" placeholder="رقم الهاتف" />
+          <button class="btn btn-primary" onclick="addMember()">إضافة</button>
+        </div>
+
+        <p class="small">يمكنك إضافة الأعضاء ثم اختيار الشهر الجاري ليظهر المستلم الحالي وحالة الدفع.</p>
+
+        <div class="divider"></div>
+
+        <h3>الأعضاء</h3>
+        <div id="membersList" class="member-list"></div>
+
+        <p class="footer-note">
+          هذه النسخة بسيطة ومقصودة للأهل أو الأصدقاء فقط. 
+          الموقع لا يحتفظ بالأموال ولا يحولها، فقط ينظم الجمعية ويتابع من دفع ومن سيستلم.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>جدول الجمعية</h2>
+        <p class="muted">يتم ترتيب الاستلام حسب ترتيب إضافة الأعضاء. العضو الأول يستلم في الشهر الأول، ثم الذي بعده، وهكذا.</p>
+
+        <div id="scheduleList" class="schedule-list"></div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "jam3eyatna_app_v1";
+
+    let appData = {
+      groupName: "",
+      monthlyAmount: "",
+      startDate: "",
+      currentMonthIndex: 0,
+      members: [],
+      payments: {}
+    };
+
+    function monthLabelFromStart(startDate, index){
+      if(!startDate) return "شهر " + (index + 1);
+      const [year, month] = startDate.split("-").map(Number);
+      const d = new Date(year, month - 1 + index, 1);
+      return d.toLocaleDateString("ar-EG", { year: "numeric", month: "long" });
+    }
+
+    function loadData(){
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if(saved){
+        try{
+          appData = JSON.parse(saved);
+        }catch(e){}
+      }
+      fillForm();
+      renderAll();
+    }
+
+    function saveData(showAlert = true){
+      syncFormToState();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+      renderAll();
+      if(showAlert) alert("تم حفظ البيانات بنجاح");
+    }
+
+    function fillForm(){
+      document.getElementById("groupName").value = appData.groupName || "";
+      document.getElementById("monthlyAmount").value = appData.monthlyAmount || "";
+      document.getElementById("startDate").value = appData.startDate || "";
+    }
+
+    function syncFormToState(){
+      appData.groupName = document.getElementById("groupName").value.trim();
+      appData.monthlyAmount = document.getElementById("monthlyAmount").value.trim();
+      appData.startDate = document.getElementById("startDate").value;
+      if(appData.currentMonthIndex >= appData.members.length){
+        appData.currentMonthIndex = Math.max(0, appData.members.length - 1);
+      }
+    }
+
+    function addMember(){
+      const name = document.getElementById("memberName").value.trim();
+      const phone = document.getElementById("memberPhone").value.trim();
+
+      if(!name){
+        alert("اكتب اسم العضو أولًا");
+        return;
+      }
+
+      appData.members.push({
+        id: Date.now() + Math.random().toString(16).slice(2),
+        name,
+        phone
+      });
+
+      document.getElementById("memberName").value = "";
+      document.getElementById("memberPhone").value = "";
+
+      if(appData.members.length === 1){
+        appData.currentMonthIndex = 0;
+      }
+
+      saveData(false);
+    }
+
+    function deleteMember(id){
+      const idx = appData.members.findIndex(m => m.id === id);
+      if(idx === -1) return;
+
+      appData.members.splice(idx, 1);
+
+      const newPayments = {};
+      Object.keys(appData.payments).forEach(key => {
+        if(key < appData.members.length){
+          newPayments[key] = appData.payments[key];
+        }
+      });
+      appData.payments = newPayments;
+
+      if(appData.currentMonthIndex >= appData.members.length){
+        appData.currentMonthIndex = Math.max(0, appData.members.length - 1);
+      }
+
+      saveData(false);
+    }
+
+    function buildMonthSelect(){
+      const select = document.getElementById("currentMonthIndex");
+      select.innerHTML = "";
+
+      if(appData.members.length === 0){
+        const opt = document.createElement("option");
+        opt.value = 0;
+        opt.textContent = "لا يوجد أشهر بعد";
+        select.appendChild(opt);
+        return;
+      }
+
+      appData.members.forEach((member, index) => {
+        const opt = document.createElement("option");
+        opt.value = index;
+        opt.textContent = monthLabelFromStart(appData.startDate, index);
+        if(index === Number(appData.currentMonthIndex)) opt.selected = true;
+        select.appendChild(opt);
+      });
+
+      select.onchange = function(){
+        appData.currentMonthIndex = Number(this.value);
+        saveData(false);
+      };
+    }
+
+    function togglePayment(memberId){
+      const month = String(appData.currentMonthIndex);
+      if(!appData.payments[month]) appData.payments[month] = {};
+
+      appData.payments[month][memberId] = !appData.payments[month][memberId];
+      saveData(false);
+    }
+
+    function markAllPaid(){
+      const month = String(appData.currentMonthIndex);
+      if(!appData.payments[month]) appData.payments[month] = {};
+
+      appData.members.forEach(member => {
+        appData.payments[month][member.id] = true;
+      });
+
+      saveData(false);
+    }
+
+    function nextMonth(){
+      if(appData.members.length === 0) return;
+      if(appData.currentMonthIndex < appData.members.length - 1){
+        appData.currentMonthIndex += 1;
+        saveData(false);
+      }else{
+        alert("هذه آخر دورة في الجمعية الحالية");
+      }
+    }
+
+    function currentReceiver(){
+      if(appData.members.length === 0) return null;
+      return appData.members[appData.currentMonthIndex] || null;
+    }
+
+    function renderMembers(){
+      const box = document.getElementById("membersList");
+      box.innerHTML = "";
+
+      if(appData.members.length === 0){
+        box.innerHTML = `<div class="empty">لا يوجد أعضاء بعد. أضف أول عضو لتبدأ.</div>`;
+        return;
+      }
+
+      const monthPayments = appData.payments[String(appData.currentMonthIndex)] || {};
+      const receiver = currentReceiver();
+
+      appData.members.forEach(member => {
+        const paid = !!monthPayments[member.id];
+        const isReceiver = receiver && receiver.id === member.id;
+
+        const item = document.createElement("div");
+        item.className = "item";
+        item.innerHTML = `
+          <div class="item-top">
+            <div>
+              <div class="name">${member.name}</div>
+              <div class="phone">${member.phone || "بدون رقم هاتف"}</div>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              ${isReceiver ? `<span class="chip chip-current">مستلم هذا الشهر</span>` : ``}
+              <span class="chip ${paid ? "chip-paid" : "chip-unpaid"}">
+                ${paid ? "تم الدفع" : "لم يدفع بعد"}
+              </span>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn-mini success" onclick="togglePayment('${member.id}')">
+              ${paid ? "إلغاء الدفع" : "تأكيد الدفع"}
+            </button>
+            <button class="btn-mini danger" onclick="deleteMember('${member.id}')">حذف</button>
+          </div>
+        `;
+        box.appendChild(item);
+      });
+
+      const tools = document.createElement("div");
+      tools.className = "actions";
+      tools.style.marginTop = "14px";
+      tools.innerHTML = `
+        <button class="btn-mini success" onclick="markAllPaid()">تأكيد دفع الجميع</button>
+        <button class="btn-mini warn" onclick="nextMonth()">الانتقال للشهر التالي</button>
+      `;
+      box.appendChild(tools);
+    }
+
+    function renderSchedule(){
+      const box = document.getElementById("scheduleList");
+      box.innerHTML = "";
+
+      if(appData.members.length === 0){
+        box.innerHTML = `<div class="empty">سيظهر جدول الأشهر هنا بعد إضافة الأعضاء.</div>`;
+        return;
+      }
+
+      appData.members.forEach((member, index) => {
+        const current = index === Number(appData.currentMonthIndex);
+        const item = document.createElement("div");
+        item.className = "item";
+        item.innerHTML = `
+          <div class="item-top">
+            <div>
+              <div class="name">${monthLabelFromStart(appData.startDate, index)}</div>
+              <div class="phone">المستلم: ${member.name}</div>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              ${current ? `<span class="chip chip-current">الشهر الحالي</span>` : ``}
+            </div>
+          </div>
+        `;
+        box.appendChild(item);
+      });
+    }
+
+    function renderStats(){
+      document.getElementById("statMembers").textContent = appData.members.length;
+      document.getElementById("statAmount").textContent = appData.monthlyAmount ? `${appData.monthlyAmount}` : "0";
+      document.getElementById("statMonth").textContent = appData.members.length ? (appData.currentMonthIndex + 1) : "-";
+
+      const receiver = currentReceiver();
+      document.getElementById("statReceiver").textContent = receiver ? receiver.name : "-";
+
+      const progressText = `${appData.members.length ? appData.currentMonthIndex + 1 : 0} / ${appData.members.length}`;
+      document.getElementById("progressText").textContent = progressText;
+
+      const percent = appData.members.length ? ((appData.currentMonthIndex + 1) / appData.members.length) * 100 : 0;
+      document.getElementById("progressBar").style.width = percent + "%";
+
+      const tag = document.getElementById("currentReceiverTag");
+      if(receiver){
+        tag.textContent = `مستلم هذا الشهر: ${receiver.name}`;
+      }else{
+        tag.textContent = "لا يوجد مستلم حالي بعد";
+      }
+    }
+
+    function renderAll(){
+      syncFormToState();
+      buildMonthSelect();
+      renderMembers();
+      renderSchedule();
+      renderStats();
+    }
+
+    function resetAll(){
+      const ok = confirm("هل أنت متأكد من حذف جميع البيانات؟");
+      if(!ok) return;
+
+      appData = {
+        groupName: "",
+        monthlyAmount: "",
+        startDate: "",
+        currentMonthIndex: 0,
+        members: [],
+        payments: {}
+      };
+
+      localStorage.removeItem(STORAGE_KEY);
+      fillForm();
+      renderAll();
+    }
+
+    document.getElementById("groupName").addEventListener("input", () => saveData(false));
+    document.getElementById("monthlyAmount").addEventListener("input", () => saveData(false));
+    document.getElementById("startDate").addEventListener("change", () => saveData(false));
+
+    loadData();
+  </script>
+</body>
+</html>
