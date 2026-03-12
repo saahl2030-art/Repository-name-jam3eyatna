@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>جمعيتنا</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<title>منصة الجمعيات</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#070d1a;--surface:#0d1b33;--surface2:#112040;
@@ -14,248 +14,201 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 .screen{display:none;min-height:100vh}.screen.active{display:block}
-input,select{width:100%;padding:12px 15px;background:#0a1428;border:1.5px solid rgba(79,138,255,.2);border-radius:12px;color:var(--text);font-family:'Tajawal',sans-serif;font-size:15px;transition:border-color .2s,box-shadow .2s;outline:none}
-input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,138,255,.15)}
+input,select,textarea{width:100%;padding:11px 14px;background:#0a1428;border:1.5px solid rgba(79,138,255,.2);border-radius:12px;color:var(--text);font-family:'Tajawal',sans-serif;font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,138,255,.12)}
 select option{background:#0d1b33}
-.field{text-align:right;margin-bottom:14px}
-.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;font-weight:600}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:12px 20px;border:none;border-radius:12px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:transform .15s,opacity .2s}
+textarea{resize:vertical;min-height:70px}
+.field{margin-bottom:13px;text-align:right}
+.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:700}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 18px;border:none;border-radius:12px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:transform .15s,opacity .2s}
 .btn:hover{transform:translateY(-1px)}.btn:active{transform:translateY(0);opacity:.85}
-.btn-primary{background:linear-gradient(135deg,var(--accent),#2563eb);color:#fff;box-shadow:0 4px 20px rgba(79,138,255,.3);width:100%}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#2563eb);color:#fff;width:100%}
 .btn-success{background:linear-gradient(135deg,#0ea36a,var(--accent2));color:#fff}
 .btn-danger{background:linear-gradient(135deg,#cc3347,var(--red));color:#fff}
 .btn-gold{background:linear-gradient(135deg,#c4870a,var(--gold));color:#fff}
 .btn-ghost{background:rgba(79,138,255,.1);border:1px solid rgba(79,138,255,.2);color:var(--accent)}
 .btn-wa{background:linear-gradient(135deg,#1da851,#25d366);color:#fff}
-.btn-sm{padding:8px 13px;font-size:13px;border-radius:9px}
-.topbar{background:rgba(13,27,51,.96);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);padding:0 22px;height:62px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.topbar-title{font-size:18px;font-weight:800;display:flex;align-items:center;gap:9px}
-.topbar-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.main{max-width:1100px;margin:0 auto;padding:26px 18px 60px}
-.tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:5px;margin-bottom:24px;overflow-x:auto}
-.tab{padding:9px 16px;border-radius:10px;border:none;background:transparent;color:var(--muted);font-family:'Tajawal',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
-.tab.active{background:var(--accent);color:#fff;box-shadow:0 2px 12px rgba(79,138,255,.35)}
-.tab:hover:not(.active){color:var(--text);background:rgba(255,255,255,.05)}
-.tab-content{display:none}.tab-content.active{display:block;animation:fadeUp .3s ease}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px}
-.card-title{font-size:17px;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:8px}
-.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:18px}
-@media(min-width:600px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
-.stat-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:16px}
-.stat-num{font-size:26px;font-weight:900;line-height:1;margin-bottom:5px}
-.stat-label{font-size:12px;color:var(--muted);font-weight:600}
-.month-hero{background:linear-gradient(135deg,#0d2050 0%,#0d1b33 60%,#0a1428 100%);border:1px solid rgba(79,138,255,.25);border-radius:20px;padding:26px;margin-bottom:18px;position:relative;overflow:hidden}
-.month-hero::before{content:'';position:absolute;top:-40px;left:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(79,138,255,.15) 0%,transparent 70%);pointer-events:none}
-.hero-label{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:6px}
-.hero-receiver{font-size:34px;font-weight:900;color:var(--gold);line-height:1.2}
-.progress-bar-wrap{margin-top:18px}
-.progress-bar-label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:7px}
-.progress-bar{height:8px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff}
+.btn-sm{padding:7px 12px;font-size:12px;border-radius:9px}
+.topbar{background:rgba(13,27,51,.96);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);padding:0 16px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.topbar-title{font-size:16px;font-weight:800;display:flex;align-items:center;gap:7px;min-width:0;overflow:hidden}
+.topbar-actions{display:flex;gap:5px;align-items:center;flex-shrink:0}
+.main{max-width:1100px;margin:0 auto;padding:20px 14px 60px}
+.tabs{display:flex;gap:3px;background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:4px;margin-bottom:20px;overflow-x:auto}
+.tab{padding:8px 13px;border-radius:9px;border:none;background:transparent;color:var(--muted);font-family:'Tajawal',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;position:relative}
+.tab.active{background:var(--accent);color:#fff}
+.tab-badge{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#000;border-radius:99px;padding:1px 5px;font-size:10px;font-weight:800}
+.tab-content{display:none}.tab-content.active{display:block;animation:fadeUp .25s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px}
+.card-title{font-size:15px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:7px}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:14px}
+@media(min-width:580px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
+.stat-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:13px}
+.stat-num{font-size:22px;font-weight:900;line-height:1;margin-bottom:3px}
+.stat-label{font-size:11px;color:var(--muted);font-weight:600}
+.month-hero{background:linear-gradient(135deg,#0d2050,#0d1b33,#0a1428);border:1px solid rgba(79,138,255,.22);border-radius:16px;padding:20px;margin-bottom:14px;position:relative;overflow:hidden}
+.month-hero::before{content:'';position:absolute;top:-30px;left:-30px;width:160px;height:160px;background:radial-gradient(circle,rgba(79,138,255,.13) 0%,transparent 70%);pointer-events:none}
+.hero-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.8px;margin-bottom:4px}
+.hero-receiver{font-size:28px;font-weight:900;color:var(--gold)}
+.progress-bar-wrap{margin-top:14px}
+.progress-bar-label{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:5px}
+.progress-bar{height:6px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden}
 .progress-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width .5s ease}
 /* member cards */
-.member-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:15px;margin-bottom:11px;transition:border-color .2s}
-.member-card.is-receiver{border-color:var(--gold);background:rgba(255,200,74,.05)}
-.member-card.pending{border-color:rgba(255,200,74,.4);background:rgba(255,200,74,.03)}
-.mc-top{display:flex;align-items:center;gap:13px}
-.avatar{width:46px;height:46px;border-radius:11px;background:linear-gradient(135deg,var(--accent),#1a3a8f);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800;flex-shrink:0;color:#fff}
-.avatar.pending-av{background:linear-gradient(135deg,#c4870a,var(--gold))}
+.member-card{background:var(--surface2);border:1px solid var(--border);border-radius:13px;padding:13px;margin-bottom:9px;transition:border-color .2s}
+.member-card.is-receiver{border-color:var(--gold);background:rgba(255,200,74,.04)}
+.member-card.pending{border-color:rgba(255,165,0,.35)}
+.mc-top{display:flex;align-items:flex-start;gap:11px}
+.avatar{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#1a3a8f);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;flex-shrink:0;color:#fff}
+.av-gold{background:linear-gradient(135deg,#c4870a,var(--gold))!important}
 .member-info{flex:1;min-width:0}
-.member-name-el{font-size:16px;font-weight:700}
-.member-sub{font-size:13px;color:var(--muted);margin-top:2px}
-.member-iban{font-size:12px;color:var(--accent2);margin-top:3px;font-family:monospace;cursor:pointer}
-.member-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
-.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:700}
+.member-name-el{font-size:15px;font-weight:700}
+.member-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.member-iban{font-size:11px;color:var(--accent2);margin-top:2px;font-family:monospace;cursor:pointer;word-break:break-all}
+.member-badges{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.badge{display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:99px;font-size:11px;font-weight:700}
 .badge-gold{background:rgba(255,200,74,.15);color:var(--gold);border:1px solid rgba(255,200,74,.3)}
 .badge-green{background:rgba(29,233,182,.12);color:var(--accent2);border:1px solid rgba(29,233,182,.25)}
 .badge-red{background:rgba(255,91,110,.12);color:var(--red);border:1px solid rgba(255,91,110,.25)}
 .badge-blue{background:rgba(79,138,255,.12);color:var(--accent);border:1px solid rgba(79,138,255,.25)}
-.badge-orange{background:rgba(255,165,0,.12);color:#ffa500;border:1px solid rgba(255,165,0,.3)}
-.member-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
-/* schedule / month grid */
-.month-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px}
-@media(min-width:500px){.month-grid{grid-template-columns:repeat(4,1fr)}}
-@media(min-width:700px){.month-grid{grid-template-columns:repeat(6,1fr)}}
-.month-slot{border-radius:12px;padding:12px 8px;text-align:center;cursor:pointer;border:2px solid transparent;transition:all .2s;position:relative}
-.month-slot.available{background:var(--surface2);border-color:var(--border)}
-.month-slot.available:hover{border-color:var(--accent);transform:translateY(-2px)}
-.month-slot.booked{background:rgba(255,91,110,.08);border-color:rgba(255,91,110,.3);cursor:not-allowed;opacity:.75}
-.month-slot.booked-mine{background:rgba(29,233,182,.08);border-color:rgba(29,233,182,.4);cursor:default}
-.month-slot.current{background:rgba(255,200,74,.1);border-color:var(--gold)}
-.month-slot.completed{background:rgba(255,255,255,.03);border-color:transparent;cursor:not-allowed;opacity:.5}
-.slot-month{font-size:13px;font-weight:800;margin-bottom:3px}
-.slot-year{font-size:11px;color:var(--muted)}
-.slot-owner{font-size:11px;font-weight:700;margin-top:4px;padding:2px 6px;border-radius:99px}
-.slot-owner.taken{background:rgba(255,91,110,.2);color:var(--red)}
-.slot-owner.mine{background:rgba(29,233,182,.2);color:var(--accent2)}
-/* registration page */
-#screenRegister{background:radial-gradient(ellipse at 50% 0%,#0d2050 0%,var(--bg) 70%)}
-.reg-card{max-width:480px;margin:0 auto;padding:20px 18px 60px}
-.reg-hero{text-align:center;padding:30px 0 20px}
-.reg-hero h1{font-size:26px;font-weight:900;margin-bottom:8px}
-.reg-hero p{color:var(--muted);font-size:14px}
-/* public page */
-#screenPublic{background:radial-gradient(ellipse at 50% 0%,#0d2050 0%,var(--bg) 70%)}
-.pub-wrap{max-width:720px;margin:0 auto;padding:10px 16px 60px}
-.pub-receiver-card{display:block;background:linear-gradient(135deg,#0d2050,#0d1b33);border:2px solid var(--gold);border-radius:20px;padding:22px 30px;margin-bottom:18px;text-align:center}
-.pub-rec-name{font-size:38px;font-weight:900;color:var(--gold)}
-.pub-rec-iban{font-size:15px;color:var(--accent2);font-weight:700;margin-top:10px;background:rgba(29,233,182,.1);border:1px solid rgba(29,233,182,.2);border-radius:10px;padding:8px 14px;display:inline-block;font-family:monospace;cursor:pointer}
-.pub-section{background:rgba(13,27,51,.75);border:1px solid var(--border);border-radius:18px;padding:20px;margin-bottom:18px}
-.pub-section h3{font-size:17px;font-weight:800;margin-bottom:16px}
-/* countdown */
-.countdown-box{background:linear-gradient(135deg,rgba(255,200,74,.1),rgba(79,138,255,.1));border:1px solid rgba(255,200,74,.3);border-radius:14px;padding:14px 18px;margin-top:14px;display:flex;align-items:center;justify-content:center;gap:12px}
-.countdown-days{font-size:32px;font-weight:900;color:var(--gold)}
-/* setup */
-.setup-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px;margin-bottom:18px}
-.setup-step{display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface2);border-radius:12px;margin-bottom:8px}
-.step-num{width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
-/* table */
+.badge-orange{background:rgba(255,165,0,.12);color:#ffa500;border:1px solid rgba(255,165,0,.28)}
+.badge-purple{background:rgba(168,85,247,.12);color:#a855f7;border:1px solid rgba(168,85,247,.28);cursor:pointer}
+.member-actions{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+/* receipt */
+.receipt-thumb{width:52px;height:52px;border-radius:9px;object-fit:cover;border:2px solid var(--accent2);cursor:pointer;flex-shrink:0}
+.receipt-placeholder{width:52px;height:52px;border-radius:9px;background:rgba(79,138,255,.07);border:1.5px dashed rgba(79,138,255,.28);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+/* schedule table */
 .schedule-table{width:100%;border-collapse:collapse}
-.schedule-table th{padding:11px 12px;text-align:right;background:var(--surface2);font-size:12px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--border)}
-.schedule-table td{padding:11px 12px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle}
+.schedule-table th{padding:9px 10px;text-align:right;background:var(--surface2);font-size:11px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--border)}
+.schedule-table td{padding:9px 10px;border-bottom:1px solid var(--border);font-size:12px;vertical-align:middle}
 .schedule-table tr:last-child td{border-bottom:none}
-.schedule-table tr.current-row td{background:rgba(79,138,255,.08)}
-.schedule-table tr.done-row td{opacity:.55}
-.month-num{width:28px;height:28px;border-radius:7px;background:var(--surface2);border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:var(--accent)}
-.status-dot{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600}
-.dot{width:7px;height:7px;border-radius:50%}
-.dot-green{background:var(--green);box-shadow:0 0 6px var(--green)}
-.dot-gold{background:var(--gold);box-shadow:0 0 6px var(--gold)}
+.schedule-table tr.current-row td{background:rgba(79,138,255,.07)}
+.schedule-table tr.done-row td{opacity:.5}
+.month-num{width:26px;height:26px;border-radius:6px;background:var(--surface2);border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;color:var(--accent)}
+.status-dot{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600}
+.dot{width:6px;height:6px;border-radius:50%}
+.dot-green{background:var(--green);box-shadow:0 0 5px var(--green)}
+.dot-gold{background:var(--gold);box-shadow:0 0 5px var(--gold)}
 .dot-gray{background:var(--muted)}
 /* history */
-.history-card{background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:11px;display:flex;gap:14px;align-items:flex-start}
-.history-month-badge{background:linear-gradient(135deg,var(--accent),#1a3a8f);border-radius:10px;padding:9px 13px;font-size:13px;font-weight:800;color:#fff;text-align:center;min-width:58px;flex-shrink:0}
+.history-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:13px;margin-bottom:9px;display:flex;gap:11px;align-items:flex-start}
+.history-month-badge{background:linear-gradient(135deg,var(--accent),#1a3a8f);border-radius:9px;padding:7px 10px;font-size:11px;font-weight:800;color:#fff;text-align:center;min-width:50px;flex-shrink:0}
+/* month grid */
+.month-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+@media(min-width:460px){.month-grid{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:660px){.month-grid{grid-template-columns:repeat(6,1fr)}}
+.month-slot{border-radius:10px;padding:10px 5px;text-align:center;cursor:pointer;border:2px solid transparent;transition:all .2s}
+.month-slot.available{background:var(--surface2);border-color:var(--border)}
+.month-slot.available:hover{border-color:var(--accent);transform:translateY(-2px)}
+.month-slot.booked{background:rgba(255,91,110,.06);border-color:rgba(255,91,110,.28);cursor:not-allowed}
+.slot-month{font-size:11px;font-weight:800;margin-bottom:2px}
+.slot-year{font-size:10px;color:var(--muted)}
+.slot-owner{font-size:9px;font-weight:700;margin-top:3px;padding:2px 4px;border-radius:99px;background:rgba(255,91,110,.18);color:var(--red);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* swap */
-.swap-row{display:flex;align-items:center;gap:10px;padding:12px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;cursor:pointer;transition:border-color .2s}
+.swap-row{display:flex;align-items:center;gap:9px;padding:10px;background:var(--surface2);border:1px solid var(--border);border-radius:11px;margin-bottom:6px;cursor:pointer;transition:border-color .2s}
 .swap-row:hover{border-color:var(--accent)}
-.swap-row.selected{border-color:var(--gold);background:rgba(255,200,74,.07)}
+.swap-row.selected{border-color:var(--gold);background:rgba(255,200,74,.06)}
+/* public */
+#screenPublic{background:radial-gradient(ellipse at 50% 0%,#0d2050 0%,var(--bg) 70%)}
+.pub-wrap{max-width:680px;margin:0 auto;padding:8px 13px 60px}
+.pub-receiver-card{background:linear-gradient(135deg,#0d2050,#0d1b33);border:2px solid var(--gold);border-radius:16px;padding:18px 22px;margin-bottom:14px;text-align:center}
+.pub-rec-name{font-size:30px;font-weight:900;color:var(--gold)}
+.pub-rec-iban{font-size:13px;color:var(--accent2);font-weight:700;margin-top:8px;background:rgba(29,233,182,.1);border:1px solid rgba(29,233,182,.2);border-radius:8px;padding:6px 12px;display:inline-block;font-family:monospace;cursor:pointer}
+.pub-section{background:rgba(13,27,51,.75);border:1px solid var(--border);border-radius:15px;padding:16px;margin-bottom:14px}
+.pub-section h3{font-size:15px;font-weight:800;margin-bottom:12px}
+.countdown-box{background:linear-gradient(135deg,rgba(255,200,74,.09),rgba(79,138,255,.09));border:1px solid rgba(255,200,74,.28);border-radius:12px;padding:11px 14px;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:9px}
+/* jameia list */
+#screenJameiaList{background:radial-gradient(ellipse at 50% 0%,#0d2050 0%,var(--bg) 70%)}
+.jameia-picker{max-width:540px;margin:0 auto;padding:16px 13px 60px}
+.jameia-item{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:16px;margin-bottom:10px;display:flex;align-items:center;gap:13px;cursor:pointer;transition:border-color .2s,transform .15s}
+.jameia-item:hover{border-color:var(--accent);transform:translateY(-1px)}
+.jameia-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.jameia-info{flex:1}
+.jameia-name{font-size:16px;font-weight:800}
+.jameia-meta{font-size:12px;color:var(--muted);margin-top:2px}
 /* login */
 #screenLogin{display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 60% 30%,#1a2f5a 0%,#070d1a 70%)}
-.login-card{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:40px 32px;width:100%;max-width:380px;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,.6);animation:fadeUp .4s ease}
-.login-icon{width:64px;height:64px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 20px;box-shadow:0 0 40px rgba(79,138,255,.4)}
-.settings-grid{display:grid;grid-template-columns:1fr;gap:12px}
-@media(min-width:640px){.settings-grid{grid-template-columns:1fr 1fr}}
-.divider{border:none;border-top:1px solid var(--border);margin:16px 0}
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
-.section-header h3{font-size:16px;font-weight:700}
-.empty{text-align:center;padding:34px 20px;color:var(--muted)}
-.empty-icon{font-size:36px;margin-bottom:8px}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:500;padding:16px;opacity:0;pointer-events:none;transition:opacity .25s}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px 28px;width:100%;max-width:360px;text-align:center;box-shadow:0 40px 80px rgba(0,0,0,.6);animation:fadeUp .4s ease}
+/* register */
+#screenRegister{background:radial-gradient(ellipse at 50% 0%,#0d2050 0%,var(--bg) 70%)}
+.reg-card{max-width:440px;margin:0 auto;padding:14px 13px 60px}
+/* misc */
+.settings-grid{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:600px){.settings-grid{grid-template-columns:1fr 1fr}}
+.divider{border:none;border-top:1px solid var(--border);margin:13px 0}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;flex-wrap:wrap;gap:6px}
+.section-header h3{font-size:14px;font-weight:700}
+.empty{text-align:center;padding:28px 16px;color:var(--muted)}
+.empty-icon{font-size:32px;margin-bottom:6px}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);display:flex;align-items:center;justify-content:center;z-index:500;padding:13px;opacity:0;pointer-events:none;transition:opacity .22s}
 .modal-overlay.open{opacity:1;pointer-events:all}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:22px;width:100%;max-width:500px;transform:scale(.9);transition:transform .25s;max-height:92vh;overflow-y:auto}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;width:100%;max-width:490px;transform:scale(.9);transition:transform .22s;max-height:92vh;overflow-y:auto}
 .modal-overlay.open .modal{transform:scale(1)}
-.modal-title{font-size:18px;font-weight:800;margin-bottom:16px}
-.modal-footer{display:flex;gap:10px;margin-top:18px;justify-content:flex-end}
-/* sync indicator */
-.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;margin-left:6px;animation:pulse 2s infinite}
+.modal-title{font-size:16px;font-weight:800;margin-bottom:14px}
+.modal-footer{display:flex;gap:8px;margin-top:14px;justify-content:flex-end}
+.link-box{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:11px;display:flex;align-items:center;gap:8px;cursor:pointer;margin-top:8px}
+.link-box span{flex:1;font-size:11px;color:var(--accent2);word-break:break-all;font-family:monospace}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.sync-dot.syncing{background:var(--gold)}
-.sync-dot.error{background:var(--red);animation:none}
-#toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:#1de9b6;color:#07201a;padding:11px 26px;border-radius:99px;font-weight:700;font-size:15px;transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .3s;opacity:0;z-index:9999;pointer-events:none;white-space:nowrap}
+.sync-dot.syncing{background:var(--gold)}.sync-dot.error{background:var(--red);animation:none}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:#1de9b6;color:#07201a;padding:10px 22px;border-radius:99px;font-weight:700;font-size:14px;transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .3s;opacity:0;z-index:9999;pointer-events:none;white-space:nowrap}
 #toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-.link-box{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;align-items:center;gap:10px;margin-top:10px;cursor:pointer}
-.link-box span{flex:1;font-size:13px;color:var(--accent2);word-break:break-all;font-family:monospace}
-@media(max-width:640px){
-  .pub-rec-name{font-size:28px}
-  .topbar{padding:0 12px}
-  .main{padding:14px 12px 60px}
-  .schedule-table th,.schedule-table td{padding:8px 7px;font-size:11px}
-}
+@media(max-width:600px){.topbar{padding:0 10px}.main{padding:12px 10px 60px}.pub-rec-name{font-size:24px}}
 </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════
-     REGISTRATION PAGE (for members)
-     ════════════════════════════════════ -->
-<div id="screenRegister" class="screen active">
+<!-- ══ SCREEN: JAMEIA LIST ══ -->
+<div id="screenJameiaList" class="screen active">
   <div class="topbar">
-    <div class="topbar-title">🏦 <span id="regTopName">جمعيتنا</span></div>
+    <div class="topbar-title">🏦 منصة الجمعيات</div>
     <div class="topbar-actions">
-      <button class="btn btn-ghost btn-sm" onclick="showScreen('screenPublic')">👁 الجدول</button>
       <button class="btn btn-ghost btn-sm" onclick="showScreen('screenLogin')">🔐 المدير</button>
     </div>
   </div>
-  <div class="reg-card">
-    <div class="reg-hero">
-      <div style="font-size:48px;margin-bottom:12px">📝</div>
-      <h1>التسجيل في الجمعية</h1>
-      <p>سجّل بياناتك واختر شهر استلامك</p>
+  <div class="jameia-picker">
+    <div style="text-align:center;padding:24px 0 18px">
+      <div style="font-size:40px;margin-bottom:10px">🏦</div>
+      <div style="font-size:20px;font-weight:900;margin-bottom:4px">منصة الجمعيات المالية</div>
+      <div style="color:var(--muted);font-size:13px">اختر الجمعية للعرض أو التسجيل</div>
     </div>
-
-    <!-- Step 1: info -->
-    <div class="card" id="regStep1">
-      <div class="card-title">👤 بياناتك الشخصية</div>
-      <div class="field"><label>الاسم الكامل *</label><input type="text" id="regName" placeholder="اسم العضو الكامل"></div>
-      <div class="field"><label>رقم الهاتف *</label><input type="tel" id="regPhone" placeholder="0501234567"></div>
-      <div class="field"><label>رقم الآيبان (IBAN)</label><input type="text" id="regIban" placeholder="AE070331234567890123456"></div>
-      <button class="btn btn-primary" onclick="goToStep2()">التالي — اختيار الشهر ←</button>
-    </div>
-
-    <!-- Step 2: pick month -->
-    <div class="card" id="regStep2" style="display:none">
-      <div class="card-title">📅 اختر شهر استلامك</div>
-      <p style="color:var(--muted);font-size:13px;margin-bottom:16px">الخانات الحمراء محجوزة · اختر شهراً متاحاً</p>
-      <div id="regMonthGrid" class="month-grid"></div>
-      <div id="regSelectedInfo" style="display:none;margin-top:14px;padding:12px;background:rgba(29,233,182,.08);border:1px solid rgba(29,233,182,.25);border-radius:12px">
-        <div style="font-size:14px;font-weight:700;color:var(--accent2)">✓ اخترت: <span id="regSelectedLabel"></span></div>
-      </div>
-      <div style="display:flex;gap:10px;margin-top:16px">
-        <button class="btn btn-ghost" onclick="backToStep1()" style="flex:1">← رجوع</button>
-        <button class="btn btn-success" onclick="submitRegistration()" style="flex:2">✅ تأكيد التسجيل</button>
-      </div>
-    </div>
-
-    <!-- Success -->
-    <div class="card" id="regSuccess" style="display:none;text-align:center">
-      <div style="font-size:60px;margin-bottom:16px">🎉</div>
-      <div style="font-size:22px;font-weight:900;color:var(--accent2);margin-bottom:10px">تم التسجيل بنجاح!</div>
-      <div id="regSuccessMsg" style="color:var(--muted);font-size:14px;line-height:1.8;margin-bottom:20px"></div>
-      <button class="btn btn-primary" onclick="showScreen('screenPublic')">👁 عرض جدول الجمعية</button>
-    </div>
-
-    <div id="regLoading" style="display:none;text-align:center;padding:30px;color:var(--muted)">
-      <div style="font-size:32px;margin-bottom:10px">⏳</div>جاري التحقق من الشهر...
-    </div>
+    <div id="jameiaListPublic"><div class="empty"><div class="empty-icon">🔍</div>لا توجد جمعيات بعد</div></div>
   </div>
 </div>
 
-<!-- ════════════════════════════════════
-     PUBLIC PAGE
-     ════════════════════════════════════ -->
+<!-- ══ SCREEN: PUBLIC ══ -->
 <div id="screenPublic" class="screen">
   <div class="topbar">
-    <div class="topbar-title">🏦 <span id="pubTopName">جمعيتنا</span></div>
+    <div class="topbar-title">🏦 <span id="pubTopName">جمعية</span></div>
     <div class="topbar-actions">
-      <button class="btn btn-success btn-sm" onclick="showScreen('screenRegister');initRegister()">📝 سجّل الآن</button>
-      <button class="btn btn-ghost btn-sm" onclick="showScreen('screenLogin')">🔐 المدير</button>
+      <button class="btn btn-ghost btn-sm" onclick="showScreen('screenJameiaList')">🏠</button>
+      <button class="btn btn-success btn-sm" onclick="showScreen('screenRegister');initRegister()">📝 سجّل</button>
+      <button class="btn btn-ghost btn-sm" onclick="showScreen('screenLogin')">🔐</button>
     </div>
   </div>
   <div class="pub-wrap">
-    <div style="text-align:center;padding:24px 0 14px">
-      <div style="font-size:12px;color:var(--muted);font-weight:700;letter-spacing:1px;margin-bottom:6px">الجمعية المالية</div>
-      <div style="font-size:26px;font-weight:900;margin-bottom:4px" id="pubGroupName">جمعيتنا</div>
+    <div style="text-align:center;padding:18px 0 10px">
+      <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.8px;margin-bottom:4px">الجمعية المالية</div>
+      <div style="font-size:22px;font-weight:900" id="pubGroupName">جمعية</div>
     </div>
-
     <div class="pub-receiver-card">
-      <div style="font-size:13px;color:var(--muted);margin-bottom:6px">🏆 مستلم هذا الشهر</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:5px">🏆 مستلم هذا الشهر</div>
       <div class="pub-rec-name" id="pubReceiver">—</div>
-      <div style="font-size:16px;color:var(--accent);font-weight:700;margin-top:8px" id="pubMonth"></div>
-      <div style="font-size:14px;color:var(--muted);margin-top:6px" id="pubAmount"></div>
-      <div id="pubIban" style="display:none;margin-top:10px">
+      <div style="font-size:14px;color:var(--accent);font-weight:700;margin-top:5px" id="pubMonth"></div>
+      <div style="font-size:13px;color:var(--muted);margin-top:4px" id="pubAmount"></div>
+      <div id="pubIban" style="display:none;margin-top:7px">
         <div class="pub-rec-iban" onclick="copyText(document.getElementById('pubIbanText').textContent)">📋 <span id="pubIbanText"></span></div>
-        <div style="font-size:11px;color:var(--muted);margin-top:4px">اضغط لنسخ الآيبان</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">اضغط لنسخ الآيبان</div>
       </div>
       <div id="pubCountdown" style="display:none" class="countdown-box">
-        <div class="countdown-days" id="countdownDays">—</div>
-        <div style="font-size:13px;color:var(--muted);font-weight:600">يوم متبقي<br>لنهاية الشهر</div>
+        <div style="font-size:28px;font-weight:900;color:var(--gold)" id="countdownDays">—</div>
+        <div style="font-size:11px;color:var(--muted);font-weight:600">يوم متبقي<br>لنهاية الشهر</div>
       </div>
     </div>
-
-    <div style="text-align:center;margin-bottom:16px">
-      <button class="btn btn-success" onclick="showScreen('screenRegister');initRegister()" style="width:100%;max-width:360px">📝 سجّل في الجمعية الآن</button>
+    <div style="margin-bottom:12px">
+      <button class="btn btn-success" style="width:100%" onclick="showScreen('screenRegister');initRegister()">📝 سجّل في الجمعية الآن</button>
     </div>
-
     <div class="pub-section">
       <h3>📅 جدول التوزيع</h3>
       <div style="overflow-x:auto">
@@ -265,49 +218,115 @@ select option{background:#0d1b33}
         </table>
       </div>
     </div>
-
     <div class="pub-section">
       <h3>✅ الأشهر المنتهية</h3>
-      <div id="pubHistoryList"><div class="empty" style="padding:16px"><div class="empty-icon">📋</div>لا يوجد سجل بعد</div></div>
+      <div id="pubHistoryList"><div class="empty" style="padding:12px"><div class="empty-icon">📋</div>لا يوجد سجل</div></div>
     </div>
   </div>
 </div>
 
-<!-- ════════════════════════════════════
-     LOGIN
-     ════════════════════════════════════ -->
+<!-- ══ SCREEN: REGISTER ══ -->
+<div id="screenRegister" class="screen">
+  <div class="topbar">
+    <div class="topbar-title">📝 <span id="regTopName">التسجيل في الجمعية</span></div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost btn-sm" onclick="showScreen('screenPublic')">← رجوع</button>
+    </div>
+  </div>
+  <div class="reg-card">
+    <div style="text-align:center;padding:18px 0 16px">
+      <div style="font-size:38px;margin-bottom:8px">📝</div>
+      <div style="font-size:19px;font-weight:900;margin-bottom:4px">التسجيل في الجمعية</div>
+      <div style="color:var(--muted);font-size:13px">سجّل بياناتك واحجز شهر استلامك</div>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="card" id="regStep1">
+      <div class="card-title">👤 بياناتك الشخصية</div>
+      <div class="field"><label>الاسم الكامل *</label><input type="text" id="regName" placeholder="الاسم الكامل"></div>
+      <div class="field"><label>رقم الهاتف *</label><input type="tel" id="regPhone" placeholder="0501234567"></div>
+      <div class="field"><label>رقم الآيبان (IBAN) — لاستلام مبلغ الجمعية</label><input type="text" id="regIban" placeholder="AE070331234567890123456"></div>
+      <button class="btn btn-primary" onclick="goToStep2()">التالي — اختيار الشهر ←</button>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="card" id="regStep2" style="display:none">
+      <div class="card-title">📅 اختر شهر استلامك</div>
+      <p style="color:var(--muted);font-size:12px;margin-bottom:12px">🔴 محجوز &nbsp;·&nbsp; ⬜ متاح — اضغط على الشهر لحجزه</p>
+      <div id="regMonthGrid" class="month-grid"></div>
+      <div id="regSelectedInfo" style="display:none;margin-top:11px;padding:10px;background:rgba(29,233,182,.08);border:1px solid rgba(29,233,182,.22);border-radius:10px">
+        <div style="font-size:13px;font-weight:700;color:var(--accent2)">✓ اخترت: <span id="regSelectedLabel"></span></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:13px">
+        <button class="btn btn-ghost" onclick="backToStep1()" style="flex:1">← رجوع</button>
+        <button class="btn btn-success" onclick="submitRegistration()" style="flex:2">✅ تأكيد التسجيل</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Upload receipt (after registration approved) -->
+    <div class="card" id="regUpload" style="display:none">
+      <div class="card-title">🧾 رفع إيصال التحويل</div>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:12px">بعد تحويل مبلغ الجمعية، ارفع إيصال التحويل هنا</p>
+      <div class="field"><label>صورة الإيصال *</label>
+        <input type="file" id="receiptFile" accept="image/*" onchange="previewReceipt()" style="background:transparent;border:1.5px dashed rgba(79,138,255,.3);padding:10px">
+      </div>
+      <img id="receiptPreview" style="display:none;max-width:100%;border-radius:10px;margin:8px 0;border:1.5px solid var(--border)">
+      <div class="field"><label>ملاحظة (اختياري)</label><input type="text" id="receiptNote" placeholder="مثال: تحويل بنكي الساعة 10 صباحاً"></div>
+      <div class="field"><label>اسمك (للتعريف)</label><input type="text" id="receiptMemberName" placeholder="أدخل اسمك"></div>
+      <button class="btn btn-purple" onclick="submitReceiptPublic()">📤 رفع الإيصال للمدير</button>
+    </div>
+
+    <!-- Success -->
+    <div class="card" id="regSuccess" style="display:none;text-align:center">
+      <div style="font-size:50px;margin-bottom:12px">🎉</div>
+      <div style="font-size:19px;font-weight:900;color:var(--accent2);margin-bottom:8px">تم التسجيل!</div>
+      <div id="regSuccessMsg" style="color:var(--muted);font-size:13px;line-height:1.8;margin-bottom:16px"></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button class="btn btn-purple" onclick="showReceiptUpload()">📤 رفع إيصال التحويل</button>
+        <button class="btn btn-ghost" onclick="showScreen('screenPublic')" style="width:100%">👁 عرض الجدول</button>
+      </div>
+    </div>
+
+    <div id="regLoading" style="display:none;text-align:center;padding:26px;color:var(--muted)">
+      <div style="font-size:28px;margin-bottom:8px">⏳</div>جاري التحقق...
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN: LOGIN ══ -->
 <div id="screenLogin" class="screen" style="min-height:100vh">
   <div class="login-card" style="margin:60px auto 0">
-    <div class="login-icon">🔐</div>
-    <h2 style="font-size:22px;font-weight:800;margin-bottom:6px">لوحة المدير</h2>
-    <p style="color:var(--muted);font-size:13px;margin-bottom:22px">أدخل كلمة المرور</p>
-    <div class="field" style="text-align:right">
-      <label>كلمة المرور</label>
-      <input type="password" id="loginPass" onkeydown="if(event.key==='Enter')doLogin()">
-    </div>
-    <p id="loginError" style="color:var(--red);font-size:13px;margin-bottom:10px;display:none">كلمة المرور خاطئة</p>
+    <div style="width:60px;height:60px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 16px;box-shadow:0 0 32px rgba(79,138,255,.4)">🔐</div>
+    <h2 style="font-size:20px;font-weight:800;margin-bottom:5px">لوحة المدير</h2>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:18px">أدخل كلمة المرور</p>
+    <div class="field" style="text-align:right"><label>كلمة المرور</label><input type="password" id="loginPass" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <p id="loginError" style="color:var(--red);font-size:12px;margin-bottom:9px;display:none">كلمة المرور خاطئة</p>
     <button class="btn btn-primary" onclick="doLogin()">دخول</button>
-    <p style="margin-top:12px;font-size:12px;color:var(--muted)">الافتراضية: <strong style="color:var(--accent)">1234</strong></p>
-    <button class="btn btn-ghost btn-sm" onclick="showScreen('screenPublic')" style="margin-top:10px;width:100%">← العودة</button>
+    <p style="margin-top:10px;font-size:11px;color:var(--muted)">الافتراضية: <strong style="color:var(--accent)">1234</strong></p>
+    <button class="btn btn-ghost btn-sm" onclick="showScreen('screenJameiaList')" style="margin-top:9px;width:100%">← الرئيسية</button>
   </div>
 </div>
 
-<!-- ════════════════════════════════════
-     ADMIN
-     ════════════════════════════════════ -->
+<!-- ══ SCREEN: ADMIN ══ -->
 <div id="screenAdmin" class="screen">
   <div class="topbar">
-    <div class="topbar-title">🏦 <span id="topbarName">جمعيتنا</span> <span class="sync-dot" id="syncDot"></span></div>
+    <div class="topbar-title">
+      <span class="sync-dot" id="syncDot"></span>
+      🏦 <span id="topbarName" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:120px">جمعية</span>
+    </div>
     <div class="topbar-actions">
-      <button class="btn btn-ghost btn-sm" onclick="syncFromCloud();showToast('جاري التحديث...')">🔄 تحديث</button>
-      <button class="btn btn-ghost btn-sm" onclick="showScreen('screenPublic')">👁 عام</button>
-      <button class="btn btn-ghost btn-sm" onclick="doLogout()">خروج 🚪</button>
+      <select id="jameiaSelector" onchange="switchJameia(this.value)" style="width:auto;padding:6px 10px;font-size:12px;border-radius:8px;max-width:130px"></select>
+      <button class="btn btn-success btn-sm" onclick="openAddJameiaModal()">➕</button>
+      <button class="btn btn-ghost btn-sm" onclick="adminRefresh()">🔄</button>
+      <button class="btn btn-ghost btn-sm" onclick="showScreen('screenPublic')">👁</button>
+      <button class="btn btn-ghost btn-sm" onclick="doLogout()">🚪</button>
     </div>
   </div>
   <div class="main">
     <div class="tabs">
       <button class="tab active" onclick="switchTab('dashboard')">📊 الرئيسية</button>
-      <button class="tab" onclick="switchTab('members')">👥 الأعضاء <span id="pendingBadge" style="display:none;background:var(--gold);color:#000;border-radius:99px;padding:1px 7px;font-size:11px;margin-right:3px"></span></button>
+      <button class="tab" onclick="switchTab('members')" id="tabMembers">👥 الأعضاء</button>
+      <button class="tab" onclick="switchTab('receipts')">🧾 الإيصالات</button>
       <button class="tab" onclick="switchTab('schedule')">📅 الجدول</button>
       <button class="tab" onclick="switchTab('history')">📋 السجل</button>
       <button class="tab" onclick="switchTab('setup')">⚙️ الإعداد</button>
@@ -316,66 +335,50 @@ select option{background:#0d1b33}
     <!-- DASHBOARD -->
     <div class="tab-content active" id="tab-dashboard">
       <div class="stats-grid">
-        <div class="stat-card"><div class="stat-num" id="st-members" style="color:var(--accent)">0</div><div class="stat-label">أعضاء مقبولون</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-members" style="color:var(--accent)">0</div><div class="stat-label">الأعضاء</div></div>
         <div class="stat-card"><div class="stat-num" id="st-pending" style="color:var(--gold)">0</div><div class="stat-label">طلبات معلقة</div></div>
         <div class="stat-card"><div class="stat-num" id="st-paid" style="color:var(--green)">0</div><div class="stat-label">دفعوا الشهر</div></div>
         <div class="stat-card"><div class="stat-num" id="st-history" style="color:var(--muted)">0</div><div class="stat-label">أشهر مكتملة</div></div>
       </div>
       <div class="month-hero">
         <div class="hero-label">الشهر الحالي</div>
-        <div style="font-size:17px;color:var(--accent);font-weight:700;margin-bottom:10px" id="heroMonthName">—</div>
+        <div style="font-size:15px;color:var(--accent);font-weight:700;margin-bottom:7px" id="heroMonthName">—</div>
         <div class="hero-label">مستلم هذا الشهر</div>
         <div class="hero-receiver" id="heroReceiver">لم يتم التحديد</div>
-        <div id="heroIban" style="font-size:13px;color:var(--accent2);margin-top:5px;font-family:monospace"></div>
-        <div style="font-size:14px;color:var(--muted);margin-top:6px" id="heroAmount"></div>
+        <div id="heroIban" style="font-size:11px;color:var(--accent2);margin-top:4px;font-family:monospace"></div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px" id="heroAmount"></div>
         <div class="progress-bar-wrap">
-          <div class="progress-bar-label"><span>تقدم الدفعات</span><span id="progressLabel">0 / 0</span></div>
+          <div class="progress-bar-label"><span>تقدم الدفعات</span><span id="progressLabel">0/0</span></div>
           <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
         </div>
       </div>
-
-      <!-- Registration link box -->
       <div class="card">
         <div class="card-title">🔗 رابط التسجيل للأعضاء</div>
-        <p style="color:var(--muted);font-size:13px;margin-bottom:10px">أرسل هذا الرابط للأعضاء لكي يسجلوا بياناتهم ويحجزوا شهرهم</p>
-        <div class="link-box" onclick="copyRegLink()">
-          <span id="regLinkDisplay">—</span>
-          <button class="btn btn-ghost btn-sm">📋 نسخ</button>
-        </div>
-        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn btn-wa btn-sm" onclick="shareRegLink()">📤 مشاركة واتساب</button>
-        </div>
-      </div>
-
-      <div class="card" id="unpaidCard" style="display:none">
-        <div class="card-title">⚠️ لم يدفعوا بعد</div>
-        <div id="unpaidList"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">⚡ إجراءات سريعة</div>
-        <div style="display:flex;flex-wrap:wrap;gap:10px">
-          <button class="btn btn-success btn-sm" onclick="switchTab('members');setTimeout(openAddMemberModal,100)">➕ عضو يدوي</button>
+        <p style="color:var(--muted);font-size:12px;margin-bottom:8px">أرسل هذا الرابط للأعضاء لكي يسجلوا ويحجزوا شهرهم</p>
+        <div class="link-box" onclick="copyRegLink()"><span id="regLinkDisplay">—</span><button class="btn btn-ghost btn-sm">📋 نسخ</button></div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">
+          <button class="btn btn-wa btn-sm" onclick="shareRegLink()">📤 واتساب</button>
           <button class="btn btn-gold btn-sm" onclick="openCompleteModal()">✅ إنهاء الشهر</button>
           <button class="btn btn-ghost btn-sm" onclick="openNewMonthModal()">📅 شهر جديد</button>
           <button class="btn btn-wa btn-sm" onclick="shareWhatsApp()">📤 مشاركة الجدول</button>
         </div>
       </div>
+      <div class="card" id="unpaidCard" style="display:none">
+        <div class="card-title">⚠️ لم يدفعوا بعد</div>
+        <div id="unpaidList"></div>
+      </div>
     </div>
 
     <!-- MEMBERS -->
     <div class="tab-content" id="tab-members">
-      <!-- Pending requests -->
       <div id="pendingSection" style="display:none">
-        <div class="section-header">
-          <h3>⏳ طلبات تسجيل جديدة</h3>
-        </div>
+        <div class="section-header"><h3>⏳ طلبات تسجيل جديدة</h3></div>
         <div id="pendingList"></div>
-        <hr class="divider" style="margin:16px 0">
+        <hr class="divider">
       </div>
-      <!-- Approved members -->
       <div class="section-header">
         <h3>👥 الأعضاء المقبولون</h3>
-        <div style="display:flex;gap:8px">
+        <div style="display:flex;gap:5px;flex-wrap:wrap">
           <button class="btn btn-ghost btn-sm" onclick="openSwapModal()">🔄 تبديل</button>
           <button class="btn btn-success btn-sm" onclick="openAddMemberModal()">➕ يدوي</button>
         </div>
@@ -383,11 +386,17 @@ select option{background:#0d1b33}
       <div id="membersList"><div class="empty"><div class="empty-icon">👤</div>لا يوجد أعضاء</div></div>
     </div>
 
+    <!-- RECEIPTS -->
+    <div class="tab-content" id="tab-receipts">
+      <div class="section-header"><h3>🧾 إيصالات التحويل</h3></div>
+      <div id="receiptsList"><div class="empty"><div class="empty-icon">🧾</div>لا توجد إيصالات</div></div>
+    </div>
+
     <!-- SCHEDULE -->
     <div class="tab-content" id="tab-schedule">
       <div class="card">
         <div class="card-title">📅 الجدول السنوي</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:11px">
           <button class="btn btn-wa btn-sm" onclick="shareWhatsApp()">📤 واتساب</button>
           <button class="btn btn-ghost btn-sm" onclick="copySchedule()">📋 نسخ</button>
         </div>
@@ -403,7 +412,7 @@ select option{background:#0d1b33}
     <!-- HISTORY -->
     <div class="tab-content" id="tab-history">
       <div class="section-header">
-        <h3>📋 سجل الأشهر المكتملة</h3>
+        <h3>📋 سجل الأشهر</h3>
         <button class="btn btn-danger btn-sm" onclick="clearHistory()">🗑 مسح</button>
       </div>
       <div id="historyList"><div class="empty"><div class="empty-icon">📋</div>لا يوجد سجل</div></div>
@@ -412,50 +421,69 @@ select option{background:#0d1b33}
     <!-- SETUP -->
     <div class="tab-content" id="tab-setup">
       <div class="card">
-        <div class="card-title">☁️ إعداد قاعدة البيانات السحابية</div>
-        <p style="color:var(--muted);font-size:13px;line-height:1.8;margin-bottom:16px">
-          لمزامنة البيانات بين المدير والأعضاء، تحتاج حساباً مجانياً على <strong style="color:var(--accent)">JSONBin.io</strong>
-        </p>
-        <div class="setup-step"><div class="step-num">1</div><div>اذهب إلى <strong style="color:var(--accent)">jsonbin.io</strong> وسجّل مجاناً</div></div>
-        <div class="setup-step"><div class="step-num">2</div><div>من القائمة اختر <strong>API Keys</strong> ثم انسخ مفتاح الـ Master Key</div></div>
-        <div class="setup-step"><div class="step-num">3</div><div>الصق المفتاح أدناه واضغط <strong>حفظ وإنشاء</strong></div></div>
-        <div class="field" style="margin-top:14px"><label>Master API Key من JSONBin.io</label><input type="text" id="cfgApiKey" placeholder="$2b$10$..."></div>
-        <button class="btn btn-success" onclick="setupCloud()" style="max-width:200px">☁️ حفظ وإنشاء البيانات</button>
-        <div id="cloudStatus" style="margin-top:12px;font-size:13px;color:var(--muted)"></div>
-        <hr class="divider">
-        <div id="binIdRow" style="display:none">
-          <div class="field"><label>Bin ID (محفوظ تلقائياً)</label><input type="text" id="cfgBinId" readonly style="opacity:.7;font-family:monospace"></div>
+        <div class="card-title">☁️ إعداد السحابة</div>
+        <p style="color:var(--muted);font-size:12px;line-height:1.7;margin-bottom:12px">أنشئ حساباً مجانياً على <strong style="color:var(--accent)">jsonbin.io</strong> ثم أدخل الـ Master Key</p>
+        <div class="field"><label>Master API Key</label><input type="text" id="cfgApiKey" placeholder="$2b$10$..."></div>
+        <button class="btn btn-success" onclick="setupCloud()" style="max-width:180px">☁️ حفظ وإنشاء</button>
+        <div id="cloudStatus" style="margin-top:9px;font-size:12px;color:var(--muted)"></div>
+        <div id="binIdRow" style="display:none;margin-top:9px">
+          <div class="field"><label>Bin ID</label><input type="text" id="cfgBinId" readonly style="opacity:.7;font-family:monospace;font-size:12px"></div>
         </div>
-      </div>
-      <div class="card">
-        <div class="card-title">⚙️ إعدادات الجمعية</div>
+        <hr class="divider">
+        <div class="card-title" style="margin-bottom:11px">⚙️ إعدادات الجمعية الحالية</div>
         <div class="settings-grid">
           <div class="field"><label>اسم الجمعية</label><input type="text" id="cfgName"></div>
           <div class="field"><label>مبلغ الاشتراك (د.إ)</label><input type="number" id="cfgAmount"></div>
         </div>
-        <div class="field"><label>الشهر الحالي</label><input type="text" id="cfgMonthName" placeholder="مثال: مايو 2025"></div>
+        <div class="field"><label>الشهر الحالي</label><input type="text" id="cfgMonthName"></div>
         <div class="field"><label>ملاحظة</label><input type="text" id="cfgMonthNote"></div>
-        <button class="btn btn-primary" onclick="saveSettings()" style="max-width:180px;margin-top:6px">💾 حفظ</button>
+        <button class="btn btn-primary" onclick="saveSettings()" style="max-width:150px;margin-top:5px">💾 حفظ</button>
         <hr class="divider">
         <div class="field"><label>تغيير كلمة المرور</label><input type="password" id="cfgPass" placeholder="كلمة مرور جديدة"></div>
         <button class="btn btn-ghost btn-sm" onclick="changePass()">تغيير</button>
         <hr class="divider">
-        <button class="btn btn-danger btn-sm" onclick="resetAll()">⚠️ إعادة ضبط كامل</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-danger btn-sm" onclick="deleteCurrentJameia()">🗑 حذف هذه الجمعية</button>
+          <button class="btn btn-danger btn-sm" onclick="resetAll()">⚠️ إعادة ضبط كامل</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL: Add Member manually -->
+<!-- ══ MODALS ══ -->
+<div class="modal-overlay" id="modalAddJameia">
+  <div class="modal">
+    <div class="modal-title">➕ إنشاء جمعية جديدة</div>
+    <div class="field"><label>اسم الجمعية *</label><input type="text" id="newJameiaName" placeholder="مثال: جمعية الدوام"></div>
+    <div class="field"><label>مبلغ الاشتراك (د.إ) *</label><input type="number" id="newJameiaAmount" placeholder="500"></div>
+    <div class="field"><label>الأيقونة</label>
+      <div style="display:flex;gap:7px;flex-wrap:wrap" id="iconPicker">
+        <span class="icon-opt sel" data-icon="🏦" data-color="#4f8aff" onclick="pickIcon(this)" style="font-size:22px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid var(--accent)">🏦</span>
+        <span class="icon-opt" data-icon="👨‍👩‍👧" data-color="#0ea36a" onclick="pickIcon(this)" style="font-size:22px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid var(--border)">👨‍👩‍👧</span>
+        <span class="icon-opt" data-icon="🏢" data-color="#c4870a" onclick="pickIcon(this)" style="font-size:22px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid var(--border)">🏢</span>
+        <span class="icon-opt" data-icon="🤝" data-color="#7c3aed" onclick="pickIcon(this)" style="font-size:22px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid var(--border)">🤝</span>
+        <span class="icon-opt" data-icon="💼" data-color="#cc3347" onclick="pickIcon(this)" style="font-size:22px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid var(--border)">💼</span>
+        <span class="icon-opt" data-icon="🌟" data-color="#ffc84a" onclick="pickIcon(this)" style="font-size:22px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid var(--border)">🌟</span>
+      </div>
+      <input type="hidden" id="newJameiaIcon" value="🏦">
+      <input type="hidden" id="newJameiaColor" value="#4f8aff">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modalAddJameia')">إلغاء</button>
+      <button class="btn btn-success" onclick="createJameia()">إنشاء</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modalAddMember">
   <div class="modal">
     <div class="modal-title">➕ إضافة عضو يدوياً</div>
     <div class="field"><label>الاسم *</label><input type="text" id="mName"></div>
     <div class="field"><label>الهاتف</label><input type="text" id="mPhone"></div>
     <div class="field"><label>الآيبان</label><input type="text" id="mIban" placeholder="AE..."></div>
-    <div class="field">
-      <label>شهر الاستحقاق</label>
-      <div style="display:flex;gap:8px"><select id="mDueMonth" style="flex:2"></select><select id="mDueYear" style="flex:1"></select></div>
+    <div class="field"><label>شهر الاستحقاق</label>
+      <div style="display:flex;gap:7px"><select id="mDueMonth" style="flex:2"></select><select id="mDueYear" style="flex:1"></select></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('modalAddMember')">إلغاء</button>
@@ -464,7 +492,6 @@ select option{background:#0d1b33}
   </div>
 </div>
 
-<!-- MODAL: Edit Member -->
 <div class="modal-overlay" id="modalEditMember">
   <div class="modal">
     <div class="modal-title">✏️ تعديل العضو</div>
@@ -472,9 +499,8 @@ select option{background:#0d1b33}
     <div class="field"><label>الاسم</label><input type="text" id="editName"></div>
     <div class="field"><label>الهاتف</label><input type="text" id="editPhone"></div>
     <div class="field"><label>الآيبان</label><input type="text" id="editIban"></div>
-    <div class="field">
-      <label>شهر الاستحقاق</label>
-      <div style="display:flex;gap:8px"><select id="editDueMonth" style="flex:2"></select><select id="editDueYear" style="flex:1"></select></div>
+    <div class="field"><label>شهر الاستحقاق</label>
+      <div style="display:flex;gap:7px"><select id="editDueMonth" style="flex:2"></select><select id="editDueYear" style="flex:1"></select></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('modalEditMember')">إلغاء</button>
@@ -483,13 +509,12 @@ select option{background:#0d1b33}
   </div>
 </div>
 
-<!-- MODAL: Swap -->
 <div class="modal-overlay" id="modalSwap">
   <div class="modal">
     <div class="modal-title">🔄 تبديل الأشهر</div>
-    <p style="color:var(--muted);font-size:14px;margin-bottom:14px">اختر عضوين لتبديل شهر استحقاقهما</p>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:11px">اختر عضوين لتبديل شهر استحقاقهما</p>
     <div id="swapList"></div>
-    <p id="swapStatus" style="margin-top:10px;font-size:13px;color:var(--gold);font-weight:700;min-height:20px"></p>
+    <p id="swapStatus" style="margin-top:8px;font-size:12px;color:var(--gold);font-weight:700;min-height:16px"></p>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('modalSwap')">إلغاء</button>
       <button class="btn btn-gold" onclick="confirmSwap()">🔄 تأكيد</button>
@@ -497,13 +522,11 @@ select option{background:#0d1b33}
   </div>
 </div>
 
-<!-- MODAL: Complete Month -->
 <div class="modal-overlay" id="modalComplete">
   <div class="modal">
     <div class="modal-title">✅ إنهاء الشهر</div>
-    <div class="field">
-      <label>الشهر</label>
-      <div style="display:flex;gap:8px;margin-bottom:8px">
+    <div class="field"><label>الشهر</label>
+      <div style="display:flex;gap:7px;margin-bottom:7px">
         <select id="completeMonthSel" style="flex:2" onchange="syncCompleteMonth()"></select>
         <select id="completeYearSel" style="flex:1" onchange="syncCompleteMonth()"></select>
       </div>
@@ -518,13 +541,11 @@ select option{background:#0d1b33}
   </div>
 </div>
 
-<!-- MODAL: New Month -->
 <div class="modal-overlay" id="modalNewMonth">
   <div class="modal">
     <div class="modal-title">📅 فتح شهر جديد</div>
-    <div class="field">
-      <label>الشهر الجديد</label>
-      <div style="display:flex;gap:8px;margin-bottom:8px">
+    <div class="field"><label>الشهر الجديد</label>
+      <div style="display:flex;gap:7px;margin-bottom:7px">
         <select id="newMonthSel" style="flex:2" onchange="syncNewMonth()"></select>
         <select id="newYearSel" style="flex:1" onchange="syncNewMonth()"></select>
       </div>
@@ -537,228 +558,324 @@ select option{background:#0d1b33}
   </div>
 </div>
 
+<!-- Receipt full view -->
+<div class="modal-overlay" id="modalReceiptView">
+  <div class="modal" style="max-width:440px;text-align:center">
+    <div class="modal-title" id="receiptViewTitle">🧾 إيصال التحويل</div>
+    <div id="receiptViewContent"></div>
+    <div class="modal-footer" style="justify-content:center">
+      <button class="btn btn-ghost" onclick="closeModal('modalReceiptView')">إغلاق</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script>
-// ══════════ CONSTANTS ══════════
-var SK = 'jam3eya_v7';
-var MONTHS = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+// ══ CONSTANTS ══
+var SK='jam3eya_v9';
+var MONTHS=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
 
-// ══════════ STATE ══════════
-var state = {
-  groupName:'جمعيتنا', monthlyAmount:500,
-  monthName:'', monthNote:'',
-  members:[], pendingMembers:[],
-  currentReceiverId:'',
-  paidMembers:{}, monthCompleted:false,
-  history:[], adminPass:'1234', completedSlots:[],
-  apiKey:'', binId:'',
-  slots:[] // {monthNum, year, memberId} — booked slots
-};
+// ══ STATE ══
+// rootState: { adminPass, apiKey, binId, jameias[] }
+// jameia: { id, name, amount, icon, color, monthName, monthNote,
+//   members[], pendingMembers[], currentReceiverId, paidMembers{},
+//   completedSlots[], history[], receipts:{memberId:[{data,note,date,memberName}]} }
+var rootState={adminPass:'1234',apiKey:'',binId:'',jameias:[]};
+var currentJId=null;
 
-// ── slots helpers ──
-function isSlotBooked(mn,y){
-  return state.members.some(function(m){return m.dueMonthNum==mn&&m.dueYear==y;})
-      || state.pendingMembers.some(function(m){return m.dueMonthNum==mn&&m.dueYear==y;});
-}
-function getSlotOwner(mn,y){
-  var m=state.members.find(function(m){return m.dueMonthNum==mn&&m.dueYear==y;});
-  if(m)return{name:m.name,pending:false};
-  m=state.pendingMembers.find(function(m){return m.dueMonthNum==mn&&m.dueYear==y;});
-  if(m)return{name:m.name,pending:true};
-  return null;
+function J(){return rootState.jameias.find(function(j){return j.id===currentJId;})||null;}
+
+function makeJ(name,amount,icon,color){
+  return{id:'j'+Date.now(),name:name,amount:parseFloat(amount)||500,
+    icon:icon||'🏦',color:color||'#4f8aff',
+    monthName:'',monthNote:'',members:[],pendingMembers:[],
+    currentReceiverId:'',paidMembers:{},completedSlots:[],history:[],receipts:{}};
 }
 
-// ══════════ PERSIST ══════════
-function save(){ localStorage.setItem(SK, JSON.stringify(state)); }
+// ══ PERSIST ══
+function save(){localStorage.setItem(SK,JSON.stringify(rootState));}
 function load(){
-  try{var d=localStorage.getItem(SK);if(d)state=Object.assign({},state,JSON.parse(d));}catch(e){}
-  if(!state.completedSlots)state.completedSlots=[];
-  if(!state.pendingMembers)state.pendingMembers=[];
+  try{var d=localStorage.getItem(SK);if(d)rootState=Object.assign({},rootState,JSON.parse(d));}catch(e){}
+  if(!rootState.jameias.length) rootState.jameias.push(makeJ('جمعيتي الأولى',500,'🏦','#4f8aff'));
+  rootState.jameias.forEach(function(j){
+    if(!j.pendingMembers)j.pendingMembers=[];
+    if(!j.completedSlots)j.completedSlots=[];
+    if(!j.receipts)j.receipts={};
+    if(!j.paidMembers)j.paidMembers={};
+  });
+  if(!currentJId) currentJId=rootState.jameias[0].id;
 }
 
-// ══════════ CLOUD (JSONBin) ══════════
-function cloudHeaders(){
-  return {'Content-Type':'application/json','X-Master-Key':state.apiKey,'X-Bin-Private':'false'};
-}
-function setSyncStatus(s){
-  var d=document.getElementById('syncDot');
-  if(!d)return;
-  d.className='sync-dot'+(s==='ok'?'':s==='sync'?' syncing':' error');
-}
+// ══ CLOUD ══
+function ch(){return{'Content-Type':'application/json','X-Master-Key':rootState.apiKey,'X-Bin-Private':'false'};}
+function setSS(s){var d=document.getElementById('syncDot');if(!d)return;d.className='sync-dot'+(s==='ok'?'':s==='sync'?' syncing':' error');}
 
 async function setupCloud(){
   var key=document.getElementById('cfgApiKey').value.trim();
   if(!key){showToast('أدخل الـ API Key',true);return;}
-  state.apiKey=key;
-  var status=document.getElementById('cloudStatus');
-  status.textContent='⏳ جاري إنشاء قاعدة البيانات...';
+  rootState.apiKey=key;
+  var st=document.getElementById('cloudStatus');st.textContent='⏳ جاري الإنشاء...';
   try{
-    var payload={groupName:state.groupName,monthlyAmount:state.monthlyAmount,monthName:state.monthName,
-      members:state.members,pendingMembers:state.pendingMembers,currentReceiverId:state.currentReceiverId,
-      paidMembers:state.paidMembers,completedSlots:state.completedSlots,history:state.history};
-    var res=await fetch('https://api.jsonbin.io/v3/b',{
-      method:'POST',headers:cloudHeaders(),
-      body:JSON.stringify(payload)
-    });
+    var res=await fetch('https://api.jsonbin.io/v3/b',{method:'POST',headers:ch(),body:JSON.stringify(rootState)});
     var data=await res.json();
-    state.binId=data.metadata.id;
-    save();
-    document.getElementById('cfgBinId').value=state.binId;
+    rootState.binId=data.metadata.id;save();
+    document.getElementById('cfgBinId').value=rootState.binId;
     document.getElementById('binIdRow').style.display='block';
-    status.innerHTML='✅ تم الإنشاء! Bin ID: <strong style="color:var(--accent2)">'+state.binId+'</strong>';
-    setSyncStatus('ok');
-    showToast('تم إعداد السحابة ✓');
-  }catch(e){
-    status.textContent='❌ فشل الاتصال. تأكد من صحة الـ API Key';
-    setSyncStatus('error');
-  }
+    st.innerHTML='✅ تم! Bin ID: <strong style="color:var(--accent2)">'+rootState.binId+'</strong>';
+    setSS('ok');showToast('تم إعداد السحابة ✓');
+  }catch(e){st.textContent='❌ فشل. تأكد من الـ API Key';setSS('error');}
 }
-
-async function syncToCloud(){
-  if(!state.apiKey||!state.binId)return;
-  setSyncStatus('sync');
+async function syncUp(){
+  if(!rootState.apiKey||!rootState.binId)return;
+  setSS('sync');
+  try{await fetch('https://api.jsonbin.io/v3/b/'+rootState.binId,{method:'PUT',headers:ch(),body:JSON.stringify(rootState)});setSS('ok');}
+  catch(e){setSS('error');}
+}
+async function syncDown(){
+  if(!rootState.apiKey||!rootState.binId)return;
+  setSS('sync');
   try{
-    var payload={groupName:state.groupName,monthlyAmount:state.monthlyAmount,monthName:state.monthName,
-      members:state.members,pendingMembers:state.pendingMembers,currentReceiverId:state.currentReceiverId,
-      paidMembers:state.paidMembers,completedSlots:state.completedSlots,history:state.history};
-    await fetch('https://api.jsonbin.io/v3/b/'+state.binId,{
-      method:'PUT',headers:cloudHeaders(),body:JSON.stringify(payload)
+    var res=await fetch('https://api.jsonbin.io/v3/b/'+rootState.binId+'/latest',{headers:{'X-Master-Key':rootState.apiKey}});
+    var data=await res.json();var remote=data.record;
+    var keep={apiKey:rootState.apiKey,binId:rootState.binId,adminPass:rootState.adminPass};
+    rootState=Object.assign({},rootState,remote,keep);
+    rootState.jameias.forEach(function(j){
+      if(!j.pendingMembers)j.pendingMembers=[];
+      if(!j.completedSlots)j.completedSlots=[];
+      if(!j.receipts)j.receipts={};
+      if(!j.paidMembers)j.paidMembers={};
     });
-    setSyncStatus('ok');
-  }catch(e){setSyncStatus('error');}
+    save();setSS('ok');
+  }catch(e){setSS('error');}
 }
-
-async function syncFromCloud(){
-  if(!state.apiKey||!state.binId)return;
-  setSyncStatus('sync');
+async function publicSync(){
+  if(!rootState.binId)return;
   try{
-    var res=await fetch('https://api.jsonbin.io/v3/b/'+state.binId+'/latest',{headers:{'X-Master-Key':state.apiKey}});
-    var data=await res.json();
-    var remote=data.record;
-    // merge remote into state (keep local apiKey/binId/adminPass)
-    var keep={apiKey:state.apiKey,binId:state.binId,adminPass:state.adminPass};
-    state=Object.assign({},state,remote,keep);
-    if(!state.pendingMembers)state.pendingMembers=[];
-    save();
-    renderAll();
-    renderSchedule();
-    renderHistory();
-    setSyncStatus('ok');
-    updatePendingBadge();
-  }catch(e){setSyncStatus('error');}
-}
-
-// Public read (no key needed if bin is public)
-async function publicSyncFromCloud(){
-  if(!state.binId)return;
-  try{
-    var res=await fetch('https://api.jsonbin.io/v3/b/'+state.binId+'/latest',{
-      headers:state.apiKey?{'X-Master-Key':state.apiKey}:{}
+    var h=rootState.apiKey?{'X-Master-Key':rootState.apiKey}:{};
+    var res=await fetch('https://api.jsonbin.io/v3/b/'+rootState.binId+'/latest',{headers:h});
+    var data=await res.json();var remote=data.record;
+    var keep={apiKey:rootState.apiKey,binId:rootState.binId,adminPass:rootState.adminPass};
+    rootState=Object.assign({},rootState,remote,keep);
+    rootState.jameias.forEach(function(j){
+      if(!j.pendingMembers)j.pendingMembers=[];
+      if(!j.completedSlots)j.completedSlots=[];
+      if(!j.receipts)j.receipts={};
+      if(!j.paidMembers)j.paidMembers={};
     });
-    var data=await res.json();
-    var remote=data.record;
-    var keep={apiKey:state.apiKey,binId:state.binId,adminPass:state.adminPass};
-    state=Object.assign({},state,remote,keep);
-    if(!state.pendingMembers)state.pendingMembers=[];
     save();
   }catch(e){}
 }
 
-// ══════════ SCREENS ══════════
+// ══ SCREENS ══
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');s.style.display='none';});
   var el=document.getElementById(id);
-  if(id==='screenLogin'){
-    el.style.cssText='display:flex;align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(ellipse at 60% 30%,#1a2f5a 0%,#070d1a 70%)';
-  } else { el.style.display='block'; }
+  if(id==='screenLogin') el.style.cssText='display:flex;align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(ellipse at 60% 30%,#1a2f5a 0%,#070d1a 70%)';
+  else el.style.display='block';
   el.classList.add('active');
-  if(id==='screenPublic'){publicSyncFromCloud().then(renderPublic);renderPublic();}
-  if(id==='screenRegister'){renderPublic();}
+  if(id==='screenPublic'){publicSync().then(renderPublic);renderPublic();}
+  if(id==='screenJameiaList'){publicSync().then(renderJList);renderJList();}
 }
 
-// ══════════ AUTH ══════════
+// ══ AUTH ══
 function doLogin(){
   load();
-  var pass=document.getElementById('loginPass').value;
-  if(pass!==state.adminPass){document.getElementById('loginError').style.display='block';return;}
+  if(document.getElementById('loginPass').value!==rootState.adminPass){document.getElementById('loginError').style.display='block';return;}
   document.getElementById('loginError').style.display='none';
-  document.getElementById('topbarName').textContent=state.groupName;
-  document.getElementById('regLinkDisplay').textContent=window.location.href.split('?')[0];
-  if(state.binId) document.getElementById('cfgBinId').value=state.binId;
-  if(state.binId) document.getElementById('binIdRow').style.display='block';
-  if(state.apiKey) document.getElementById('cfgApiKey').value=state.apiKey;
-  fillSettings();
-  syncFromCloud().then(function(){renderAll();renderSchedule();renderHistory();updatePendingBadge();});
+  buildJSel();fillSetup();
+  syncDown().then(function(){renderAll();renderSchedule();renderHistory();renderReceipts();updateBadge();});
   showScreen('screenAdmin');
 }
-function doLogout(){document.getElementById('loginPass').value='';showScreen('screenPublic');}
+function doLogout(){document.getElementById('loginPass').value='';showScreen('screenJameiaList');}
+function adminRefresh(){syncDown().then(function(){renderAll();renderSchedule();renderHistory();renderReceipts();updateBadge();showToast('تم التحديث ✓');});}
 
-// ══════════ PENDING BADGE ══════════
-function updatePendingBadge(){
-  var cnt=state.pendingMembers.length;
-  var b=document.getElementById('pendingBadge');
-  if(cnt>0){b.style.display='inline';b.textContent=cnt;}
-  else{b.style.display='none';}
-  document.getElementById('st-pending').textContent=cnt;
+// ══ MULTI-JAMEIA ══
+function buildJSel(){
+  var sel=document.getElementById('jameiaSelector');
+  sel.innerHTML=rootState.jameias.map(function(j){
+    return '<option value="'+j.id+'"'+(j.id===currentJId?' selected':'')+'>'+j.icon+' '+j.name+'</option>';
+  }).join('');
+}
+function switchJameia(id){
+  currentJId=id;var j=J();if(!j)return;
+  document.getElementById('topbarName').textContent=j.name;
+  fillSetup();renderAll();renderSchedule();renderHistory();renderReceipts();updateBadge();
+  showToast('انتقلت إلى: '+j.name);
+}
+function renderJList(){
+  var box=document.getElementById('jameiaListPublic');
+  if(!rootState.jameias||!rootState.jameias.length){box.innerHTML='<div class="empty"><div class="empty-icon">🔍</div>لا توجد جمعيات</div>';return;}
+  box.innerHTML=rootState.jameias.map(function(j){
+    var mc=j.members?j.members.length:0;
+    return '<div class="jameia-item" onclick="openJameia(\''+j.id+'\')">'
+      +'<div class="jameia-icon" style="background:linear-gradient(135deg,'+j.color+'33,'+j.color+'11);font-size:24px">'+j.icon+'</div>'
+      +'<div class="jameia-info"><div class="jameia-name">'+esc(j.name)+'</div>'
+      +'<div class="jameia-meta">💰 '+j.amount+' د.إ &nbsp;·&nbsp; 👥 '+mc+' عضو'+(j.monthName?' &nbsp;·&nbsp; 📅 '+j.monthName:'')+'</div></div>'
+      +'<div style="color:var(--accent);font-size:18px">←</div></div>';
+  }).join('');
+}
+function openJameia(id){currentJId=id;renderPublic();showScreen('screenPublic');}
+
+// icon picker
+function pickIcon(el){
+  document.querySelectorAll('.icon-opt').forEach(function(e){e.style.border='2px solid var(--border)';});
+  el.style.border='2px solid var(--accent)';
+  document.getElementById('newJameiaIcon').value=el.dataset.icon;
+  document.getElementById('newJameiaColor').value=el.dataset.color;
+}
+function openAddJameiaModal(){
+  ['newJameiaName','newJameiaAmount'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('newJameiaIcon').value='🏦';
+  document.getElementById('newJameiaColor').value='#4f8aff';
+  openModal('modalAddJameia');
+}
+function createJameia(){
+  var name=document.getElementById('newJameiaName').value.trim();
+  var amount=document.getElementById('newJameiaAmount').value;
+  if(!name||!amount){showToast('أدخل الاسم والمبلغ',true);return;}
+  var j=makeJ(name,amount,document.getElementById('newJameiaIcon').value,document.getElementById('newJameiaColor').value);
+  rootState.jameias.push(j);currentJId=j.id;
+  save();syncUp();buildJSel();renderAll();renderSchedule();renderHistory();
+  closeModal('modalAddJameia');showToast('تم إنشاء '+name+' ✓');
+}
+function deleteCurrentJameia(){
+  var j=J();if(!j)return;
+  if(rootState.jameias.length<=1){showToast('لا يمكن حذف آخر جمعية',true);return;}
+  if(!confirm('حذف جمعية '+j.name+'؟ ستُحذف كل بياناتها!'))return;
+  rootState.jameias=rootState.jameias.filter(function(x){return x.id!==currentJId;});
+  currentJId=rootState.jameias[0].id;
+  save();syncUp();buildJSel();renderAll();renderSchedule();renderHistory();showToast('تم الحذف');
 }
 
-// ══════════ TABS ══════════
+// ══ TABS ══
 function switchTab(name){
-  var names=['dashboard','members','schedule','history','setup'];
+  var names=['dashboard','members','receipts','schedule','history','setup'];
   document.querySelectorAll('.tab').forEach(function(t,i){t.classList.toggle('active',names[i]===name);});
   document.querySelectorAll('.tab-content').forEach(function(c){c.classList.toggle('active',c.id==='tab-'+name);});
   if(name==='schedule')renderSchedule();
   if(name==='history')renderHistory();
-  if(name==='members')renderPending();
+  if(name==='members'){renderPending();renderMembers();}
+  if(name==='receipts')renderReceipts();
 }
 
-function renderAll(){renderDashboard();renderMembers();renderPublic();}
+// ══ RENDER ALL ══
+function renderAll(){
+  var j=J();if(!j)return;
+  document.getElementById('topbarName').textContent=j.name;
+  renderDashboard();renderMembers();renderPublic();
+}
 
-// ══════════ DASHBOARD ══════════
+// ══ DASHBOARD ══
 function renderDashboard(){
-  var pc=getPaidCount(),tot=state.members.length,pct=tot?Math.round(pc/tot*100):0;
+  var j=J();if(!j)return;
+  var pc=getPaidCount(),tot=j.members.length,pct=tot?Math.round(pc/tot*100):0;
   document.getElementById('st-members').textContent=tot;
+  document.getElementById('st-pending').textContent=(j.pendingMembers||[]).length;
   document.getElementById('st-paid').textContent=pc;
-  document.getElementById('st-history').textContent=state.history.length;
-  document.getElementById('heroMonthName').textContent=state.monthName||'—';
-  var recM=state.members.find(function(x){return x.id===state.currentReceiverId;});
+  document.getElementById('st-history').textContent=j.history.length;
+  document.getElementById('heroMonthName').textContent=j.monthName||'—';
+  var recM=j.members.find(function(x){return x.id===j.currentReceiverId;});
   document.getElementById('heroReceiver').textContent=recM?recM.name:'لم يتم التحديد';
   document.getElementById('heroIban').textContent=recM&&recM.iban?'IBAN: '+recM.iban:'';
-  document.getElementById('heroAmount').textContent=recM&&tot?'سيستلم: '+(state.monthlyAmount*tot)+' د.إ':'';
-  document.getElementById('progressLabel').textContent=pc+' / '+tot;
+  document.getElementById('heroAmount').textContent=recM&&tot?'سيستلم: '+(j.amount*tot)+' د.إ':'';
+  document.getElementById('progressLabel').textContent=pc+'/'+tot;
   document.getElementById('progressFill').style.width=pct+'%';
-  var unpaid=state.members.filter(function(m){return !state.paidMembers[m.id];});
+  document.getElementById('regLinkDisplay').textContent=window.location.href.split('?')[0];
+  var unpaid=j.members.filter(function(m){return !j.paidMembers[m.id];});
   var uc=document.getElementById('unpaidCard');
   if(unpaid.length&&tot){
     uc.style.display='block';
     document.getElementById('unpaidList').innerHTML=unpaid.map(function(m){
-      return '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">'
-        +'<div><div style="font-weight:600">'+esc(m.name)+'</div>'+(m.phone?'<div style="font-size:12px;color:var(--muted)">'+esc(m.phone)+'</div>':'')+'</div>'
+      return '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">'
+        +'<div><div style="font-weight:700;font-size:13px">'+esc(m.name)+'</div>'+(m.phone?'<div style="font-size:11px;color:var(--muted)">'+esc(m.phone)+'</div>':'')+'</div>'
         +'<button class="btn btn-success btn-sm" onclick="togglePaid(\''+m.id+'\')">✓ دفع</button></div>';
     }).join('');
-  } else {uc.style.display='none';}
-  updatePendingBadge();
+  }else uc.style.display='none';
 }
 
-// ══════════ MEMBERS (approved) ══════════
+// ══ RECEIPTS TAB ══
+function renderReceipts(){
+  var j=J();if(!j)return;
+  var box=document.getElementById('receiptsList');
+  var allR=[];
+  // collect from approved members
+  j.members.forEach(function(m){
+    var recs=j.receipts[m.id]||[];
+    recs.forEach(function(r){allR.push({member:m,rec:r,memberId:m.id,idx:j.receipts[m.id].indexOf(r)});});
+  });
+  // collect from pending (no member yet)
+  var pubRecs=j.receipts['__public']||[];
+  pubRecs.forEach(function(r,i){allR.push({member:{name:r.memberName||'—',id:'__public'},rec:r,memberId:'__public',idx:i});});
+
+  if(!allR.length){box.innerHTML='<div class="empty"><div class="empty-icon">🧾</div>لا توجد إيصالات بعد</div>';return;}
+
+  box.innerHTML=allR.map(function(item){
+    var m=item.member,r=item.rec;
+    var isPaid=m.id!=='__public'&&!!j.paidMembers[m.id];
+    return '<div class="member-card" style="align-items:flex-start">'
+      +'<div style="display:flex;gap:11px;align-items:center;width:100%">'
+        +'<img src="'+r.data+'" class="receipt-thumb" onclick="viewReceiptModal(\''+item.memberId+'\','+item.idx+')" style="width:64px;height:64px">'
+        +'<div style="flex:1">'
+          +'<div style="font-weight:700;font-size:14px">'+esc(m.name)+'</div>'
+          +(r.note?'<div style="font-size:12px;color:var(--accent2);margin-top:2px">'+esc(r.note)+'</div>':'')
+          +'<div style="font-size:11px;color:var(--muted);margin-top:2px">📅 '+esc(r.date)+'</div>'
+          +'<div style="margin-top:5px">'
+            +(isPaid?'<span class="badge badge-green">✓ مدفوع</span>':'<span class="badge badge-red">⏳ لم يُقبل بعد</span>')
+          +'</div>'
+        +'</div>'
+        +'<div style="display:flex;flex-direction:column;gap:5px;flex-shrink:0">'
+          +'<button class="btn btn-ghost btn-sm" onclick="viewReceiptModal(\''+item.memberId+'\','+item.idx+')">👁 عرض</button>'
+          +(m.id!=='__public'&&!isPaid?'<button class="btn btn-success btn-sm" onclick="togglePaid(\''+m.id+'\');renderReceipts();renderDashboard()">✓ قبول</button>':'')
+          +'<button class="btn btn-danger btn-sm" onclick="deleteReceipt(\''+item.memberId+'\','+item.idx+')">🗑</button>'
+        +'</div>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+}
+
+function viewReceiptModal(memberId,idx){
+  var j=J();if(!j)return;
+  var recs=j.receipts[memberId]||[];
+  var r=recs[idx];if(!r)return;
+  document.getElementById('receiptViewTitle').textContent='🧾 إيصال — '+(memberId==='__public'?(r.memberName||'عضو'):((j.members.find(function(m){return m.id===memberId;})||{}).name||'—'));
+  document.getElementById('receiptViewContent').innerHTML=
+    '<img src="'+r.data+'" style="max-width:100%;border-radius:10px;border:1.5px solid var(--border)">'
+    +(r.note?'<div style="font-size:13px;color:var(--accent2);margin-top:8px">'+esc(r.note)+'</div>':'')
+    +'<div style="font-size:12px;color:var(--muted);margin-top:4px">'+esc(r.date)+'</div>';
+  openModal('modalReceiptView');
+}
+function deleteReceipt(memberId,idx){
+  var j=J();if(!j||!confirm('حذف الإيصال؟'))return;
+  j.receipts[memberId].splice(idx,1);
+  if(!j.receipts[memberId].length)delete j.receipts[memberId];
+  save();syncUp();renderReceipts();renderDashboard();showToast('تم الحذف');
+}
+
+// ══ MEMBERS ══
 function renderMembers(){
+  var j=J();if(!j)return;
   var box=document.getElementById('membersList');
-  if(!state.members.length){box.innerHTML='<div class="empty"><div class="empty-icon">👤</div>لا يوجد أعضاء مقبولون</div>';return;}
-  box.innerHTML=state.members.map(function(m){
-    var isRec=state.currentReceiverId===m.id,isPaid=!!state.paidMembers[m.id];
+  if(!j.members.length){box.innerHTML='<div class="empty"><div class="empty-icon">👤</div>لا يوجد أعضاء</div>';return;}
+  box.innerHTML=j.members.map(function(m){
+    var isRec=j.currentReceiverId===m.id,isPaid=!!j.paidMembers[m.id];
+    var recs=j.receipts[m.id]||[];var hasR=recs.length>0;
     return '<div class="member-card'+(isRec?' is-receiver':'')+'"><div class="mc-top">'
       +'<div class="avatar">'+m.name[0]+'</div>'
       +'<div class="member-info">'
         +'<div class="member-name-el">'+esc(m.name)+'</div>'
         +(m.phone?'<div class="member-sub">📞 '+esc(m.phone)+'</div>':'')
-        +(m.iban?'<div class="member-iban" onclick="copyText(\''+esc(m.iban)+'\')" title="انسخ الآيبان">🏦 '+esc(m.iban)+' 📋</div>':'')
+        +(m.iban?'<div class="member-iban" onclick="copyText(\''+esc(m.iban)+'\')" title="نسخ">🏦 '+esc(m.iban)+' 📋</div>':'')
         +'<div class="member-badges"><span class="badge badge-blue">📅 '+getSlotLabel(m)+'</span>'
         +(isRec?'<span class="badge badge-gold">⭐ مستلم</span>':'')
         +(isPaid?'<span class="badge badge-green">✓ دفع</span>':'<span class="badge badge-red">✗ لم يدفع</span>')
-        +'</div></div></div>'
+        +(hasR?'<span class="badge badge-purple" onclick="switchTab(\'receipts\')">🧾 '+recs.length+'</span>':'')
+        +'</div>'
+      +'</div>'
+      +(hasR?'<img src="'+recs[recs.length-1].data+'" class="receipt-thumb" onclick="switchTab(\'receipts\')">':'<div class="receipt-placeholder" title="لا يوجد إيصال">📄</div>')
+      +'</div>'
       +'<div class="member-actions">'
-        +'<button class="btn btn-sm btn-gold" onclick="setReceiver(\''+m.id+'\')">👑 مستلم</button>'
+        +'<button class="btn btn-sm btn-gold" onclick="setReceiver(\''+m.id+'\')">👑</button>'
         +'<button class="btn btn-sm '+(isPaid?'btn-danger':'btn-success')+'" onclick="togglePaid(\''+m.id+'\')">'+(isPaid?'↩ إلغاء':'✓ دفع')+'</button>'
         +'<button class="btn btn-sm btn-ghost" onclick="openEditMember(\''+m.id+'\')">✏️</button>'
         +'<button class="btn btn-sm btn-danger" onclick="deleteMember(\''+m.id+'\')">🗑</button>'
@@ -766,164 +883,57 @@ function renderMembers(){
   }).join('');
 }
 
-// ══════════ PENDING MEMBERS ══════════
+// ══ PENDING ══
 function renderPending(){
-  var ps=document.getElementById('pendingSection');
-  var pl=document.getElementById('pendingList');
-  if(!state.pendingMembers||!state.pendingMembers.length){ps.style.display='none';return;}
+  var j=J();if(!j)return;
+  var ps=document.getElementById('pendingSection'),pl=document.getElementById('pendingList');
+  if(!(j.pendingMembers||[]).length){ps.style.display='none';return;}
   ps.style.display='block';
-  pl.innerHTML=state.pendingMembers.map(function(m,i){
+  pl.innerHTML=j.pendingMembers.map(function(m,i){
     return '<div class="member-card pending"><div class="mc-top">'
-      +'<div class="avatar pending-av">'+m.name[0]+'</div>'
-      +'<div class="member-info">'
-        +'<div class="member-name-el">'+esc(m.name)+'</div>'
-        +(m.phone?'<div class="member-sub">📞 '+esc(m.phone)+'</div>':'')
-        +(m.iban?'<div class="member-iban">🏦 '+esc(m.iban)+'</div>':'')
-        +'<div class="member-badges"><span class="badge badge-blue">📅 '+getSlotLabel(m)+'</span>'
-        +'<span class="badge badge-orange">⏳ في الانتظار</span></div>'
-      +'</div></div>'
+      +'<div class="avatar av-gold">'+m.name[0]+'</div>'
+      +'<div class="member-info"><div class="member-name-el">'+esc(m.name)+'</div>'
+      +(m.phone?'<div class="member-sub">📞 '+esc(m.phone)+'</div>':'')
+      +(m.iban?'<div class="member-iban">🏦 '+esc(m.iban)+'</div>':'')
+      +'<div class="member-badges"><span class="badge badge-blue">📅 '+getSlotLabel(m)+'</span>'
+      +'<span class="badge badge-orange">⏳ انتظار</span></div></div></div>'
       +'<div class="member-actions">'
         +'<button class="btn btn-sm btn-success" onclick="approveMember('+i+')">✅ قبول</button>'
         +'<button class="btn btn-sm btn-danger" onclick="rejectMember('+i+')">❌ رفض</button>'
       +'</div></div>';
   }).join('');
 }
-
 function approveMember(i){
-  var m=state.pendingMembers[i];
-  m.id='m'+Date.now();
-  state.members.push(m);
-  state.pendingMembers.splice(i,1);
-  save();syncToCloud();renderAll();renderPending();renderSchedule();updatePendingBadge();
+  var j=J();if(!j)return;
+  var m=j.pendingMembers[i];m.id='m'+Date.now();
+  j.members.push(m);j.pendingMembers.splice(i,1);
+  save();syncUp();renderAll();renderPending();renderSchedule();updateBadge();
   showToast('تم قبول '+m.name+' ✓');
 }
 function rejectMember(i){
-  var m=state.pendingMembers[i];
-  if(!confirm('رفض طلب '+m.name+'؟'))return;
-  state.pendingMembers.splice(i,1);
-  save();syncToCloud();renderPending();updatePendingBadge();
-  showToast('تم رفض الطلب');
+  var j=J();if(!j)return;
+  var m=j.pendingMembers[i];if(!confirm('رفض طلب '+m.name+'؟'))return;
+  j.pendingMembers.splice(i,1);save();syncUp();renderPending();updateBadge();showToast('تم الرفض');
+}
+function updateBadge(){
+  var j=J();var cnt=j?(j.pendingMembers||[]).length:0;
+  var b=document.getElementById('tabMembers');
+  // remove old badge
+  var old=b.querySelector('.tab-badge');if(old)old.remove();
+  if(cnt>0){var sp=document.createElement('span');sp.className='tab-badge';sp.textContent=cnt;b.appendChild(sp);}
+  var sp2=document.getElementById('st-pending');if(sp2)sp2.textContent=cnt;
 }
 
-// ══════════ REGISTRATION FLOW ══════════
-var regData={name:'',phone:'',iban:'',dueMonthNum:'',dueYear:''};
-
-function initRegister(){
-  document.getElementById('regTopName').textContent=state.groupName;
-  document.getElementById('regStep1').style.display='block';
-  document.getElementById('regStep2').style.display='none';
-  document.getElementById('regSuccess').style.display='none';
-  document.getElementById('regLoading').style.display='none';
-  document.getElementById('regName').value='';
-  document.getElementById('regPhone').value='';
-  document.getElementById('regIban').value='';
-  regData={name:'',phone:'',iban:'',dueMonthNum:'',dueYear:''};
-}
-
-function goToStep2(){
-  var name=document.getElementById('regName').value.trim();
-  var phone=document.getElementById('regPhone').value.trim();
-  if(!name||!phone){showToast('أدخل الاسم ورقم الهاتف',true);return;}
-  regData.name=name;regData.phone=phone;
-  regData.iban=document.getElementById('regIban').value.trim().replace(/\s/g,'').toUpperCase();
-  document.getElementById('regStep1').style.display='none';
-  document.getElementById('regStep2').style.display='block';
-  renderRegMonthGrid();
-}
-
-function backToStep1(){
-  document.getElementById('regStep1').style.display='block';
-  document.getElementById('regStep2').style.display='none';
-  regData.dueMonthNum='';regData.dueYear='';
-}
-
-function renderRegMonthGrid(){
-  var grid=document.getElementById('regMonthGrid');
-  var now=new Date();
-  var startYear=now.getFullYear();
-  var startMonth=now.getMonth()+1;
-  var html='';
-  // show 18 months ahead
-  for(var i=0;i<18;i++){
-    var mn=((startMonth-1+i)%12)+1;
-    var yr=startYear+Math.floor((startMonth-1+i)/12);
-    var booked=isSlotBooked(mn,yr);
-    var owner=getSlotOwner(mn,yr);
-    var isDone=false;
-    var isCur=false;
-    // check if completed
-    var curRecM=state.members.find(function(x){return x.id===state.currentReceiverId;});
-    if(curRecM&&curRecM.dueMonthNum==mn&&curRecM.dueYear==yr) isCur=true;
-    var cls='month-slot '+(booked?'booked':'available');
-    if(isCur) cls='month-slot current';
-    var ownerHtml='';
-    if(booked&&owner) ownerHtml='<div class="slot-owner taken">'+esc(owner.name)+(owner.pending?' ⏳':'')+'</div>';
-    if(isCur&&owner) ownerHtml='<div class="slot-owner taken">'+esc(owner.name)+'</div>';
-    html+='<div class="'+cls+'" onclick="selectRegMonth('+mn+','+yr+','+booked+',\''+MONTHS[mn-1]+' '+yr+'\')">'
-      +'<div class="slot-month">'+MONTHS[mn-1]+'</div>'
-      +'<div class="slot-year">'+yr+'</div>'
-      +ownerHtml
-      +'</div>';
-  }
-  grid.innerHTML=html;
-  document.getElementById('regSelectedInfo').style.display='none';
-  regData.dueMonthNum='';regData.dueYear='';
-}
-
-function selectRegMonth(mn,yr,booked,label){
-  if(booked){showToast('هذا الشهر محجوز!',true);return;}
-  regData.dueMonthNum=mn;regData.dueYear=yr;
-  // highlight
-  document.querySelectorAll('.month-slot').forEach(function(el){el.style.boxShadow='';});
-  event.currentTarget.style.boxShadow='0 0 0 2px var(--accent2)';
-  document.getElementById('regSelectedLabel').textContent=label;
-  document.getElementById('regSelectedInfo').style.display='block';
-}
-
-async function submitRegistration(){
-  if(!regData.dueMonthNum){showToast('اختر شهر الاستلام',true);return;}
-  document.getElementById('regStep2').style.display='none';
-  document.getElementById('regLoading').style.display='block';
-
-  // sync first to get latest booked slots
-  await publicSyncFromCloud();
-  // re-check
-  if(isSlotBooked(regData.dueMonthNum,regData.dueYear)){
-    document.getElementById('regLoading').style.display='none';
-    document.getElementById('regStep2').style.display='block';
-    showToast('عذراً، هذا الشهر حُجز للتو! اختر شهراً آخر',true);
-    renderRegMonthGrid();
-    return;
-  }
-
-  var newMember={
-    id:'p'+Date.now(),
-    name:regData.name,phone:regData.phone,iban:regData.iban,
-    dueMonthNum:parseInt(regData.dueMonthNum),
-    dueYear:parseInt(regData.dueYear),
-    registeredAt:new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'})
-  };
-  state.pendingMembers.push(newMember);
-  save();
-  await syncToCloud();
-
-  document.getElementById('regLoading').style.display='none';
-  document.getElementById('regSuccess').style.display='block';
-  document.getElementById('regSuccessMsg').innerHTML=
-    'مرحباً <strong>'+esc(regData.name)+'</strong>!<br>'+
-    'تم تسجيل طلبك لشهر <strong style="color:var(--gold)">'+MONTHS[regData.dueMonthNum-1]+' '+regData.dueYear+'</strong><br>'+
-    'سيتم مراجعة طلبك من قِبل المدير وإشعارك بالموافقة.';
-}
-
-// ══════════ SCHEDULE (admin) ══════════
+// ══ SCHEDULE ══
 function renderSchedule(){
+  var j=J();if(!j)return;
   var body=document.getElementById('scheduleBody');
   var sorted=getSortedMembers();
-  if(!sorted.length){body.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">لا يوجد أعضاء مقبولون بعد</td></tr>';return;}
+  if(!sorted.length){body.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:16px">لا يوجد أعضاء</td></tr>';return;}
   body.innerHTML=sorted.map(function(m,i){
-    var isDone=state.completedSlots.indexOf(m.id)!==-1;
-    var isCur=!isDone&&state.currentReceiverId===m.id;
-    var amt=state.monthlyAmount*state.members.length;
+    var isDone=j.completedSlots.indexOf(m.id)!==-1;
+    var isCur=!isDone&&j.currentReceiverId===m.id;
+    var amt=j.amount*j.members.length;
     return '<tr class="'+(isDone?'done-row':isCur?'current-row':'')+'">'
       +'<td><span class="month-num">'+(i+1)+'</span></td>'
       +'<td>'+getSlotLabel(m)+'</td>'
@@ -931,88 +941,185 @@ function renderSchedule(){
       +'<td>'+(m.iban?'<span style="font-family:monospace;font-size:11px;color:var(--accent2);cursor:pointer" onclick="copyText(\''+esc(m.iban)+'\')">'+esc(m.iban)+'</span>':'—')+'</td>'
       +'<td>'+amt+' د.إ</td>'
       +'<td>'+(isDone?'<span class="status-dot"><span class="dot dot-green"></span> مكتمل</span>'
-               :isCur?'<span class="status-dot"><span class="dot dot-gold"></span> الشهر الحالي</span>'
+               :isCur?'<span class="status-dot"><span class="dot dot-gold"></span> حالي</span>'
                :'<span class="status-dot"><span class="dot dot-gray"></span> قادم</span>')+'</td>'
-      +'<td>'+(isCur?'<span style="color:var(--gold);font-size:12px;font-weight:700">▶ حالي</span>'
-                    :(isDone?'':'<button class="btn btn-sm btn-gold" onclick="setReceiver(\''+m.id+'\');switchTab(\'schedule\')">👑 اختر</button>'))+'</td>'
+      +'<td>'+(isCur?'<span style="color:var(--gold);font-size:11px;font-weight:700">▶ حالي</span>'
+                    :(isDone?'':'<button class="btn btn-sm btn-gold" onclick="setReceiver(\''+m.id+'\');switchTab(\'schedule\')">👑</button>'))+'</td>'
       +'</tr>';
   }).join('');
 }
 
-// ══════════ HISTORY ══════════
+// ══ HISTORY ══
 function renderHistory(){
+  var j=J();if(!j)return;
   var box=document.getElementById('historyList');
-  if(!state.history.length){box.innerHTML='<div class="empty"><div class="empty-icon">📋</div>لا يوجد سجل</div>';return;}
-  box.innerHTML=state.history.map(function(r){
+  if(!j.history.length){box.innerHTML='<div class="empty"><div class="empty-icon">📋</div>لا يوجد سجل</div>';return;}
+  box.innerHTML=j.history.map(function(r){
     return '<div class="history-card"><div class="history-month-badge">'+esc(r.monthName||'—')+'</div>'
-      +'<div><div style="font-weight:700;font-size:15px">المستلم: '+esc(r.receiverName)+'</div>'
-      +(r.receiverIban?'<div style="font-size:12px;font-family:monospace;color:var(--accent2)">'+esc(r.receiverIban)+'</div>':'')
-      +'<div style="color:var(--muted);font-size:13px;margin-top:4px">الدفعات: '+r.paidCount+' / '+r.totalMembers+'</div>'
-      +'<div style="color:var(--muted);font-size:13px">المبلغ: '+(r.monthlyAmount*r.totalMembers)+' د.إ</div>'
-      +(r.note?'<div style="color:var(--muted);font-size:13px">ملاحظة: '+esc(r.note)+'</div>':'')
-      +'<div style="color:var(--muted);font-size:12px;margin-top:4px">📅 '+esc(r.savedAt)+'</div></div></div>';
+      +'<div><div style="font-weight:700;font-size:13px">المستلم: '+esc(r.receiverName)+'</div>'
+      +(r.receiverIban?'<div style="font-size:11px;font-family:monospace;color:var(--accent2)">'+esc(r.receiverIban)+'</div>':'')
+      +'<div style="color:var(--muted);font-size:11px;margin-top:2px">الدفعات: '+r.paidCount+'/'+r.totalMembers+' · '+(r.monthlyAmount*r.totalMembers)+' د.إ</div>'
+      +(r.note?'<div style="color:var(--muted);font-size:11px">'+esc(r.note)+'</div>':'')
+      +'<div style="color:var(--muted);font-size:10px;margin-top:2px">📅 '+esc(r.savedAt)+'</div></div></div>';
   }).join('');
 }
 
-// ══════════ PUBLIC PAGE ══════════
+// ══ PUBLIC PAGE ══
 function renderPublic(){
-  document.getElementById('pubTopName').textContent=state.groupName;
-  document.getElementById('pubGroupName').textContent=state.groupName;
-  document.getElementById('regTopName').textContent=state.groupName;
-  var recM=state.members.find(function(x){return x.id===state.currentReceiverId;}),tot=state.members.length;
-  document.getElementById('pubReceiver').textContent=recM?recM.name:'لم يتم التحديد بعد';
-  document.getElementById('pubMonth').textContent=state.monthName||'';
-  document.getElementById('pubAmount').textContent=(recM&&tot)?'المبلغ الكلي: '+(state.monthlyAmount*tot)+' د.إ':'';
-  var ibanBox=document.getElementById('pubIban');
-  if(recM&&recM.iban){ibanBox.style.display='block';document.getElementById('pubIbanText').textContent=recM.iban;}
-  else ibanBox.style.display='none';
+  var j=J();if(!j)return;
+  document.getElementById('pubTopName').textContent=j.name;
+  document.getElementById('pubGroupName').textContent=j.name;
+  document.getElementById('regTopName').textContent='التسجيل في '+j.name;
+  var recM=j.members.find(function(x){return x.id===j.currentReceiverId;}),tot=j.members.length;
+  document.getElementById('pubReceiver').textContent=recM?recM.name:'لم يتم التحديد';
+  document.getElementById('pubMonth').textContent=j.monthName||'';
+  document.getElementById('pubAmount').textContent=(recM&&tot)?'المبلغ: '+(j.amount*tot)+' د.إ':'';
+  var ib=document.getElementById('pubIban');
+  if(recM&&recM.iban){ib.style.display='block';document.getElementById('pubIbanText').textContent=recM.iban;}
+  else ib.style.display='none';
   var now=new Date(),end=new Date(now.getFullYear(),now.getMonth()+1,0),days=Math.ceil((end-now)/864e5);
   var cb=document.getElementById('pubCountdown');
   if(recM){cb.style.display='flex';document.getElementById('countdownDays').textContent=days;}
   else cb.style.display='none';
-
-  // Schedule public
   var sorted=getSortedMembers();
   var pb=document.getElementById('pubScheduleBody');
-  if(!sorted.length){pb.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">لا يوجد جدول بعد</td></tr>';}
+  if(!sorted.length)pb.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:16px">لا يوجد جدول بعد</td></tr>';
   else pb.innerHTML=sorted.map(function(m,i){
-    var isDone=state.completedSlots.indexOf(m.id)!==-1;
-    var isCur=!isDone&&state.currentReceiverId===m.id;
+    var isDone=j.completedSlots.indexOf(m.id)!==-1,isCur=!isDone&&j.currentReceiverId===m.id;
     return '<tr class="'+(isDone?'done-row':isCur?'current-row':'')+'">'
-      +'<td><span class="month-num">'+(i+1)+'</span></td>'
-      +'<td>'+getSlotLabel(m)+'</td>'
+      +'<td><span class="month-num">'+(i+1)+'</span></td><td>'+getSlotLabel(m)+'</td>'
       +'<td><strong>'+esc(m.name)+'</strong></td>'
       +'<td>'+(m.iban?'<span style="font-family:monospace;font-size:11px;color:var(--accent2);cursor:pointer" onclick="copyText(\''+esc(m.iban)+'\')">'+esc(m.iban)+'</span>':'—')+'</td>'
       +'<td>'+(isDone?'<span class="status-dot"><span class="dot dot-green"></span> مكتمل</span>'
-               :isCur?'<span class="status-dot"><span class="dot dot-gold"></span> الشهر الحالي</span>'
+               :isCur?'<span class="status-dot"><span class="dot dot-gold"></span> حالي</span>'
                :'<span class="status-dot"><span class="dot dot-gray"></span> قادم</span>')+'</td></tr>';
   }).join('');
-
   var ph=document.getElementById('pubHistoryList');
-  if(!state.history.length){ph.innerHTML='<div class="empty" style="padding:14px"><div class="empty-icon">📋</div>لا يوجد سجل</div>';}
-  else ph.innerHTML=state.history.map(function(r){
-    return '<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)">'
-      +'<div style="background:linear-gradient(135deg,var(--accent),#1a3a8f);border-radius:9px;padding:8px 12px;font-size:13px;font-weight:800;color:#fff;min-width:50px;text-align:center;flex-shrink:0">'+esc(r.monthName)+'</div>'
-      +'<div><div style="font-weight:700">'+esc(r.receiverName)+'</div>'
-      +(r.receiverIban?'<div style="font-size:11px;font-family:monospace;color:var(--accent2)">'+esc(r.receiverIban)+'</div>':'')
-      +'<div style="font-size:13px;color:var(--muted)">'+(r.monthlyAmount*r.totalMembers)+' د.إ · '+esc(r.savedAt)+'</div></div></div>';
+  if(!j.history.length)ph.innerHTML='<div class="empty" style="padding:10px"><div class="empty-icon">📋</div>لا يوجد سجل</div>';
+  else ph.innerHTML=j.history.map(function(r){
+    return '<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)">'
+      +'<div style="background:linear-gradient(135deg,var(--accent),#1a3a8f);border-radius:8px;padding:6px 10px;font-size:11px;font-weight:800;color:#fff;min-width:46px;text-align:center;flex-shrink:0">'+esc(r.monthName)+'</div>'
+      +'<div><div style="font-weight:700;font-size:13px">'+esc(r.receiverName)+'</div>'
+      +(r.receiverIban?'<div style="font-size:10px;font-family:monospace;color:var(--accent2)">'+esc(r.receiverIban)+'</div>':'')
+      +'<div style="font-size:11px;color:var(--muted)">'+(r.monthlyAmount*r.totalMembers)+' د.إ · '+esc(r.savedAt)+'</div></div></div>';
   }).join('');
 }
 
-// ══════════ REG LINK ══════════
-function copyRegLink(){
-  var link=window.location.href.split('?')[0];
-  copyText(link);
-  showToast('تم نسخ الرابط ✓');
+// ══ REGISTRATION ══
+var regData={};var regMemberId=null;
+function initRegister(){
+  ['regStep1','regStep2','regSuccess','regLoading','regUpload'].forEach(function(id){
+    document.getElementById(id).style.display=id==='regStep1'?'block':'none';
+  });
+  ['regName','regPhone','regIban'].forEach(function(id){document.getElementById(id).value='';});
+  regData={};regMemberId=null;
 }
-function shareRegLink(){
-  var link=window.location.href.split('?')[0];
-  var txt='🏦 *'+state.groupName+'*\n\nانضم إلى الجمعية وسجّل بياناتك واحجز شهرك:\n'+link;
-  window.open('https://wa.me/?text='+encodeURIComponent(txt),'_blank');
+function goToStep2(){
+  var name=document.getElementById('regName').value.trim();
+  var phone=document.getElementById('regPhone').value.trim();
+  if(!name||!phone){showToast('أدخل الاسم والهاتف',true);return;}
+  regData.name=name;regData.phone=phone;
+  regData.iban=document.getElementById('regIban').value.trim().replace(/\s/g,'').toUpperCase();
+  document.getElementById('regStep1').style.display='none';
+  document.getElementById('regStep2').style.display='block';
+  renderRegGrid();
+}
+function backToStep1(){document.getElementById('regStep1').style.display='block';document.getElementById('regStep2').style.display='none';}
+function isSlotBooked(mn,y){
+  var j=J();if(!j)return false;
+  return j.members.some(function(m){return m.dueMonthNum==mn&&m.dueYear==y;})
+    ||(j.pendingMembers||[]).some(function(m){return m.dueMonthNum==mn&&m.dueYear==y;});
+}
+function getSlotOwner(mn,y){
+  var j=J();if(!j)return null;
+  var m=j.members.find(function(m){return m.dueMonthNum==mn&&m.dueYear==y;});if(m)return m.name;
+  m=(j.pendingMembers||[]).find(function(m){return m.dueMonthNum==mn&&m.dueYear==y;});return m?m.name+'⏳':null;
+}
+function renderRegGrid(){
+  var grid=document.getElementById('regMonthGrid');
+  var now=new Date(),sm=now.getMonth()+1,sy=now.getFullYear(),html='';
+  for(var i=0;i<18;i++){
+    var mn=((sm-1+i)%12)+1,yr=sy+Math.floor((sm-1+i)/12);
+    var booked=isSlotBooked(mn,yr),owner=getSlotOwner(mn,yr);
+    html+='<div class="month-slot '+(booked?'booked':'available')+'" onclick="selectMonth('+mn+','+yr+','+booked+',\''+MONTHS[mn-1]+' '+yr+'\')">'
+      +'<div class="slot-month">'+MONTHS[mn-1]+'</div><div class="slot-year">'+yr+'</div>'
+      +(booked&&owner?'<div class="slot-owner">'+esc(owner)+'</div>':'')+'</div>';
+  }
+  grid.innerHTML=html;
+  document.getElementById('regSelectedInfo').style.display='none';
+}
+function selectMonth(mn,yr,booked,label){
+  if(booked){showToast('هذا الشهر محجوز!',true);return;}
+  regData.dueMonthNum=mn;regData.dueYear=yr;
+  document.querySelectorAll('.month-slot').forEach(function(el){el.style.outline='';});
+  event.currentTarget.style.outline='2px solid var(--accent2)';
+  document.getElementById('regSelectedLabel').textContent=label;
+  document.getElementById('regSelectedInfo').style.display='block';
+}
+async function submitRegistration(){
+  if(!regData.dueMonthNum){showToast('اختر شهر الاستلام',true);return;}
+  document.getElementById('regStep2').style.display='none';
+  document.getElementById('regLoading').style.display='block';
+  await publicSync();
+  if(isSlotBooked(regData.dueMonthNum,regData.dueYear)){
+    document.getElementById('regLoading').style.display='none';
+    document.getElementById('regStep2').style.display='block';
+    showToast('الشهر حُجز للتو! اختر آخر',true);renderRegGrid();return;
+  }
+  var j=J();if(!j){showToast('خطأ',true);return;}
+  var nm={id:'p'+Date.now(),name:regData.name,phone:regData.phone,iban:regData.iban,
+    dueMonthNum:parseInt(regData.dueMonthNum),dueYear:parseInt(regData.dueYear),
+    registeredAt:new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'})};
+  j.pendingMembers.push(nm);regMemberId=nm.id;
+  save();await syncUp();
+  document.getElementById('regLoading').style.display='none';
+  document.getElementById('regSuccess').style.display='block';
+  document.getElementById('regSuccessMsg').innerHTML='مرحباً <strong>'+esc(regData.name)+'</strong>! 🎉<br>'
+    +'تم تسجيل طلبك لشهر <strong style="color:var(--gold)">'+MONTHS[regData.dueMonthNum-1]+' '+regData.dueYear+'</strong><br>'
+    +'سيراجعه المدير قريباً. يمكنك رفع إيصال التحويل الآن.';
+}
+function showReceiptUpload(){
+  document.getElementById('regSuccess').style.display='none';
+  document.getElementById('regUpload').style.display='block';
+  document.getElementById('receiptFile').value='';
+  document.getElementById('receiptPreview').style.display='none';
+  document.getElementById('receiptNote').value='';
+  document.getElementById('receiptMemberName').value=regData.name||'';
+}
+function previewReceipt(){
+  var file=document.getElementById('receiptFile').files[0];
+  if(!file)return;
+  if(file.size>4*1024*1024){showToast('الصورة أكبر من 4MB',true);return;}
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var img=document.getElementById('receiptPreview');
+    img.src=e.target.result;img.style.display='block';
+  };
+  reader.readAsDataURL(file);
+}
+async function submitReceiptPublic(){
+  var img=document.getElementById('receiptPreview');
+  if(!img||!img.src||img.style.display==='none'){showToast('اختر صورة الإيصال',true);return;}
+  var note=document.getElementById('receiptNote').value.trim();
+  var mName=document.getElementById('receiptMemberName').value.trim()||regData.name||'—';
+  var j=J();if(!j)return;
+  // store under __public key so admin can see without member approval
+  if(!j.receipts['__public'])j.receipts['__public']=[];
+  j.receipts['__public'].push({
+    data:img.src,note:note,memberName:mName,
+    date:new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'})
+  });
+  save();await syncUp();
+  document.getElementById('regUpload').style.display='none';
+  document.getElementById('regSuccess').style.display='block';
+  document.getElementById('regSuccessMsg').innerHTML='✅ تم رفع الإيصال بنجاح!<br><span style="color:var(--accent2)">سيراجعه المدير ويؤكد دفعتك قريباً.</span>';
+  // hide upload button
+  document.querySelector('#regSuccess .btn-purple').style.display='none';
+  showToast('تم رفع الإيصال ✓');
 }
 
-// ══════════ MEMBER CRUD ══════════
-function buildMonthYearSelects(mId,yId,curM,curY){
+// ══ MEMBER CRUD ══
+function buildMSel(mId,yId,curM,curY){
   var ms=document.getElementById(mId),ys=document.getElementById(yId);
   ms.innerHTML='<option value="">— الشهر —</option>';
   MONTHS.forEach(function(mn,i){ms.innerHTML+='<option value="'+(i+1)+'"'+((i+1)==curM?' selected':'')+'>'+mn+'</option>';});
@@ -1021,88 +1128,90 @@ function buildMonthYearSelects(mId,yId,curM,curY){
   for(var y=cy-1;y<=cy+5;y++) ys.innerHTML+='<option value="'+y+'"'+(y==curY?' selected':'')+'>'+y+'</option>';
 }
 function openAddMemberModal(){
-  buildMonthYearSelects('mDueMonth','mDueYear','','');
+  buildMSel('mDueMonth','mDueYear','','');
   ['mName','mPhone','mIban'].forEach(function(id){document.getElementById(id).value='';});
   openModal('modalAddMember');
 }
 function addMember(){
+  var j=J();if(!j)return;
   var name=document.getElementById('mName').value.trim();
   if(!name){showToast('أدخل الاسم',true);return;}
   var dm=document.getElementById('mDueMonth').value,dy=document.getElementById('mDueYear').value;
-  if(dm&&dy&&isSlotBooked(parseInt(dm),parseInt(dy))){showToast('هذا الشهر محجوز!',true);return;}
-  state.members.push({id:'m'+Date.now(),name:name,phone:document.getElementById('mPhone').value.trim(),
+  if(dm&&dy&&isSlotBooked(parseInt(dm),parseInt(dy))){showToast('الشهر محجوز!',true);return;}
+  j.members.push({id:'m'+Date.now(),name:name,phone:document.getElementById('mPhone').value.trim(),
     iban:document.getElementById('mIban').value.trim().replace(/\s/g,'').toUpperCase(),
     dueMonthNum:dm?parseInt(dm):'',dueYear:dy?parseInt(dy):''});
-  save();syncToCloud();closeModal('modalAddMember');renderAll();renderSchedule();showToast('تمت الإضافة ✓');
+  save();syncUp();closeModal('modalAddMember');renderAll();renderSchedule();showToast('تمت الإضافة ✓');
 }
 function openEditMember(id){
-  var m=state.members.find(function(x){return x.id===id;});if(!m)return;
+  var j=J();var m=j&&j.members.find(function(x){return x.id===id;});if(!m)return;
   document.getElementById('editId').value=id;
   document.getElementById('editName').value=m.name;
   document.getElementById('editPhone').value=m.phone||'';
   document.getElementById('editIban').value=m.iban||'';
-  buildMonthYearSelects('editDueMonth','editDueYear',m.dueMonthNum||'',m.dueYear||'');
+  buildMSel('editDueMonth','editDueYear',m.dueMonthNum||'',m.dueYear||'');
   openModal('modalEditMember');
 }
 function saveEditMember(){
-  var id=document.getElementById('editId').value;
-  var m=state.members.find(function(x){return x.id===id;});if(!m)return;
+  var j=J();var id=document.getElementById('editId').value;
+  var m=j&&j.members.find(function(x){return x.id===id;});if(!m)return;
   m.name=document.getElementById('editName').value.trim()||m.name;
   m.phone=document.getElementById('editPhone').value.trim();
   m.iban=document.getElementById('editIban').value.trim().replace(/\s/g,'').toUpperCase();
   var dm=document.getElementById('editDueMonth').value,dy=document.getElementById('editDueYear').value;
   m.dueMonthNum=dm?parseInt(dm):'';m.dueYear=dy?parseInt(dy):'';
-  save();syncToCloud();closeModal('modalEditMember');renderAll();renderSchedule();showToast('تم التعديل ✓');
+  save();syncUp();closeModal('modalEditMember');renderAll();renderSchedule();showToast('تم التعديل ✓');
 }
 function deleteMember(id){
-  if(!confirm('حذف هذا العضو؟'))return;
-  state.members=state.members.filter(function(m){return m.id!==id;});
-  if(state.currentReceiverId===id)state.currentReceiverId='';
-  delete state.paidMembers[id];
-  state.completedSlots=state.completedSlots.filter(function(x){return x!==id;});
-  save();syncToCloud();renderAll();renderSchedule();showToast('تم الحذف');
+  var j=J();if(!j||!confirm('حذف العضو؟'))return;
+  j.members=j.members.filter(function(m){return m.id!==id;});
+  if(j.currentReceiverId===id)j.currentReceiverId='';
+  delete j.paidMembers[id];delete j.receipts[id];
+  j.completedSlots=j.completedSlots.filter(function(x){return x!==id;});
+  save();syncUp();renderAll();renderSchedule();showToast('تم الحذف');
 }
-function setReceiver(id){state.currentReceiverId=id;state.monthCompleted=false;save();syncToCloud();renderAll();showToast('تم التحديد ✓');}
-function togglePaid(id){if(state.paidMembers[id])delete state.paidMembers[id];else state.paidMembers[id]=true;save();syncToCloud();renderAll();}
+function setReceiver(id){var j=J();if(!j)return;j.currentReceiverId=id;j.monthCompleted=false;save();syncUp();renderAll();showToast('تم التحديد ✓');}
+function togglePaid(id){var j=J();if(!j)return;if(j.paidMembers[id])delete j.paidMembers[id];else j.paidMembers[id]=true;save();syncUp();renderAll();}
 
-// ══════════ SWAP ══════════
-var swapSelected=[];
-function openSwapModal(){swapSelected=[];renderSwapList();openModal('modalSwap');}
+// ══ SWAP ══
+var swapSel=[];
+function openSwapModal(){swapSel=[];renderSwapList();openModal('modalSwap');}
 function renderSwapList(){
-  document.getElementById('swapStatus').textContent='';
+  var j=J();document.getElementById('swapStatus').textContent='';
   var box=document.getElementById('swapList');
-  if(!state.members.length){box.innerHTML='<p style="color:var(--muted)">لا يوجد أعضاء</p>';return;}
-  box.innerHTML=state.members.map(function(m){
-    var sel=swapSelected.indexOf(m.id)!==-1;
-    return '<div class="swap-row'+(sel?' selected':'')+'" onclick="toggleSwapSelect(\''+m.id+'\')">'
-      +'<div style="width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--accent),#1a3a8f);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;flex-shrink:0">'+m.name[0]+'</div>'
-      +'<div style="flex:1"><div style="font-weight:700">'+esc(m.name)+'</div><div style="font-size:13px;color:var(--muted)">'+getSlotLabel(m)+'</div></div>'
-      +(sel?'<span style="color:var(--gold);font-size:20px">✓</span>':'')+'</div>';
+  if(!j||!j.members.length){box.innerHTML='<p style="color:var(--muted)">لا يوجد أعضاء</p>';return;}
+  box.innerHTML=j.members.map(function(m){
+    var sel=swapSel.indexOf(m.id)!==-1;
+    return '<div class="swap-row'+(sel?' selected':'')+'" onclick="toggleSwapSel(\''+m.id+'\')">'
+      +'<div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#1a3a8f);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;flex-shrink:0">'+m.name[0]+'</div>'
+      +'<div style="flex:1"><div style="font-weight:700;font-size:13px">'+esc(m.name)+'</div><div style="font-size:11px;color:var(--muted)">'+getSlotLabel(m)+'</div></div>'
+      +(sel?'<span style="color:var(--gold)">✓</span>':'')+'</div>';
   }).join('');
 }
-function toggleSwapSelect(id){
-  var idx=swapSelected.indexOf(id);
-  if(idx===-1){if(swapSelected.length>=2){showToast('اختر عضوين فقط',true);return;}swapSelected.push(id);}
-  else swapSelected.splice(idx,1);
+function toggleSwapSel(id){
+  var idx=swapSel.indexOf(id);
+  if(idx===-1){if(swapSel.length>=2){showToast('اختر عضوين فقط',true);return;}swapSel.push(id);}
+  else swapSel.splice(idx,1);
   renderSwapList();
-  if(swapSelected.length===2){
-    var a=state.members.find(function(m){return m.id===swapSelected[0];});
-    var b=state.members.find(function(m){return m.id===swapSelected[1];});
+  if(swapSel.length===2){
+    var j=J();
+    var a=j.members.find(function(m){return m.id===swapSel[0];});
+    var b=j.members.find(function(m){return m.id===swapSel[1];});
     document.getElementById('swapStatus').textContent='⇄ '+a.name+' ↔ '+b.name;
   }
 }
 function confirmSwap(){
-  if(swapSelected.length!==2){showToast('اختر عضوين',true);return;}
-  var a=state.members.find(function(m){return m.id===swapSelected[0];});
-  var b=state.members.find(function(m){return m.id===swapSelected[1];});
+  if(swapSel.length!==2){showToast('اختر عضوين',true);return;}
+  var j=J();
+  var a=j.members.find(function(m){return m.id===swapSel[0];});
+  var b=j.members.find(function(m){return m.id===swapSel[1];});
   var tm=a.dueMonthNum,ty=a.dueYear;
-  a.dueMonthNum=b.dueMonthNum;a.dueYear=b.dueYear;
-  b.dueMonthNum=tm;b.dueYear=ty;
-  save();syncToCloud();closeModal('modalSwap');renderAll();renderSchedule();showToast('تم التبديل ✓');
+  a.dueMonthNum=b.dueMonthNum;a.dueYear=b.dueYear;b.dueMonthNum=tm;b.dueYear=ty;
+  save();syncUp();closeModal('modalSwap');renderAll();renderSchedule();showToast('تم التبديل ✓');
 }
 
-// ══════════ MONTH MODALS ══════════
-function buildCompleteSelects(){
+// ══ MONTH MODALS ══
+function buildMonthSelects(){
   var cy=new Date().getFullYear(),cm=new Date().getMonth()+1;
   ['completeMonthSel','newMonthSel'].forEach(function(id){
     var el=document.getElementById(id);
@@ -1111,115 +1220,106 @@ function buildCompleteSelects(){
   });
   ['completeYearSel','newYearSel'].forEach(function(id){
     var el=document.getElementById(id);el.innerHTML='';
-    for(var y=cy-1;y<=cy+3;y++) el.innerHTML+='<option value="'+y+'"'+(y===cy?' selected':'')+'>'+y+'</option>';
+    var cy2=new Date().getFullYear();
+    for(var y=cy2-1;y<=cy2+3;y++) el.innerHTML+='<option value="'+y+'"'+(y===cy2?' selected':'')+'>'+y+'</option>';
   });
   syncCompleteMonth();syncNewMonth();
 }
-function syncCompleteMonth(){
-  var ms=document.getElementById('completeMonthSel').value,ys=document.getElementById('completeYearSel').value;
-  if(ms&&ys) document.getElementById('completeMonthName').value=MONTHS[ms-1]+' '+ys;
-}
-function syncNewMonth(){
-  var ms=document.getElementById('newMonthSel').value,ys=document.getElementById('newYearSel').value;
-  if(ms&&ys) document.getElementById('newMonthName').value=MONTHS[ms-1]+' '+ys;
-}
+function syncCompleteMonth(){var ms=document.getElementById('completeMonthSel').value,ys=document.getElementById('completeYearSel').value;if(ms&&ys)document.getElementById('completeMonthName').value=MONTHS[ms-1]+' '+ys;}
+function syncNewMonth(){var ms=document.getElementById('newMonthSel').value,ys=document.getElementById('newYearSel').value;if(ms&&ys)document.getElementById('newMonthName').value=MONTHS[ms-1]+' '+ys;}
 function openCompleteModal(){
-  buildCompleteSelects();
-  if(state.monthName) document.getElementById('completeMonthName').value=state.monthName;
+  buildMonthSelects();
+  var j=J();if(j&&j.monthName)document.getElementById('completeMonthName').value=j.monthName;
   document.getElementById('completeReceiver').value=getReceiverName()||'لم يتم التحديد';
   document.getElementById('completeNote').value='';
   openModal('modalComplete');
 }
 function completeMonth(){
+  var j=J();if(!j)return;
   var mn=document.getElementById('completeMonthName').value.trim();
   if(!mn){showToast('أدخل اسم الشهر',true);return;}
   var rec=getReceiverName();if(!rec){showToast('حدد المستلم أولاً',true);return;}
-  var recM=state.members.find(function(x){return x.id===state.currentReceiverId;});
-  state.monthName=mn;
-  state.history.unshift({monthName:mn,note:document.getElementById('completeNote').value.trim(),
+  var recM=j.members.find(function(x){return x.id===j.currentReceiverId;});
+  j.monthName=mn;
+  j.history.unshift({monthName:mn,note:document.getElementById('completeNote').value.trim(),
     receiverName:rec,receiverIban:recM?recM.iban||'':'',
-    paidCount:getPaidCount(),totalMembers:state.members.length,monthlyAmount:state.monthlyAmount,
+    paidCount:getPaidCount(),totalMembers:j.members.length,monthlyAmount:j.amount,
     savedAt:new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'})});
-  state.monthCompleted=true;
-  if(state.currentReceiverId)state.completedSlots.push(state.currentReceiverId);
-  save();syncToCloud();closeModal('modalComplete');renderAll();renderHistory();showToast('تم إنهاء الشهر ✓');
+  j.monthCompleted=true;
+  if(j.currentReceiverId)j.completedSlots.push(j.currentReceiverId);
+  save();syncUp();closeModal('modalComplete');renderAll();renderHistory();showToast('تم إنهاء الشهر ✓');
 }
-function openNewMonthModal(){buildCompleteSelects();openModal('modalNewMonth');}
+function openNewMonthModal(){buildMonthSelects();openModal('modalNewMonth');}
 function confirmNewMonth(){
+  var j=J();if(!j)return;
   var nm=document.getElementById('newMonthName').value.trim();
   if(!nm){showToast('أدخل اسم الشهر',true);return;}
-  state.monthName=nm;state.monthNote='';state.currentReceiverId='';state.paidMembers={};state.monthCompleted=false;
-  fillSettings();save();syncToCloud();closeModal('modalNewMonth');renderAll();showToast('تم فتح شهر جديد ✓');
+  j.monthName=nm;j.monthNote='';j.currentReceiverId='';j.paidMembers={};j.monthCompleted=false;
+  fillSetup();save();syncUp();closeModal('modalNewMonth');renderAll();showToast('تم فتح شهر جديد ✓');
 }
 
-// ══════════ SHARE ══════════
+// ══ SHARE ══
 function getScheduleText(){
+  var j=J();if(!j)return '';
   var sorted=getSortedMembers();
-  var recM=state.members.find(function(x){return x.id===state.currentReceiverId;});
-  var lines=['🏦 *'+state.groupName+'*','💰 الاشتراك: '+state.monthlyAmount+' د.إ | الكلي: '+(state.monthlyAmount*state.members.length)+' د.إ','━━━━━━━━━━━━━━━━━━━━','*📅 جدول التوزيع*',''];
+  var recM=j.members.find(function(x){return x.id===j.currentReceiverId;});
+  var lines=['🏦 *'+j.name+'*','💰 '+j.amount+' د.إ | إجمالي: '+(j.amount*j.members.length)+' د.إ','━━━━━━━━━━━━━━━━',''];
   sorted.forEach(function(m,i){
-    var isDone=state.completedSlots.indexOf(m.id)!==-1;
-    var isCur=!isDone&&state.currentReceiverId===m.id;
+    var isDone=j.completedSlots.indexOf(m.id)!==-1,isCur=!isDone&&j.currentReceiverId===m.id;
     var line=(isDone?'✅':isCur?'⭐':'⏳')+' *'+(i+1)+'.* '+m.name+' — '+getSlotLabel(m);
-    if(m.iban) line+='\n     🏦 '+m.iban;
+    if(m.iban)line+='\n     🏦 '+m.iban;
     lines.push(line);
   });
-  lines.push('');lines.push('━━━━━━━━━━━━━━━━━━━━');
-  if(state.monthName) lines.push('📅 *الشهر الحالي:* '+state.monthName);
+  lines.push('');lines.push('━━━━━━━━━━━━━━━━');
+  if(j.monthName)lines.push('📅 *الشهر الحالي:* '+j.monthName);
   if(recM){lines.push('🏆 *المستلم:* '+recM.name);if(recM.iban)lines.push('🏦 *الآيبان:* '+recM.iban);}
   return lines.join('\n');
 }
-function shareWhatsApp(){
-  if(!state.members.length){showToast('لا يوجد أعضاء بعد',true);return;}
-  window.open('https://wa.me/?text='+encodeURIComponent(getScheduleText()),'_blank');
-}
-function copySchedule(){
-  var text=getScheduleText();
-  if(navigator.clipboard){navigator.clipboard.writeText(text).then(function(){showToast('تم النسخ ✓');});return;}
-  var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('تم النسخ ✓');
-}
+function shareWhatsApp(){var j=J();if(!j||!j.members.length){showToast('لا يوجد أعضاء',true);return;}window.open('https://wa.me/?text='+encodeURIComponent(getScheduleText()),'_blank');}
+function copySchedule(){var t=getScheduleText();if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){showToast('تم النسخ ✓');});return;}var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('تم النسخ ✓');}
+function copyRegLink(){copyText(window.location.href.split('?')[0]);}
+function shareRegLink(){var j=J();var link=window.location.href.split('?')[0];window.open('https://wa.me/?text='+encodeURIComponent('🏦 *'+(j?j.name:'الجمعية')+'*\n\nسجّل واحجز شهرك:\n'+link),'_blank');}
 
-// ══════════ HISTORY ══════════
-function clearHistory(){
-  if(!confirm('حذف سجل الأشهر؟'))return;
-  state.history=[];state.completedSlots=[];
-  save();syncToCloud();renderHistory();renderPublic();showToast('تم المسح');
-}
+// ══ HISTORY ══
+function clearHistory(){var j=J();if(!j||!confirm('حذف السجل؟'))return;j.history=[];j.completedSlots=[];save();syncUp();renderHistory();renderPublic();}
 
-// ══════════ SETTINGS ══════════
-function fillSettings(){
-  document.getElementById('cfgName').value=state.groupName;
-  document.getElementById('cfgAmount').value=state.monthlyAmount;
-  document.getElementById('cfgMonthName').value=state.monthName;
-  document.getElementById('cfgMonthNote').value=state.monthNote||'';
-  if(state.apiKey)document.getElementById('cfgApiKey').value=state.apiKey;
-  if(state.binId){document.getElementById('cfgBinId').value=state.binId;document.getElementById('binIdRow').style.display='block';}
+// ══ SETTINGS ══
+function fillSetup(){
+  var j=J();if(!j)return;
+  document.getElementById('cfgName').value=j.name;
+  document.getElementById('cfgAmount').value=j.amount;
+  document.getElementById('cfgMonthName').value=j.monthName||'';
+  document.getElementById('cfgMonthNote').value=j.monthNote||'';
+  if(rootState.apiKey)document.getElementById('cfgApiKey').value=rootState.apiKey;
+  if(rootState.binId){document.getElementById('cfgBinId').value=rootState.binId;document.getElementById('binIdRow').style.display='block';}
 }
 function saveSettings(){
-  state.groupName=document.getElementById('cfgName').value.trim()||state.groupName;
-  state.monthlyAmount=parseFloat(document.getElementById('cfgAmount').value)||state.monthlyAmount;
-  state.monthName=document.getElementById('cfgMonthName').value.trim();
-  state.monthNote=document.getElementById('cfgMonthNote').value.trim();
-  document.getElementById('topbarName').textContent=state.groupName;
-  save();syncToCloud();renderAll();showToast('تم الحفظ ✓');
+  var j=J();if(!j)return;
+  j.name=document.getElementById('cfgName').value.trim()||j.name;
+  j.amount=parseFloat(document.getElementById('cfgAmount').value)||j.amount;
+  j.monthName=document.getElementById('cfgMonthName').value.trim();
+  j.monthNote=document.getElementById('cfgMonthNote').value.trim();
+  document.getElementById('topbarName').textContent=j.name;
+  buildJSel();save();syncUp();renderAll();showToast('تم الحفظ ✓');
 }
 function changePass(){
   var np=document.getElementById('cfgPass').value;
   if(!np||np.length<3){showToast('كلمة المرور قصيرة',true);return;}
-  state.adminPass=np;document.getElementById('cfgPass').value='';save();showToast('تم التغيير ✓');
+  rootState.adminPass=np;document.getElementById('cfgPass').value='';save();showToast('تم التغيير ✓');
 }
 function resetAll(){
   if(!confirm('إعادة ضبط كامل؟'))return;
   if(!confirm('سيتم حذف كل البيانات!'))return;
-  localStorage.removeItem(SK);doLogout();
+  localStorage.removeItem(SK);location.reload();
 }
 
-// ══════════ HELPERS ══════════
-function getReceiverName(){var m=state.members.find(function(x){return x.id===state.currentReceiverId;});return m?m.name:'';}
-function getPaidCount(){return Object.keys(state.paidMembers).filter(function(k){return state.paidMembers[k];}).length;}
+// ══ HELPERS ══
+function getReceiverName(){var j=J();var m=j&&j.members.find(function(x){return x.id===j.currentReceiverId;});return m?m.name:'';}
+function getPaidCount(){var j=J();if(!j)return 0;return Object.keys(j.paidMembers).filter(function(k){return j.paidMembers[k];}).length;}
 function getSlotLabel(m){return(m.dueMonthNum&&m.dueYear)?MONTHS[m.dueMonthNum-1]+' '+m.dueYear:'غير محدد';}
 function getSortedMembers(){
-  return state.members.slice().sort(function(a,b){
+  var j=J();if(!j)return[];
+  return j.members.slice().sort(function(a,b){
     var ay=parseInt(a.dueYear)||9999,by=parseInt(b.dueYear)||9999;
     var am=parseInt(a.dueMonthNum)||99,bm=parseInt(b.dueMonthNum)||99;
     return ay!==by?ay-by:am-bm;
@@ -1231,14 +1331,14 @@ function copyText(t){
 }
 function esc(t){if(!t&&t!==0)return'';return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-// ══════════ MODALS ══════════
+// ══ MODALS ══
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.modal-overlay').forEach(function(o){
   o.addEventListener('click',function(e){if(e.target===o)o.classList.remove('open');});
 });
 
-// ══════════ TOAST ══════════
+// ══ TOAST ══
 var toastTimer;
 function showToast(msg,isErr){
   var t=document.getElementById('toast');
@@ -1247,13 +1347,10 @@ function showToast(msg,isErr){
   toastTimer=setTimeout(function(){t.classList.remove('show');},2600);
 }
 
-// ══════════ BOOT ══════════
+// ══ BOOT ══
 load();
-renderPublic();
-// auto-refresh public data every 30s
-setInterval(function(){
-  publicSyncFromCloud().then(renderPublic);
-},30000);
+renderJList();
+setInterval(function(){publicSync().then(function(){var s=document.getElementById('screenJameiaList');if(s.classList.contains('active'))renderJList();});},30000);
 </script>
 </body>
 </html>
