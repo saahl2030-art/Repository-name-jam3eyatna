@@ -265,4 +265,1797 @@ textarea{resize:vertical;min-height:70px}
 
     <!-- Step 3: Upload receipt (after registration approved) -->
     <div class="card" id="regUpload" style="display:none">
-      <div class="c
+      <div class="card-title">🧾 رفع إيصال التحويل</div>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:12px">بعد تحويل مبلغ الجمعية، ارفع إيصال التحويل هنا</p>
+      <div class="field"><label>صورة الإيصال *</label>
+        <input type="file" id="receiptFile" accept="image/*" onchange="previewReceipt()" style="background:transparent;border:1.5px dashed rgba(79,138,255,.3);padding:10px">
+      </div>
+      <img id="receiptPreview" style="display:none;max-width:100%;border-radius:10px;margin:8px 0;border:1.5px solid var(--border)">
+      <div class="field"><label>ملاحظة (اختياري)</label><input type="text" id="receiptNote" placeholder="مثال: تحويل بنكي الساعة 10 صباحاً"></div>
+      <div class="field"><label>اسمك (للتعريف)</label><input type="text" id="receiptMemberName" placeholder="أدخل اسمك"></div>
+      <button class="btn btn-purple" onclick="submitReceiptPublic()">📤 رفع الإيصال للمدير</button>
+    </div>
+
+    <!-- Success -->
+    <div class="card" id="regSuccess" style="display:none;text-align:center">
+      <div style="font-size:50px;margin-bottom:12px">🎉</div>
+      <div style="font-size:19px;font-weight:900;color:var(--accent2);margin-bottom:8px">تم التسجيل!</div>
+      <div id="regSuccessMsg" style="color:var(--muted);font-size:13px;line-height:1.8;margin-bottom:16px"></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button class="btn btn-purple" onclick="showReceiptUpload()">📤 رفع إيصال التحويل</button>
+        <button class="btn btn-ghost" onclick="showScreen('screenPublic')" style="width:100%">👁 عرض الجدول</button>
+      </div>
+    </div>
+
+    <div id="regLoading" style="display:none;text-align:center;padding:26px;color:var(--muted)">
+      <div style="font-size:28px;margin-bottom:8px">⏳</div>جاري التحقق...
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN: LOGIN ══ -->
+<div id="screenLogin" class="screen" style="min-height:100vh">
+  <div class="login-card" style="margin:60px auto 0">
+    <div style="width:60px;height:60px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 16px;box-shadow:0 0 32px rgba(79,138,255,.4)">🔐</div>
+    <h2 style="font-size:20px;font-weight:800;margin-bottom:5px">تسجيل الدخول</h2>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:18px">مدير جمعية أو مشرف المنصة</p>
+    <div class="field" style="text-align:right"><label>كلمة المرور</label><input type="password" id="loginPass" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <p id="loginError" style="color:var(--red);font-size:12px;margin-bottom:9px;display:none">كلمة المرور خاطئة</p>
+    <button class="btn btn-primary" onclick="doLogin()">دخول</button>
+    <button class="btn btn-ghost btn-sm" onclick="showScreen('screenJameiaList')" style="margin-top:9px;width:100%">← الرئيسية</button>
+  </div>
+</div>
+
+<!-- ══ SCREEN: GROUP ADMIN ══ -->
+<div id="screenGroupAdmin" class="screen">
+  <div class="topbar">
+    <div class="topbar-title">🏦 <span id="gaTopName">لوحتي</span></div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost btn-sm" onclick="gaRefresh()">🔄</button>
+      <button class="btn btn-ghost btn-sm" onclick="showScreen('screenPublic')">👁</button>
+      <button class="btn btn-ghost btn-sm" onclick="doLogout()">🚪</button>
+    </div>
+  </div>
+  <div class="main">
+    <!-- Trial banner -->
+    <div id="gaTrialBanner" style="display:none;background:linear-gradient(135deg,rgba(255,200,74,.15),rgba(255,165,0,.08));border:1px solid rgba(255,200,74,.4);border-radius:14px;padding:16px;margin-bottom:16px;text-align:center">
+      <div style="font-size:18px;font-weight:900;color:var(--gold);margin-bottom:5px">⚠️ وضع تجريبي</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:10px">يمكنك إضافة <strong style="color:var(--gold)">عضوين فقط</strong> في الوضع التجريبي.<br>لتفعيل جمعيتك كاملاً ادفع رسوم الاشتراك.</div>
+      <button class="btn btn-gold btn-sm" onclick="openPaymentRequest()">💳 طلب التفعيل الكامل</button>
+    </div>
+    <!-- Frozen banner -->
+    <div id="gaFrozenBanner" style="display:none;background:linear-gradient(135deg,rgba(255,91,110,.12),rgba(204,51,71,.08));border:1px solid rgba(255,91,110,.4);border-radius:14px;padding:16px;margin-bottom:16px;text-align:center">
+      <div style="font-size:18px;font-weight:900;color:var(--red);margin-bottom:5px">🔒 الحساب مجمّد</div>
+      <div style="font-size:13px;color:var(--muted)">تواصل مع مشرف المنصة لتفعيل حسابك.</div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="switchGATab('dashboard')">📊 الرئيسية</button>
+      <button class="tab" onclick="switchGATab('members')" id="gaTabMembers">👥 الأعضاء</button>
+      <button class="tab" onclick="switchGATab('receipts')">🧾 الإيصالات</button>
+      <button class="tab" onclick="switchGATab('schedule')">📅 الجدول</button>
+      <button class="tab" onclick="switchGATab('history')">📋 السجل</button>
+    </div>
+
+    <!-- GA DASHBOARD -->
+    <div class="tab-content active" id="gatab-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num" id="gast-members" style="color:var(--accent)">0</div><div class="stat-label">الأعضاء</div></div>
+        <div class="stat-card"><div class="stat-num" id="gast-pending" style="color:var(--gold)">0</div><div class="stat-label">طلبات</div></div>
+        <div class="stat-card"><div class="stat-num" id="gast-paid" style="color:var(--green)">0</div><div class="stat-label">دفعوا</div></div>
+        <div class="stat-card"><div class="stat-num" id="gast-history" style="color:var(--muted)">0</div><div class="stat-label">مكتملة</div></div>
+      </div>
+      <div class="month-hero">
+        <div class="hero-label">الشهر الحالي</div>
+        <div style="font-size:15px;color:var(--accent);font-weight:700;margin-bottom:7px" id="gaHeroMonth">—</div>
+        <div class="hero-label">مستلم هذا الشهر</div>
+        <div class="hero-receiver" id="gaHeroReceiver">لم يتم التحديد</div>
+        <div id="gaHeroIban" style="font-size:11px;color:var(--accent2);margin-top:4px;font-family:monospace"></div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-label"><span>تقدم الدفعات</span><span id="gaProgressLabel">0/0</span></div>
+          <div class="progress-bar"><div class="progress-fill" id="gaProgressFill" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔗 رابط التسجيل</div>
+        <div class="link-box" onclick="copyRegLink()"><span id="gaRegLink">—</span><button class="btn btn-ghost btn-sm">📋</button></div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">
+          <button class="btn btn-wa btn-sm" onclick="shareRegLink()">📤 واتساب</button>
+          <button class="btn btn-gold btn-sm" onclick="openCompleteModal()">✅ إنهاء الشهر</button>
+          <button class="btn btn-ghost btn-sm" onclick="openNewMonthModal()">📅 شهر جديد</button>
+          <button class="btn btn-wa btn-sm" onclick="shareWhatsApp()">📤 مشاركة الجدول</button>
+        </div>
+      </div>
+      <div class="card" id="gaUnpaidCard" style="display:none">
+        <div class="card-title">⚠️ لم يدفعوا بعد</div>
+        <div id="gaUnpaidList"></div>
+      </div>
+    </div>
+
+    <!-- GA MEMBERS -->
+    <div class="tab-content" id="gatab-members">
+      <div id="gaPendingSection" style="display:none">
+        <div class="section-header"><h3>⏳ طلبات جديدة</h3></div>
+        <div id="gaPendingList"></div>
+        <hr class="divider">
+      </div>
+      <div class="section-header">
+        <h3>👥 الأعضاء</h3>
+        <div style="display:flex;gap:5px">
+          <button class="btn btn-ghost btn-sm" onclick="openSwapModal()">🔄 تبديل</button>
+          <button class="btn btn-success btn-sm" id="gaAddMemberBtn" onclick="openAddMemberModal()">➕ يدوي</button>
+        </div>
+      </div>
+      <div id="gaMembersList"><div class="empty"><div class="empty-icon">👤</div>لا يوجد أعضاء</div></div>
+    </div>
+
+    <!-- GA RECEIPTS -->
+    <div class="tab-content" id="gatab-receipts">
+      <div class="section-header"><h3>🧾 إيصالات التحويل</h3></div>
+      <div id="gaReceiptsList"><div class="empty"><div class="empty-icon">🧾</div>لا توجد إيصالات</div></div>
+    </div>
+
+    <!-- GA SCHEDULE -->
+    <div class="tab-content" id="gatab-schedule">
+      <div class="card">
+        <div class="card-title">📅 الجدول</div>
+        <div style="display:flex;gap:6px;margin-bottom:10px">
+          <button class="btn btn-wa btn-sm" onclick="shareWhatsApp()">📤 واتساب</button>
+          <button class="btn btn-ghost btn-sm" onclick="copySchedule()">📋 نسخ</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="schedule-table">
+            <thead><tr><th>#</th><th>الشهر</th><th>المستلم</th><th>الآيبان</th><th>المبلغ</th><th>الحالة</th><th>إجراء</th></tr></thead>
+            <tbody id="gaScheduleBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- GA HISTORY -->
+    <div class="tab-content" id="gatab-history">
+      <div class="section-header"><h3>📋 السجل</h3></div>
+      <div id="gaHistoryList"><div class="empty"><div class="empty-icon">📋</div>لا يوجد سجل</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN: SUPER ADMIN ══ -->
+<div id="screenSuperAdmin" class="screen">
+  <div class="topbar">
+    <div class="topbar-title">👑 <span style="color:var(--gold)">مشرف المنصة</span></div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost btn-sm" onclick="superRefresh()">🔄</button>
+      <button class="btn btn-ghost btn-sm" onclick="doLogout()">🚪</button>
+    </div>
+  </div>
+  <div class="main">
+    <div class="tabs">
+      <button class="tab active" onclick="switchSuperTab('overview')">📊 نظرة عامة</button>
+      <button class="tab" onclick="switchSuperTab('groupadmins')">👤 المديرون</button>
+      <button class="tab" onclick="switchSuperTab('alljameias')">🏦 كل الجمعيات</button>
+      <button class="tab" onclick="switchSuperTab('payments')">💳 الدفعات</button>
+      <button class="tab" onclick="switchSuperTab('supersettings')">⚙️ إعدادات</button>
+    </div>
+
+    <!-- OVERVIEW -->
+    <div class="tab-content active" id="supertab-overview">
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num" id="sup-admins" style="color:var(--gold)">0</div><div class="stat-label">مديرو الجمعيات</div></div>
+        <div class="stat-card"><div class="stat-num" id="sup-jameias" style="color:var(--accent)">0</div><div class="stat-label">إجمالي الجمعيات</div></div>
+        <div class="stat-card"><div class="stat-num" id="sup-members" style="color:var(--green)">0</div><div class="stat-label">إجمالي الأعضاء</div></div>
+        <div class="stat-card"><div class="stat-num" id="sup-revenue" style="color:var(--accent2)">0</div><div class="stat-label">الإيرادات (د.إ)</div></div>
+      </div>
+      <div id="superOverviewList"></div>
+    </div>
+
+    <!-- GROUP ADMINS -->
+    <div class="tab-content" id="supertab-groupadmins">
+      <div class="section-header">
+        <h3>👤 مديرو الجمعيات</h3>
+        <button class="btn btn-success btn-sm" onclick="openAddGroupAdmin()">➕ إضافة مدير</button>
+      </div>
+      <div id="groupAdminsList"><div class="empty"><div class="empty-icon">👤</div>لا يوجد مديرون</div></div>
+    </div>
+
+    <!-- ALL JAMEIAS -->
+    <div class="tab-content" id="supertab-alljameias">
+      <div class="section-header"><h3>🏦 جميع الجمعيات</h3></div>
+      <div id="allJameiasList"></div>
+    </div>
+
+    <!-- PAYMENTS -->
+    <div class="tab-content" id="supertab-payments">
+      <div class="section-header"><h3>💳 طلبات الدفع والتفعيل</h3></div>
+      <div id="paymentRequestsList"><div class="empty"><div class="empty-icon">💳</div>لا توجد طلبات</div></div>
+    </div>
+
+    <!-- SUPER SETTINGS -->
+    <div class="tab-content" id="supertab-supersettings">
+      <div class="card">
+        <div class="card-title">⚙️ إعدادات المنصة</div>
+        <div class="field"><label>رسوم الاشتراك لكل جمعية (د.إ)</label><input type="number" id="supSubFee" value="300"></div>
+        <div class="field"><label>الحد الأقصى للأعضاء في الوضع التجريبي</label><input type="number" id="supTrialLimit" value="2"></div>
+        <div class="field"><label>آيبان استلام الرسوم</label><input type="text" id="supIban" placeholder="AE..."></div>
+        <div class="field"><label>رقم واتساب للتواصل</label><input type="text" id="supPhone" placeholder="971501234567"></div>
+        <button class="btn btn-primary" onclick="saveSuperSettings()" style="max-width:150px">💾 حفظ</button>
+        <hr class="divider">
+        <div class="card-title" style="margin-bottom:11px">☁️ إعداد السحابة</div>
+        <div class="field"><label>Master API Key (JSONBin)</label><input type="text" id="supApiKey" placeholder="$2b$10$..."></div>
+        <button class="btn btn-success" onclick="setupCloud()" style="max-width:180px">☁️ حفظ وإنشاء</button>
+        <div id="cloudStatus" style="margin-top:9px;font-size:12px;color:var(--muted)"></div>
+        <div id="binIdRow" style="display:none;margin-top:9px">
+          <div class="field"><label>Bin ID</label><input type="text" id="cfgBinId" readonly style="opacity:.7;font-family:monospace;font-size:12px"></div>
+        </div>
+        <hr class="divider">
+        <div class="field"><label>كلمة مرور مشرف المنصة (Super)</label><input type="password" id="supPassInput" placeholder="كلمة مرور جديدة"></div>
+        <button class="btn btn-ghost btn-sm" onclick="changeSuperPass()">تغيير</button>
+        <hr class="divider">
+        <button class="btn btn-danger btn-sm" onclick="resetAll()">⚠️ إعادة ضبط كامل</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCREEN: ADMIN ══ -->
+<div id="screenAdmin" class="screen">
+  <div class="topbar">
+    <div class="topbar-title">
+      <span class="sync-dot" id="syncDot"></span>
+      🏦 <span id="topbarName" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:120px">جمعية</span>
+    </div>
+    <div class="topbar-actions">
+      <select id="jameiaSelector" onchange="switchJameia(this.value)" style="width:auto;padding:6px 10px;font-size:12px;border-radius:8px;max-width:130px"></select>
+      <button class="btn btn-success btn-sm" onclick="openAddJameiaModal()">➕</button>
+      <button class="btn btn-ghost btn-sm" onclick="adminRefresh()">🔄</button>
+      <button class="btn btn-ghost btn-sm" onclick="showScreen('screenPublic')">👁</button>
+      <button class="btn btn-ghost btn-sm" onclick="doLogout()">🚪</button>
+    </div>
+  </div>
+  <div class="main">
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('dashboard')">📊 الرئيسية</button>
+      <button class="tab" onclick="switchTab('members')" id="tabMembers">👥 الأعضاء</button>
+      <button class="tab" onclick="switchTab('receipts')">🧾 الإيصالات</button>
+      <button class="tab" onclick="switchTab('schedule')">📅 الجدول</button>
+      <button class="tab" onclick="switchTab('history')">📋 السجل</button>
+      <button class="tab" onclick="switchTab('setup')">⚙️ الإعداد</button>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="tab-content active" id="tab-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num" id="st-members" style="color:var(--accent)">0</div><div class="stat-label">الأعضاء</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-pending" style="color:var(--gold)">0</div><div class="stat-label">طلبات معلقة</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-paid" style="color:var(--green)">0</div><div class="stat-label">دفعوا الشهر</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-history" style="color:var(--muted)">0</div><div class="stat-label">أشهر مكتملة</div></div>
+      </div>
+      <div class="month-hero">
+        <div class="hero-label">الشهر الحالي</div>
+        <div style="font-size:15px;color:var(--accent);font-weight:700;margin-bottom:7px" id="heroMonthName">—</div>
+        <div class="hero-label">مستلم هذا الشهر</div>
+        <div class="hero-receiver" id="heroReceiver">لم يتم التحديد</div>
+        <div id="heroIban" style="font-size:11px;color:var(--accent2);margin-top:4px;font-family:monospace"></div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px" id="heroAmount"></div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-label"><span>تقدم الدفعات</span><span id="progressLabel">0/0</span></div>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔗 رابط التسجيل للأعضاء</div>
+        <p style="color:var(--muted);font-size:12px;margin-bottom:8px">أرسل هذا الرابط للأعضاء لكي يسجلوا ويحجزوا شهرهم</p>
+        <div class="link-box" onclick="copyRegLink()"><span id="regLinkDisplay">—</span><button class="btn btn-ghost btn-sm">📋 نسخ</button></div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">
+          <button class="btn btn-wa btn-sm" onclick="shareRegLink()">📤 واتساب</button>
+          <button class="btn btn-gold btn-sm" onclick="openCompleteModal()">✅ إنهاء الشهر</button>
+          <button class="btn btn-ghost btn-sm" onclick="openNewMonthModal()">📅 شهر جديد</button>
+          <button class="btn btn-wa btn-sm" onclick="shareWhatsApp()">📤 مشاركة الجدول</button>
+        </div>
+      </div>
+      <div class="card" id="unpaidCard" style="display:none">
+        <div class="card-title">⚠️ لم يدفعوا بعد</div>
+        <div id="unpaidList"></div>
+      </div>
+    </div>
+
+    <!-- MEMBERS -->
+    <div class="tab-content" id="tab-members">
+      <div id="pendingSection" style="display:none">
+        <div class="section-header"><h3>⏳ طلبات تسجيل جديدة</h3></div>
+        <div id="pendingList"></div>
+        <hr class="divider">
+      </div>
+      <div class="section-header">
+        <h3>👥 الأعضاء المقبولون</h3>
+        <div style="display:flex;gap:5px;flex-wrap:wrap">
+          <button class="btn btn-ghost btn-sm" onclick="openSwapModal()">🔄 تبديل</button>
+          <button class="btn btn-success btn-sm" onclick="openAddMemberModal()">➕ يدوي</button>
+        </div>
+      </div>
+      <div id="membersList"><div class="empty"><div class="empty-icon">👤</div>لا يوجد أعضاء</div></div>
+    </div>
+
+    <!-- RECEIPTS -->
+    <div class="tab-content" id="tab-receipts">
+      <div class="section-header"><h3>🧾 إيصالات التحويل</h3></div>
+      <div id="receiptsList"><div class="empty"><div class="empty-icon">🧾</div>لا توجد إيصالات</div></div>
+    </div>
+
+    <!-- SCHEDULE -->
+    <div class="tab-content" id="tab-schedule">
+      <div class="card">
+        <div class="card-title">📅 الجدول السنوي</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:11px">
+          <button class="btn btn-wa btn-sm" onclick="shareWhatsApp()">📤 واتساب</button>
+          <button class="btn btn-ghost btn-sm" onclick="copySchedule()">📋 نسخ</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="schedule-table">
+            <thead><tr><th>#</th><th>الشهر</th><th>المستلم</th><th>الآيبان</th><th>المبلغ</th><th>الحالة</th><th>إجراء</th></tr></thead>
+            <tbody id="scheduleBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORY -->
+    <div class="tab-content" id="tab-history">
+      <div class="section-header">
+        <h3>📋 سجل الأشهر</h3>
+        <button class="btn btn-danger btn-sm" onclick="clearHistory()">🗑 مسح</button>
+      </div>
+      <div id="historyList"><div class="empty"><div class="empty-icon">📋</div>لا يوجد سجل</div></div>
+    </div>
+
+    <!-- SETUP -->
+    <div class="tab-content" id="tab-setup">
+      <div class="card">
+        <div class="card-title">☁️ إعداد السحابة</div>
+        <p style="color:var(--muted);font-size:12px;line-height:1.7;margin-bottom:12px">أنشئ حساباً مجانياً على <strong style="color:var(--accent)">jsonbin.io</strong> ثم أدخل الـ Master Key</p>
+        <div class="field"><label>Master API Key</label><input type="text" id="cfgApiKey" placeholder="$2b$10$..."></div>
+        <button class="btn btn-success" onclick="setupCloud()" style="max-width:180px">☁️ حفظ وإنشاء</button>
+        <div id="cloudStatus" style="margin-top:9px;font-size:12px;color:var(--muted)"></div>
+        <div id="binIdRow" style="display:none;margin-top:9px">
+          <div class="field"><label>Bin ID</label><input type="text" id="cfgBinId" readonly style="opacity:.7;font-family:monospace;font-size:12px"></div>
+        </div>
+        <hr class="divider">
+        <div class="card-title" style="margin-bottom:11px">⚙️ إعدادات الجمعية الحالية</div>
+        <div class="settings-grid">
+          <div class="field"><label>اسم الجمعية</label><input type="text" id="cfgName"></div>
+          <div class="field"><label>مبلغ الاشتراك (د.إ)</label><input type="number" id="cfgAmount"></div>
+        </div>
+        <div class="field"><label>الشهر الحالي</label><input type="text" id="cfgMonthName"></div>
+        <div class="field"><label>ملاحظة</label><input type="text" id="cfgMonthNote"></div>
+        <button class="btn btn-primary" onclick="saveSettings()" style="max-width:150px;margin-top:5px">💾 حفظ</button>
+        <hr class="divider">
+        <div class="field"><label>تغيير كلمة المرور</label><input type="password" id="cfgPass" placeholder="كلمة مرور جديدة"></div>
+        <button class="btn btn-ghost btn-sm" onclick="changePass()">تغيير</button>
+        <hr class="divider">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-danger btn-sm" onclick="deleteCurrentJameia()">🗑 حذف هذه الجمعية</button>
+          <button class="btn btn-danger btn-sm" onclick="resetAll()">⚠️ إعادة ضبط كامل</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODALS ══ -->
+<div class="modal-overlay" id="modalAddJameia">
+  <div class="modal">
+    <div class="modal-title">➕ إنشاء جمعية جديدة</div>
+    <div class="field"><label>اسم الجمعية *</label><input type="text" id="newJameiaName" placeholder="مثال: جمعية الدوام"></div>
+    <div class="field"><label>مبلغ الاشتراك (د.إ) *</label><input type="number" id="newJameiaAmount" placeholder="500"></div>
+    <div class="field"><label>الأيقونة</label>
+      <div style="display:flex;gap:7px;flex-wrap:wrap" id="iconPicker">
+        <span class="icon-opt sel" data-icon="🏦" data-color="#4f8aff" onclick="pickIcon(this)" style="font-size:22px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid var(--accent)">🏦</span>
+        <span class="icon-opt" data-icon="👨‍👩‍👧" data-color="#0ea36a" onclick="pickIcon(this)" style="font-size:22px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid var(--border)">👨‍👩‍👧</span>
+        <span class="icon-opt" data-icon="🏢" data-color="#c4870a" onclick="pickIcon(this)" style="font-size:22px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid var(--border)">🏢</span>
+        <span class="icon-opt" data-icon="🤝" data-color="#7c3aed" onclick="pickIcon(this)" style="font-size:22px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid var(--border)">🤝</span>
+        <span class="icon-opt" data-icon="💼" data-color="#cc3347" onclick="pickIcon(this)" style="font-size:22px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid var(--border)">💼</span>
+        <span class="icon-opt" data-icon="🌟" data-color="#ffc84a" onclick="pickIcon(this)" style="font-size:22px;cursor:pointer;padding:6px;border-radius:8px;border:2px solid var(--border)">🌟</span>
+      </div>
+      <input type="hidden" id="newJameiaIcon" value="🏦">
+      <input type="hidden" id="newJameiaColor" value="#4f8aff">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modalAddJameia')">إلغاء</button>
+      <button class="btn btn-success" onclick="createJameia()">إنشاء</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalAddMember">
+  <div class="modal">
+    <div class="modal-title">➕ إضافة عضو يدوياً</div>
+    <div class="field"><label>الاسم *</label><input type="text" id="mName"></div>
+    <div class="field"><label>الهاتف</label><input type="text" id="mPhone"></div>
+    <div class="field"><label>الآيبان</label><input type="text" id="mIban" placeholder="AE..."></div>
+    <div class="field"><label>شهر الاستحقاق</label>
+      <div style="display:flex;gap:7px"><select id="mDueMonth" style="flex:2"></select><select id="mDueYear" style="flex:1"></select></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modalAddMember')">إلغاء</button>
+      <button class="btn btn-success" onclick="addMember()">إضافة</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalEditMember">
+  <div class="modal">
+    <div class="modal-title">✏️ تعديل العضو</div>
+    <input type="hidden" id="editId">
+    <div class="field"><label>الاسم</label><input type="text" id="editName"></div>
+    <div class="field"><label>الهاتف</label><input type="text" id="editPhone"></div>
+    <div class="field"><label>الآيبان</label><input type="text" id="editIban"></div>
+    <div class="field"><label>شهر الاستحقاق</label>
+      <div style="display:flex;gap:7px"><select id="editDueMonth" style="flex:2"></select><select id="editDueYear" style="flex:1"></select></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modalEditMember')">إلغاء</button>
+      <button class="btn btn-primary" onclick="saveEditMember()">حفظ</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalSwap">
+  <div class="modal">
+    <div class="modal-title">🔄 تبديل الأشهر</div>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:11px">اختر عضوين لتبديل شهر استحقاقهما</p>
+    <div id="swapList"></div>
+    <p id="swapStatus" style="margin-top:8px;font-size:12px;color:var(--gold);font-weight:700;min-height:16px"></p>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modalSwap')">إلغاء</button>
+      <button class="btn btn-gold" onclick="confirmSwap()">🔄 تأكيد</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalComplete">
+  <div class="modal">
+    <div class="modal-title">✅ إنهاء الشهر</div>
+    <div class="field"><label>الشهر</label>
+      <div style="display:flex;gap:7px;margin-bottom:7px">
+        <select id="completeMonthSel" style="flex:2" onchange="syncCompleteMonth()"></select>
+        <select id="completeYearSel" style="flex:1" onchange="syncCompleteMonth()"></select>
+      </div>
+      <input type="text" id="completeMonthName" placeholder="أو اكتب يدوياً">
+    </div>
+    <div class="field"><label>المستلم</label><input type="text" id="completeReceiver" readonly style="opacity:.7"></div>
+    <div class="field"><label>ملاحظة</label><input type="text" id="completeNote"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modalComplete')">إلغاء</button>
+      <button class="btn btn-gold" onclick="completeMonth()">✅ تأكيد</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalNewMonth">
+  <div class="modal">
+    <div class="modal-title">📅 فتح شهر جديد</div>
+    <div class="field"><label>الشهر الجديد</label>
+      <div style="display:flex;gap:7px;margin-bottom:7px">
+        <select id="newMonthSel" style="flex:2" onchange="syncNewMonth()"></select>
+        <select id="newYearSel" style="flex:1" onchange="syncNewMonth()"></select>
+      </div>
+      <input type="text" id="newMonthName" placeholder="أو اكتب يدوياً">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modalNewMonth')">إلغاء</button>
+      <button class="btn btn-primary" onclick="confirmNewMonth()">فتح</button>
+    </div>
+  </div>
+</div>
+
+<!-- Receipt full view -->
+<div class="modal-overlay" id="modalReceiptView">
+  <div class="modal" style="max-width:440px;text-align:center">
+    <div class="modal-title" id="receiptViewTitle">🧾 إيصال التحويل</div>
+    <div id="receiptViewContent"></div>
+    <div class="modal-footer" style="justify-content:center">
+      <button class="btn btn-ghost" onclick="closeModal('modalReceiptView')">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Group Admin Modal -->
+<div class="modal-overlay" id="modalAddGroupAdmin">
+  <div class="modal">
+    <div class="modal-title">➕ إضافة مدير جمعية</div>
+    <div class="field"><label>الاسم *</label><input type="text" id="gaName" placeholder="اسم المدير"></div>
+    <div class="field"><label>الهاتف *</label><input type="text" id="gaPhone" placeholder="0501234567"></div>
+    <div class="field"><label>كلمة المرور *</label><input type="password" id="gaPass" placeholder="كلمة مرور للمدير"></div>
+    <div class="field"><label>نوع الحساب</label>
+      <select id="gaStatus">
+        <option value="trial">تجريبي (حتى عضوين)</option>
+        <option value="active">مفعّل كامل</option>
+      </select>
+    </div>
+    <div class="field"><label>ربط بجمعية موجودة (اختياري)</label>
+      <select id="gaJameiaLink"><option value="">— بدون ربط —</option></select>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modalAddGroupAdmin')">إلغاء</button>
+      <button class="btn btn-success" onclick="createGroupAdmin()">إضافة المدير</button>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Request Modal -->
+<div class="modal-overlay" id="modalPaymentRequest">
+  <div class="modal" style="text-align:center">
+    <div class="modal-title">💳 طلب التفعيل الكامل</div>
+    <div style="font-size:36px;margin-bottom:12px">🏦</div>
+    <div id="payReqDetails" style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px;text-align:right">
+      <div style="margin-bottom:8px"><span style="color:var(--muted);font-size:12px">رسوم الاشتراك:</span><br><span style="font-size:22px;font-weight:900;color:var(--gold)" id="payReqFee">300 د.إ</span></div>
+      <div style="margin-bottom:8px"><span style="color:var(--muted);font-size:12px">تحويل على آيبان:</span><br><span style="font-family:monospace;font-size:13px;color:var(--accent2)" id="payReqIban" onclick="copyText(document.getElementById('payReqIban').textContent)">—</span></div>
+      <div><span style="color:var(--muted);font-size:12px">أو تواصل واتساب:</span><br><span id="payReqPhone" style="color:var(--green);font-weight:700">—</span></div>
+    </div>
+    <div class="field"><label>ملاحظة (رقم التحويل)</label><input type="text" id="payReqNote" placeholder="رقم العملية أو وقت التحويل"></div>
+    <button class="btn btn-gold" onclick="submitPaymentRequest()">📤 إرسال طلب التفعيل</button>
+    <button class="btn btn-ghost btn-sm" onclick="closeModal('modalPaymentRequest')" style="margin-top:8px;width:100%">إلغاء</button>
+  </div>
+</div>
+
+<!-- View Jameia Details (Super Admin) -->
+<div class="modal-overlay" id="modalViewJameia">
+  <div class="modal">
+    <div class="modal-title" id="viewJameiaTitle">🏦 تفاصيل الجمعية</div>
+    <div id="viewJameiaContent"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modalViewJameia')">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ══ CONSTANTS ══
+var SK='jam3eya_v9';
+var MONTHS=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+
+// ══ STATE ══
+// rootState: { adminPass, apiKey, binId, jameias[] }
+// jameia: { id, name, amount, icon, color, monthName, monthNote,
+//   members[], pendingMembers[], currentReceiverId, paidMembers{},
+//   completedSlots[], history[], receipts:{memberId:[{data,note,date,memberName}]} }
+// roleType: 'super' | 'group'
+// groupAdmins: [{id, name, phone, pass, status:'trial'|'active'|'frozen', jameiaIds:[], createdAt, paidAt}]
+var rootState={adminPass:'1234',superPass:'super1234',apiKey:'',binId:'',jameias:[],groupAdmins:[]};
+var currentJId=null;
+var currentRole=null; // 'super' | 'group'
+var currentGroupAdminId=null;
+
+function J(){return rootState.jameias.find(function(j){return j.id===currentJId;})||null;}
+
+function makeJ(name,amount,icon,color){
+  return{id:'j'+Date.now(),name:name,amount:parseFloat(amount)||500,
+    icon:icon||'🏦',color:color||'#4f8aff',
+    monthName:'',monthNote:'',members:[],pendingMembers:[],
+    currentReceiverId:'',paidMembers:{},completedSlots:[],history:[],receipts:{}};
+}
+
+// ══ PERSIST ══
+function save(){localStorage.setItem(SK,JSON.stringify(rootState));}
+function load(){
+  try{var d=localStorage.getItem(SK);if(d)rootState=Object.assign({},rootState,JSON.parse(d));}catch(e){}
+  if(!rootState.jameias.length) rootState.jameias.push(makeJ('جمعيتي الأولى',500,'🏦','#4f8aff'));
+  if(!rootState.groupAdmins) rootState.groupAdmins=[];
+  if(!rootState.superPass) rootState.superPass='super1234';
+  rootState.jameias.forEach(function(j){
+    if(!j.pendingMembers)j.pendingMembers=[];
+    if(!j.completedSlots)j.completedSlots=[];
+    if(!j.receipts)j.receipts={};
+    if(!j.paidMembers)j.paidMembers={};
+  });
+  if(!currentJId) currentJId=rootState.jameias[0].id;
+}
+
+// ══ CLOUD ══
+function ch(){return{'Content-Type':'application/json','X-Master-Key':rootState.apiKey,'X-Bin-Private':'false'};}
+function setSS(s){var d=document.getElementById('syncDot');if(!d)return;d.className='sync-dot'+(s==='ok'?'':s==='sync'?' syncing':' error');}
+
+async function syncUp(){
+  if(!rootState.apiKey||!rootState.binId)return;
+  setSS('sync');
+  try{await fetch('https://api.jsonbin.io/v3/b/'+rootState.binId,{method:'PUT',headers:ch(),body:JSON.stringify(rootState)});setSS('ok');}
+  catch(e){setSS('error');}
+}
+async function syncDown(){
+  if(!rootState.apiKey||!rootState.binId)return;
+  setSS('sync');
+  try{
+    var res=await fetch('https://api.jsonbin.io/v3/b/'+rootState.binId+'/latest',{headers:{'X-Master-Key':rootState.apiKey}});
+    var data=await res.json();var remote=data.record;
+    var keep={apiKey:rootState.apiKey,binId:rootState.binId,adminPass:rootState.adminPass,superPass:rootState.superPass};
+    rootState=Object.assign({},rootState,remote,keep);
+    rootState.jameias.forEach(function(j){
+      if(!j.pendingMembers)j.pendingMembers=[];
+      if(!j.completedSlots)j.completedSlots=[];
+      if(!j.receipts)j.receipts={};
+      if(!j.paidMembers)j.paidMembers={};
+    });
+    if(!rootState.groupAdmins)rootState.groupAdmins=[];
+    save();setSS('ok');
+  }catch(e){setSS('error');}
+}
+async function publicSync(){
+  if(!rootState.binId)return;
+  try{
+    var h=rootState.apiKey?{'X-Master-Key':rootState.apiKey}:{};
+    var res=await fetch('https://api.jsonbin.io/v3/b/'+rootState.binId+'/latest',{headers:h});
+    var data=await res.json();var remote=data.record;
+    var keep={apiKey:rootState.apiKey,binId:rootState.binId,adminPass:rootState.adminPass,superPass:rootState.superPass};
+    rootState=Object.assign({},rootState,remote,keep);
+    rootState.jameias.forEach(function(j){
+      if(!j.pendingMembers)j.pendingMembers=[];
+      if(!j.completedSlots)j.completedSlots=[];
+      if(!j.receipts)j.receipts={};
+      if(!j.paidMembers)j.paidMembers={};
+    });
+    save();
+  }catch(e){}
+}
+
+// ══ SCREENS ══
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');s.style.display='none';});
+  var el=document.getElementById(id);
+  if(id==='screenLogin') el.style.cssText='display:flex;align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(ellipse at 60% 30%,#1a2f5a 0%,#070d1a 70%)';
+  else el.style.display='block';
+  el.classList.add('active');
+  if(id==='screenPublic'){publicSync().then(renderPublic);renderPublic();}
+  if(id==='screenJameiaList'){publicSync().then(renderJList);renderJList();}
+}
+
+// ══ AUTH ══
+function doLogin(){
+  load();
+  var pass=document.getElementById('loginPass').value;
+  document.getElementById('loginError').style.display='none';
+  // Super Admin
+  if(pass===rootState.superPass){
+    currentRole='super';currentGroupAdminId=null;
+    syncDown().then(function(){renderSuperAdmin();});
+    showScreen('screenSuperAdmin');
+    return;
+  }
+  // Group Admin
+  var ga=(rootState.groupAdmins||[]).find(function(a){return a.pass===pass;});
+  if(ga){
+    if(ga.status==='frozen'){showToast('حسابك مجمّد. تواصل مع المشرف',true);return;}
+    currentRole='group';currentGroupAdminId=ga.id;
+    // set currentJId to first jameia of this admin
+    if(ga.jameiaIds&&ga.jameiaIds.length) currentJId=ga.jameiaIds[0];
+    else if(rootState.jameias.length) currentJId=rootState.jameias[0].id;
+    syncDown().then(function(){renderGroupAdmin();});
+    showScreen('screenGroupAdmin');
+    return;
+  }
+  // Legacy admin pass fallback
+  if(pass===rootState.adminPass){
+    currentRole='super';currentGroupAdminId=null;
+    buildJSel();fillSetup();
+    syncDown().then(function(){renderAll();renderSchedule();renderHistory();renderReceipts();updateBadge();});
+    showScreen('screenAdmin');
+    return;
+  }
+  document.getElementById('loginError').style.display='block';
+}
+function doLogout(){
+  document.getElementById('loginPass').value='';
+  currentRole=null;currentGroupAdminId=null;
+  showScreen('screenJameiaList');
+}
+function adminRefresh(){syncDown().then(function(){renderAll();renderSchedule();renderHistory();renderReceipts();updateBadge();showToast('تم التحديث ✓');});}
+function gaRefresh(){syncDown().then(function(){renderGroupAdmin();showToast('تم التحديث ✓');});}
+function superRefresh(){syncDown().then(function(){renderSuperAdmin();showToast('تم التحديث ✓');});}
+
+// ══ GROUP ADMIN RENDER ══
+function getGA(){return(rootState.groupAdmins||[]).find(function(a){return a.id===currentGroupAdminId;})||null;}
+function getGAJameia(){
+  var ga=getGA();if(!ga)return J();
+  if(ga.jameiaIds&&ga.jameiaIds.length){
+    return rootState.jameias.find(function(j){return j.id===ga.jameiaIds[0];})||null;
+  }
+  return J();
+}
+function renderGroupAdmin(){
+  var ga=getGA();var j=getGAJameia();
+  if(!j)return;
+  currentJId=j.id;
+  document.getElementById('gaTopName').textContent=j.name;
+  // banners
+  document.getElementById('gaTrialBanner').style.display=ga&&ga.status==='trial'?'block':'none';
+  document.getElementById('gaFrozenBanner').style.display=ga&&ga.status==='frozen'?'block':'none';
+  // disable add member if trial & full
+  var trialLimit=rootState.superSettings&&rootState.superSettings.trialLimit||2;
+  var gaBtn=document.getElementById('gaAddMemberBtn');
+  if(ga&&ga.status==='trial'&&j.members.length>=trialLimit){
+    if(gaBtn){gaBtn.disabled=true;gaBtn.title='وصلت للحد التجريبي';}
+  } else {if(gaBtn)gaBtn.disabled=false;}
+  // stats
+  var pc=getPaidCount(),tot=j.members.length;
+  document.getElementById('gast-members').textContent=tot;
+  document.getElementById('gast-pending').textContent=(j.pendingMembers||[]).length;
+  document.getElementById('gast-paid').textContent=pc;
+  document.getElementById('gast-history').textContent=j.history.length;
+  var recM=j.members.find(function(x){return x.id===j.currentReceiverId;});
+  document.getElementById('gaHeroMonth').textContent=j.monthName||'—';
+  document.getElementById('gaHeroReceiver').textContent=recM?recM.name:'لم يتم التحديد';
+  document.getElementById('gaHeroIban').textContent=recM&&recM.iban?'IBAN: '+recM.iban:'';
+  var pct=tot?Math.round(pc/tot*100):0;
+  document.getElementById('gaProgressLabel').textContent=pc+'/'+tot;
+  document.getElementById('gaProgressFill').style.width=pct+'%';
+  document.getElementById('gaRegLink').textContent=window.location.href.split('?')[0];
+  // unpaid
+  var unpaid=j.members.filter(function(m){return !j.paidMembers[m.id];});
+  var uc=document.getElementById('gaUnpaidCard');
+  if(unpaid.length){uc.style.display='block';document.getElementById('gaUnpaidList').innerHTML=unpaid.map(function(m){
+    return '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">'
+      +'<div><div style="font-weight:700;font-size:13px">'+esc(m.name)+'</div></div>'
+      +'<button class="btn btn-success btn-sm" onclick="togglePaid(\''+m.id+'\');renderGroupAdmin()">✓ دفع</button></div>';
+  }).join('');}else uc.style.display='none';
+  // members
+  renderGAMembers();renderGAPending();renderGAReceipts();renderGASchedule();renderGAHistory();
+  // update badges
+  var bc=document.getElementById('gaTabMembers');
+  var bo=bc.querySelector('.tab-badge');if(bo)bo.remove();
+  var cnt=(j.pendingMembers||[]).length;
+  if(cnt>0){var bs=document.createElement('span');bs.className='tab-badge';bs.textContent=cnt;bc.appendChild(bs);}
+}
+function switchGATab(name){
+  var names=['dashboard','members','receipts','schedule','history'];
+  document.querySelectorAll('#screenGroupAdmin .tab').forEach(function(t,i){t.classList.toggle('active',names[i]===name);});
+  document.querySelectorAll('#screenGroupAdmin .tab-content').forEach(function(c){c.classList.toggle('active',c.id==='gatab-'+name);});
+}
+function renderGAMembers(){
+  var j=getGAJameia();if(!j)return;
+  var box=document.getElementById('gaMembersList');
+  if(!j.members.length){box.innerHTML='<div class="empty"><div class="empty-icon">👤</div>لا يوجد أعضاء</div>';return;}
+  box.innerHTML=j.members.map(function(m){
+    var isRec=j.currentReceiverId===m.id,isPaid=!!j.paidMembers[m.id];
+    var recs=j.receipts[m.id]||[];
+    return '<div class="member-card'+(isRec?' is-receiver':'')+'"><div class="mc-top">'
+      +'<div class="avatar">'+m.name[0]+'</div>'
+      +'<div class="member-info"><div class="member-name-el">'+esc(m.name)+'</div>'
+      +(m.phone?'<div class="member-sub">📞 '+esc(m.phone)+'</div>':'')
+      +(m.iban?'<div class="member-iban" onclick="copyText(\''+esc(m.iban)+'\')">🏦 '+esc(m.iban)+'</div>':'')
+      +'<div class="member-badges"><span class="badge badge-blue">'+getSlotLabel(m)+'</span>'
+      +(isRec?'<span class="badge badge-gold">⭐ مستلم</span>':'')
+      +(isPaid?'<span class="badge badge-green">✓ دفع</span>':'<span class="badge badge-red">✗ لم يدفع</span>')
+      +(recs.length?'<span class="badge badge-purple">🧾 '+recs.length+'</span>':'')
+      +'</div></div>'
+      +(recs.length?'<img src="'+recs[recs.length-1].data+'" class="receipt-thumb" onclick="switchGATab(\'receipts\')">':'<div class="receipt-placeholder">📄</div>')
+      +'</div>'
+      +'<div class="member-actions">'
+        +'<button class="btn btn-sm btn-gold" onclick="setReceiver(\''+m.id+'\');renderGroupAdmin()">👑</button>'
+        +'<button class="btn btn-sm '+(isPaid?'btn-danger':'btn-success')+'" onclick="togglePaid(\''+m.id+'\');renderGroupAdmin()">'+(isPaid?'↩':'✓')+'</button>'
+        +'<button class="btn btn-sm btn-ghost" onclick="openEditMember(\''+m.id+'\')">✏️</button>'
+        +'<button class="btn btn-sm btn-danger" onclick="deleteMember(\''+m.id+'\');renderGroupAdmin()">🗑</button>'
+      +'</div></div>';
+  }).join('');
+}
+function renderGAPending(){
+  var j=getGAJameia();if(!j)return;
+  var ps=document.getElementById('gaPendingSection'),pl=document.getElementById('gaPendingList');
+  if(!(j.pendingMembers||[]).length){ps.style.display='none';return;}
+  ps.style.display='block';
+  // Check trial limit before showing approve
+  var ga=getGA();var trialLimit=rootState.superSettings&&rootState.superSettings.trialLimit||2;
+  pl.innerHTML=j.pendingMembers.map(function(m,i){
+    var canApprove=!(ga&&ga.status==='trial'&&j.members.length>=trialLimit);
+    return '<div class="member-card pending"><div class="mc-top">'
+      +'<div class="avatar av-gold">'+m.name[0]+'</div>'
+      +'<div class="member-info"><div class="member-name-el">'+esc(m.name)+'</div>'
+      +(m.phone?'<div class="member-sub">📞 '+esc(m.phone)+'</div>':'')
+      +(m.iban?'<div class="member-iban">🏦 '+esc(m.iban)+'</div>':'')
+      +'<div class="member-badges"><span class="badge badge-blue">'+getSlotLabel(m)+'</span>'
+      +'<span class="badge badge-orange">⏳ انتظار</span></div></div></div>'
+      +'<div class="member-actions">'
+        +(canApprove?'<button class="btn btn-sm btn-success" onclick="approveMember('+i+');renderGroupAdmin()">✅ قبول</button>'
+          :'<button class="btn btn-sm btn-gold" onclick="openPaymentRequest()">⚠️ فعّل الحساب</button>')
+        +'<button class="btn btn-sm btn-danger" onclick="rejectMember('+i+');renderGroupAdmin()">❌ رفض</button>'
+      +'</div></div>';
+  }).join('');
+}
+function renderGAReceipts(){
+  var j=getGAJameia();if(!j)return;
+  var box=document.getElementById('gaReceiptsList');
+  var allR=[];
+  j.members.forEach(function(m){(j.receipts[m.id]||[]).forEach(function(r,i){allR.push({member:m,rec:r,memberId:m.id,idx:i});});});
+  var pubRecs=j.receipts['__public']||[];
+  pubRecs.forEach(function(r,i){allR.push({member:{name:r.memberName||'—',id:'__public'},rec:r,memberId:'__public',idx:i});});
+  if(!allR.length){box.innerHTML='<div class="empty"><div class="empty-icon">🧾</div>لا توجد إيصالات</div>';return;}
+  box.innerHTML=allR.map(function(item){
+    var m=item.member,r=item.rec,isPaid=m.id!=='__public'&&!!j.paidMembers[m.id];
+    return '<div class="member-card"><div style="display:flex;gap:11px;align-items:center;width:100%">'
+      +'<img src="'+r.data+'" class="receipt-thumb" onclick="viewReceiptModal(\''+item.memberId+'\','+item.idx+')" style="width:64px;height:64px">'
+      +'<div style="flex:1"><div style="font-weight:700;font-size:14px">'+esc(m.name)+'</div>'
+      +(r.note?'<div style="font-size:12px;color:var(--accent2)">'+esc(r.note)+'</div>':'')
+      +'<div style="font-size:11px;color:var(--muted)">📅 '+esc(r.date)+'</div>'
+      +(isPaid?'<span class="badge badge-green">✓ مدفوع</span>':'<span class="badge badge-red">⏳ لم يُقبل</span>')
+      +'</div><div style="display:flex;flex-direction:column;gap:5px">'
+      +(m.id!=='__public'&&!isPaid?'<button class="btn btn-success btn-sm" onclick="togglePaid(\''+m.id+'\');renderGroupAdmin()">✓ قبول</button>':'')
+      +'<button class="btn btn-danger btn-sm" onclick="deleteReceipt(\''+item.memberId+'\','+item.idx+');renderGroupAdmin()">🗑</button>'
+      +'</div></div></div>';
+  }).join('');
+}
+function renderGASchedule(){
+  var j=getGAJameia();if(!j)return;
+  var body=document.getElementById('gaScheduleBody');
+  var sorted=getSortedMembers();
+  if(!sorted.length){body.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:16px">لا يوجد أعضاء</td></tr>';return;}
+  body.innerHTML=sorted.map(function(m,i){
+    var isDone=j.completedSlots.indexOf(m.id)!==-1,isCur=!isDone&&j.currentReceiverId===m.id;
+    return '<tr class="'+(isDone?'done-row':isCur?'current-row':'')+'">'
+      +'<td><span class="month-num">'+(i+1)+'</span></td><td>'+getSlotLabel(m)+'</td>'
+      +'<td><strong>'+esc(m.name)+'</strong></td>'
+      +'<td>'+(m.iban?'<span style="font-family:monospace;font-size:11px;color:var(--accent2)">'+esc(m.iban)+'</span>':'—')+'</td>'
+      +'<td>'+(j.amount*j.members.length)+' د.إ</td>'
+      +'<td>'+(isDone?'<span class="status-dot"><span class="dot dot-green"></span> مكتمل</span>'
+               :isCur?'<span class="status-dot"><span class="dot dot-gold"></span> حالي</span>'
+               :'<span class="status-dot"><span class="dot dot-gray"></span> قادم</span>')+'</td>'
+      +'<td>'+(isCur?'<span style="color:var(--gold);font-size:11px">▶ حالي</span>'
+        :(isDone?'':'<button class="btn btn-sm btn-gold" onclick="setReceiver(\''+m.id+'\');renderGroupAdmin()">👑</button>'))+'</td>'
+      +'</tr>';
+  }).join('');
+}
+function renderGAHistory(){
+  var j=getGAJameia();if(!j)return;
+  var box=document.getElementById('gaHistoryList');
+  if(!j.history.length){box.innerHTML='<div class="empty"><div class="empty-icon">📋</div>لا يوجد سجل</div>';return;}
+  box.innerHTML=j.history.map(function(r){
+    return '<div class="history-card"><div class="history-month-badge">'+esc(r.monthName||'—')+'</div>'
+      +'<div><div style="font-weight:700;font-size:13px">'+esc(r.receiverName)+'</div>'
+      +(r.receiverIban?'<div style="font-size:11px;font-family:monospace;color:var(--accent2)">'+esc(r.receiverIban)+'</div>':'')
+      +'<div style="color:var(--muted);font-size:11px">'+(r.monthlyAmount*r.totalMembers)+' د.إ · '+esc(r.savedAt)+'</div></div></div>';
+  }).join('');
+}
+
+// ══ PAYMENT REQUEST ══
+function openPaymentRequest(){
+  var ss=rootState.superSettings||{};
+  document.getElementById('payReqFee').textContent=(ss.subFee||300)+' د.إ';
+  document.getElementById('payReqIban').textContent=ss.iban||'لم يتم تحديد الآيبان بعد';
+  document.getElementById('payReqPhone').textContent=ss.phone?'+'+ss.phone:'—';
+  document.getElementById('payReqNote').value='';
+  openModal('modalPaymentRequest');
+}
+function submitPaymentRequest(){
+  var ga=getGA();if(!ga)return;
+  var note=document.getElementById('payReqNote').value.trim();
+  if(!rootState.paymentRequests)rootState.paymentRequests=[];
+  rootState.paymentRequests.push({
+    id:'pay'+Date.now(), adminId:ga.id, adminName:ga.name, phone:ga.phone,
+    note:note, status:'pending',
+    date:new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'})
+  });
+  save();syncUp();closeModal('modalPaymentRequest');
+  showToast('تم إرسال طلب التفعيل ✓');
+  // Open WhatsApp if phone set
+  var ss=rootState.superSettings||{};
+  if(ss.phone){var msg='🏦 طلب تفعيل جمعية\nالاسم: '+ga.name+'\nالهاتف: '+ga.phone+(note?'\nملاحظة: '+note:'');window.open('https://wa.me/'+ss.phone+'?text='+encodeURIComponent(msg),'_blank');}
+}
+
+// ══ SUPER ADMIN RENDER ══
+function renderSuperAdmin(){
+  var gas=rootState.groupAdmins||[];
+  var allMembers=rootState.jameias.reduce(function(t,j){return t+(j.members?j.members.length:0);},0);
+  var revenue=(rootState.paymentRequests||[]).filter(function(p){return p.status==='approved';}).length*(rootState.superSettings&&rootState.superSettings.subFee||300);
+  document.getElementById('sup-admins').textContent=gas.length;
+  document.getElementById('sup-jameias').textContent=rootState.jameias.length;
+  document.getElementById('sup-members').textContent=allMembers;
+  document.getElementById('sup-revenue').textContent=revenue;
+  // Overview
+  var ov=document.getElementById('superOverviewList');
+  ov.innerHTML=rootState.jameias.map(function(j){
+    var ga=gas.find(function(a){return a.jameiaIds&&a.jameiaIds.indexOf(j.id)!==-1;});
+    return '<div class="member-card"><div class="mc-top">'
+      +'<div class="avatar" style="background:linear-gradient(135deg,'+j.color+',#1a3a8f)">'+j.icon+'</div>'
+      +'<div class="member-info"><div class="member-name-el">'+esc(j.name)+'</div>'
+      +'<div class="member-sub">👥 '+(j.members?j.members.length:0)+' عضو · 💰 '+j.amount+' د.إ'+(ga?' · المدير: '+ga.name:'')+'</div>'
+      +(j.monthName?'<div style="font-size:11px;color:var(--gold);margin-top:2px">📅 '+esc(j.monthName)+'</div>':'')
+      +'</div></div>'
+      +'<div class="member-actions">'
+        +'<button class="btn btn-sm btn-ghost" onclick="superViewJameia(\''+j.id+'\')">👁 تفاصيل</button>'
+        +'<button class="btn btn-sm btn-danger" onclick="superDeleteJameia(\''+j.id+'\')">🗑</button>'
+      +'</div></div>';
+  }).join('')||'<div class="empty"><div class="empty-icon">🏦</div>لا توجد جمعيات</div>';
+  // Group Admins
+  renderGroupAdminsList();
+  // All Jameias
+  document.getElementById('allJameiasList').innerHTML=ov.innerHTML;
+  // Payments
+  renderPaymentRequests();
+  // Setup values
+  var ss=rootState.superSettings||{};
+  if(document.getElementById('supSubFee'))document.getElementById('supSubFee').value=ss.subFee||300;
+  if(document.getElementById('supTrialLimit'))document.getElementById('supTrialLimit').value=ss.trialLimit||2;
+  if(document.getElementById('supIban'))document.getElementById('supIban').value=ss.iban||'';
+  if(document.getElementById('supPhone'))document.getElementById('supPhone').value=ss.phone||'';
+  if(rootState.apiKey&&document.getElementById('supApiKey'))document.getElementById('supApiKey').value=rootState.apiKey;
+  if(rootState.binId&&document.getElementById('cfgBinId')){document.getElementById('cfgBinId').value=rootState.binId;document.getElementById('binIdRow').style.display='block';}
+}
+function switchSuperTab(name){
+  var names=['overview','groupadmins','alljameias','payments','supersettings'];
+  document.querySelectorAll('#screenSuperAdmin .tab').forEach(function(t,i){t.classList.toggle('active',names[i]===name);});
+  document.querySelectorAll('#screenSuperAdmin .tab-content').forEach(function(c){c.classList.toggle('active',c.id==='supertab-'+name);});
+}
+function getAdminLoginLink(){
+  return window.location.href.replace(/#.*$/,'').replace(/\?.*$/,'')+window.location.pathname.endsWith('/')?'index.html#admin':'#admin';
+}
+function getBaseUrl(){
+  // returns clean base URL e.g. https://saahl2030-art.github.io/Repository-name-jam3eyatna/index.html
+  var url=window.location.href.split('#')[0].split('?')[0];
+  if(!url.endsWith('.html')) url=url.replace(/\/$/,'')+'/index.html';
+  return url;
+}
+function sendGAWhatsApp(gaId){
+  var ga=(rootState.groupAdmins||[]).find(function(a){return a.id===gaId;});
+  if(!ga)return;
+  var link=getBaseUrl()+'#admin';
+  var jNames=(ga.jameiaIds||[]).map(function(id){var j=rootState.jameias.find(function(j){return j.id===id;});return j?j.name:'';}).filter(Boolean).join('، ');
+  var ss=rootState.superSettings||{};
+  var msg='🏦 *منصة الجمعيات*\n\n'
+    +'مرحباً *'+ga.name+'*! تم إنشاء حسابك كمدير جمعية.\n\n'
+    +'🔗 *رابط الدخول:*\n'+link+'\n\n'
+    +'🔐 *كلمة المرور:* '+ga.pass+'\n\n'
+    +(jNames?'🏦 *جمعيتك:* '+jNames+'\n\n':'')
+    +'⚠️ الحساب '+(ga.status==='active'?'مفعّل كامل ✅':'تجريبي — يمكنك إضافة عضوين للتجربة')
+    +(ga.status!=='active'&&ss.subFee?'\n\n💳 رسوم التفعيل: *'+ss.subFee+' د.إ*'+(ss.iban?'\nالآيبان: '+ss.iban:''):'');
+  var phone=ga.phone.replace(/[^0-9]/g,'');
+  window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(msg),'_blank');
+}
+function copyGALink(gaId){
+  var ga=(rootState.groupAdmins||[]).find(function(a){return a.id===gaId;});
+  if(!ga)return;
+  var link=getBaseUrl()+'#admin';
+  var text='رابط الدخول: '+link+'\nكلمة المرور: '+ga.pass;
+  copyText(text);
+}
+function renderGroupAdminsList(){
+  var gas=rootState.groupAdmins||[];
+  var box=document.getElementById('groupAdminsList');
+  if(!gas.length){box.innerHTML='<div class="empty"><div class="empty-icon">👤</div>لا يوجد مديرون بعد — اضغط "إضافة مدير"</div>';return;}
+  box.innerHTML=gas.map(function(ga){
+    var statusColor=ga.status==='active'?'badge-green':ga.status==='frozen'?'badge-red':'badge-orange';
+    var statusLabel=ga.status==='active'?'✅ مفعّل':ga.status==='frozen'?'🔒 مجمّد':'⏳ تجريبي';
+    var jNames=(ga.jameiaIds||[]).map(function(id){var j=rootState.jameias.find(function(j){return j.id===id;});return j?j.name:'';}).filter(Boolean).join('، ');
+    var link=getBaseUrl()+'#admin';
+    return '<div class="member-card"><div class="mc-top">'
+      +'<div class="avatar" style="background:linear-gradient(135deg,#7c3aed,#a855f7)">'+ga.name[0]+'</div>'
+      +'<div class="member-info"><div class="member-name-el">'+esc(ga.name)+'</div>'
+      +'<div class="member-sub">📞 '+esc(ga.phone)+'</div>'
+      +(jNames?'<div style="font-size:11px;color:var(--accent2);margin-top:2px">🏦 '+esc(jNames)+'</div>':'')
+      +'<div class="member-badges"><span class="badge '+statusColor+'">'+statusLabel+'</span></div>'
+      +'</div></div>'
+      // رابط الدخول مباشرة في البطاقة
+      +'<div style="background:rgba(79,138,255,.07);border:1px solid rgba(79,138,255,.18);border-radius:10px;padding:10px;margin-top:10px">'
+        +'<div style="font-size:11px;color:var(--muted);margin-bottom:5px;font-weight:700">🔗 رابط دخول المدير</div>'
+        +'<div style="font-size:11px;font-family:monospace;color:var(--accent2);word-break:break-all;margin-bottom:7px">'+link+'</div>'
+        +'<div style="font-size:11px;color:var(--muted);margin-bottom:7px">🔐 كلمة المرور: <strong style="color:var(--gold)">'+esc(ga.pass)+'</strong></div>'
+        +'<div style="display:flex;gap:6px;flex-wrap:wrap">'
+          +'<button class="btn btn-wa btn-sm" onclick="sendGAWhatsApp(\''+ga.id+'\')">📤 إرسال واتساب</button>'
+          +'<button class="btn btn-ghost btn-sm" onclick="copyGALink(\''+ga.id+'\')">📋 نسخ الرابط + كلمة المرور</button>'
+        +'</div>'
+      +'</div>'
+      +'<div class="member-actions" style="margin-top:8px">'
+        +(ga.status!=='active'?'<button class="btn btn-sm btn-success" onclick="activateGA(\''+ga.id+'\')">✅ تفعيل</button>':'')
+        +(ga.status!=='frozen'?'<button class="btn btn-sm btn-danger" onclick="freezeGA(\''+ga.id+'\')">🔒 تجميد</button>':'')
+        +(ga.status==='frozen'?'<button class="btn btn-sm btn-gold" onclick="activateGA(\''+ga.id+'\')">🔓 فتح</button>':'')
+        +'<button class="btn btn-sm btn-danger" onclick="deleteGA(\''+ga.id+'\')">🗑 حذف</button>'
+      +'</div></div>';
+  }).join('');
+}
+function renderPaymentRequests(){
+  var prs=(rootState.paymentRequests||[]);
+  var box=document.getElementById('paymentRequestsList');
+  if(!prs.length){box.innerHTML='<div class="empty"><div class="empty-icon">💳</div>لا توجد طلبات</div>';return;}
+  box.innerHTML=prs.map(function(p,i){
+    var statusBadge=p.status==='approved'?'<span class="badge badge-green">✅ موافق</span>':'<span class="badge badge-orange">⏳ انتظار</span>';
+    return '<div class="member-card"><div class="mc-top">'
+      +'<div class="avatar av-gold">'+p.adminName[0]+'</div>'
+      +'<div class="member-info"><div class="member-name-el">'+esc(p.adminName)+'</div>'
+      +'<div class="member-sub">📞 '+esc(p.phone)+'</div>'
+      +(p.note?'<div style="font-size:12px;color:var(--accent2);margin-top:2px">📝 '+esc(p.note)+'</div>':'')
+      +'<div style="font-size:11px;color:var(--muted);margin-top:2px">📅 '+esc(p.date)+'</div>'
+      +'<div class="member-badges">'+statusBadge+'</div>'
+      +'</div></div>'
+      +(p.status==='pending'?'<div class="member-actions">'
+        +'<button class="btn btn-sm btn-success" onclick="approvePayment('+i+')">✅ موافقة وتفعيل</button>'
+        +'<button class="btn btn-sm btn-danger" onclick="rejectPayment('+i+')">❌ رفض</button>'
+        +'</div>':'')
+      +'</div>';
+  }).join('');
+}
+function superViewJameia(id){
+  var j=rootState.jameias.find(function(x){return x.id===id;});if(!j)return;
+  document.getElementById('viewJameiaTitle').textContent=j.icon+' '+j.name;
+  var sorted=j.members.slice().sort(function(a,b){return ((parseInt(a.dueYear)||9999)*12+(parseInt(a.dueMonthNum)||99))-((parseInt(b.dueYear)||9999)*12+(parseInt(b.dueMonthNum)||99));});
+  document.getElementById('viewJameiaContent').innerHTML=
+    '<div class="stats-grid" style="margin-bottom:12px">'
+    +'<div class="stat-card"><div class="stat-num" style="color:var(--accent)">'+j.members.length+'</div><div class="stat-label">أعضاء</div></div>'
+    +'<div class="stat-card"><div class="stat-num" style="color:var(--gold)">'+j.amount+'</div><div class="stat-label">د.إ / شهر</div></div></div>'
+    +(j.monthName?'<div style="font-size:13px;color:var(--accent2);margin-bottom:10px">📅 الشهر الحالي: '+esc(j.monthName)+'</div>':'')
+    +'<div style="overflow-x:auto"><table class="schedule-table"><thead><tr><th>#</th><th>الاسم</th><th>الشهر</th><th>الآيبان</th></tr></thead><tbody>'
+    +sorted.map(function(m,i){return '<tr><td>'+(i+1)+'</td><td>'+esc(m.name)+'</td><td>'+getSlotLabelM(m)+'</td><td style="font-size:11px;font-family:monospace">'+(m.iban||'—')+'</td></tr>';}).join('')
+    +'</tbody></table></div>';
+  openModal('modalViewJameia');
+}
+function getSlotLabelM(m){return(m.dueMonthNum&&m.dueYear)?MONTHS[m.dueMonthNum-1]+' '+m.dueYear:'غير محدد';}
+function superDeleteJameia(id){
+  if(!confirm('حذف هذه الجمعية وكل بياناتها؟'))return;
+  rootState.jameias=rootState.jameias.filter(function(j){return j.id!==id;});
+  (rootState.groupAdmins||[]).forEach(function(ga){if(ga.jameiaIds)ga.jameiaIds=ga.jameiaIds.filter(function(x){return x!==id;});});
+  save();syncUp();renderSuperAdmin();showToast('تم الحذف');
+}
+
+// Group Admin CRUD (Super)
+function openAddGroupAdmin(){
+  ['gaName','gaPhone','gaPass'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('gaStatus').value='trial';
+  var sel=document.getElementById('gaJameiaLink');
+  sel.innerHTML='<option value="">— بدون ربط —</option>';
+  rootState.jameias.forEach(function(j){sel.innerHTML+='<option value="'+j.id+'">'+j.icon+' '+j.name+'</option>';});
+  openModal('modalAddGroupAdmin');
+}
+function createGroupAdmin(){
+  var name=document.getElementById('gaName').value.trim();
+  var phone=document.getElementById('gaPhone').value.trim();
+  var pass=document.getElementById('gaPass').value;
+  if(!name||!phone||!pass){showToast('أدخل كل الحقول المطلوبة',true);return;}
+  var jLink=document.getElementById('gaJameiaLink').value;
+  var ga={id:'ga'+Date.now(),name:name,phone:phone,pass:pass,
+    status:document.getElementById('gaStatus').value,
+    jameiaIds:jLink?[jLink]:[],
+    createdAt:new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'})};
+  if(!rootState.groupAdmins)rootState.groupAdmins=[];
+  rootState.groupAdmins.push(ga);
+  // Create a new jameia for this admin if not linked
+  if(!jLink){
+    var nj=makeJ(name+'\'s جمعية',500,'🏦','#7c3aed');
+    rootState.jameias.push(nj);ga.jameiaIds=[nj.id];
+  }
+  save();syncUp();closeModal('modalAddGroupAdmin');renderSuperAdmin();showToast('تم إضافة المدير ✓');
+}
+function activateGA(id){
+  var ga=(rootState.groupAdmins||[]).find(function(a){return a.id===id;});if(!ga)return;
+  ga.status='active';ga.paidAt=new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});
+  save();syncUp();renderSuperAdmin();showToast('تم تفعيل '+ga.name+' ✓');
+}
+function freezeGA(id){
+  var ga=(rootState.groupAdmins||[]).find(function(a){return a.id===id;});if(!ga)return;
+  if(!confirm('تجميد حساب '+ga.name+'؟'))return;
+  ga.status='frozen';save();syncUp();renderSuperAdmin();showToast('تم التجميد');
+}
+function deleteGA(id){
+  var ga=(rootState.groupAdmins||[]).find(function(a){return a.id===id;});if(!ga)return;
+  if(!confirm('حذف مدير '+ga.name+'؟'))return;
+  rootState.groupAdmins=rootState.groupAdmins.filter(function(a){return a.id!==id;});
+  save();syncUp();renderSuperAdmin();showToast('تم الحذف');
+}
+function approvePayment(i){
+  var p=rootState.paymentRequests[i];if(!p)return;
+  p.status='approved';
+  var ga=(rootState.groupAdmins||[]).find(function(a){return a.id===p.adminId;});
+  if(ga){ga.status='active';ga.paidAt=new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'});}
+  save();syncUp();renderSuperAdmin();showToast('تم التفعيل ✓');
+}
+function rejectPayment(i){
+  var p=rootState.paymentRequests[i];if(!p)return;
+  if(!confirm('رفض هذا الطلب؟'))return;
+  p.status='rejected';save();syncUp();renderSuperAdmin();showToast('تم الرفض');
+}
+function saveSuperSettings(){
+  if(!rootState.superSettings)rootState.superSettings={};
+  rootState.superSettings.subFee=parseInt(document.getElementById('supSubFee').value)||300;
+  rootState.superSettings.trialLimit=parseInt(document.getElementById('supTrialLimit').value)||2;
+  rootState.superSettings.iban=document.getElementById('supIban').value.trim();
+  rootState.superSettings.phone=document.getElementById('supPhone').value.trim();
+  save();syncUp();showToast('تم حفظ الإعدادات ✓');
+}
+function changeSuperPass(){
+  var np=document.getElementById('supPassInput').value;
+  if(!np||np.length<4){showToast('كلمة المرور قصيرة (4 أحرف على الأقل)',true);return;}
+  rootState.superPass=np;document.getElementById('supPassInput').value='';save();showToast('تم تغيير كلمة مرور المشرف ✓');
+}
+
+// Override setupCloud to use supApiKey field too
+function setupCloud(){
+  var keyEl=document.getElementById('cfgApiKey')||document.getElementById('supApiKey');
+  var key=keyEl?keyEl.value.trim():'';
+  if(!key){showToast('أدخل الـ API Key',true);return;}
+  rootState.apiKey=key;
+  var st=document.getElementById('cloudStatus');if(st)st.textContent='⏳ جاري الإنشاء...';
+  fetch('https://api.jsonbin.io/v3/b',{method:'POST',headers:ch(),body:JSON.stringify(rootState)})
+  .then(function(r){return r.json();}).then(function(data){
+    rootState.binId=data.metadata.id;save();
+    if(document.getElementById('cfgBinId'))document.getElementById('cfgBinId').value=rootState.binId;
+    if(document.getElementById('binIdRow'))document.getElementById('binIdRow').style.display='block';
+    if(st)st.innerHTML='✅ تم! Bin ID: <strong style="color:var(--accent2)">'+rootState.binId+'</strong>';
+    setSS('ok');showToast('تم إعداد السحابة ✓');
+  }).catch(function(){if(st)st.textContent='❌ فشل. تأكد من الـ API Key';setSS('error');});
+}
+
+// ══ MULTI-JAMEIA ══
+function buildJSel(){
+  var sel=document.getElementById('jameiaSelector');
+  sel.innerHTML=rootState.jameias.map(function(j){
+    return '<option value="'+j.id+'"'+(j.id===currentJId?' selected':'')+'>'+j.icon+' '+j.name+'</option>';
+  }).join('');
+}
+function switchJameia(id){
+  currentJId=id;var j=J();if(!j)return;
+  document.getElementById('topbarName').textContent=j.name;
+  fillSetup();renderAll();renderSchedule();renderHistory();renderReceipts();updateBadge();
+  showToast('انتقلت إلى: '+j.name);
+}
+function renderJList(){
+  var box=document.getElementById('jameiaListPublic');
+  if(!rootState.jameias||!rootState.jameias.length){box.innerHTML='<div class="empty"><div class="empty-icon">🔍</div>لا توجد جمعيات</div>';return;}
+  box.innerHTML=rootState.jameias.map(function(j){
+    var mc=j.members?j.members.length:0;
+    return '<div class="jameia-item" onclick="openJameia(\''+j.id+'\')">'
+      +'<div class="jameia-icon" style="background:linear-gradient(135deg,'+j.color+'33,'+j.color+'11);font-size:24px">'+j.icon+'</div>'
+      +'<div class="jameia-info"><div class="jameia-name">'+esc(j.name)+'</div>'
+      +'<div class="jameia-meta">💰 '+j.amount+' د.إ &nbsp;·&nbsp; 👥 '+mc+' عضو'+(j.monthName?' &nbsp;·&nbsp; 📅 '+j.monthName:'')+'</div></div>'
+      +'<div style="color:var(--accent);font-size:18px">←</div></div>';
+  }).join('');
+}
+function openJameia(id){currentJId=id;renderPublic();showScreen('screenPublic');}
+
+// icon picker
+function pickIcon(el){
+  document.querySelectorAll('.icon-opt').forEach(function(e){e.style.border='2px solid var(--border)';});
+  el.style.border='2px solid var(--accent)';
+  document.getElementById('newJameiaIcon').value=el.dataset.icon;
+  document.getElementById('newJameiaColor').value=el.dataset.color;
+}
+function openAddJameiaModal(){
+  ['newJameiaName','newJameiaAmount'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('newJameiaIcon').value='🏦';
+  document.getElementById('newJameiaColor').value='#4f8aff';
+  openModal('modalAddJameia');
+}
+function createJameia(){
+  var name=document.getElementById('newJameiaName').value.trim();
+  var amount=document.getElementById('newJameiaAmount').value;
+  if(!name||!amount){showToast('أدخل الاسم والمبلغ',true);return;}
+  var j=makeJ(name,amount,document.getElementById('newJameiaIcon').value,document.getElementById('newJameiaColor').value);
+  rootState.jameias.push(j);currentJId=j.id;
+  save();syncUp();buildJSel();renderAll();renderSchedule();renderHistory();
+  closeModal('modalAddJameia');showToast('تم إنشاء '+name+' ✓');
+}
+function deleteCurrentJameia(){
+  var j=J();if(!j)return;
+  if(rootState.jameias.length<=1){showToast('لا يمكن حذف آخر جمعية',true);return;}
+  if(!confirm('حذف جمعية '+j.name+'؟ ستُحذف كل بياناتها!'))return;
+  rootState.jameias=rootState.jameias.filter(function(x){return x.id!==currentJId;});
+  currentJId=rootState.jameias[0].id;
+  save();syncUp();buildJSel();renderAll();renderSchedule();renderHistory();showToast('تم الحذف');
+}
+
+// ══ TABS ══
+function switchTab(name){
+  var names=['dashboard','members','receipts','schedule','history','setup'];
+  document.querySelectorAll('.tab').forEach(function(t,i){t.classList.toggle('active',names[i]===name);});
+  document.querySelectorAll('.tab-content').forEach(function(c){c.classList.toggle('active',c.id==='tab-'+name);});
+  if(name==='schedule')renderSchedule();
+  if(name==='history')renderHistory();
+  if(name==='members'){renderPending();renderMembers();}
+  if(name==='receipts')renderReceipts();
+}
+
+// ══ RENDER ALL ══
+function renderAll(){
+  var j=J();if(!j)return;
+  document.getElementById('topbarName').textContent=j.name;
+  renderDashboard();renderMembers();renderPublic();
+}
+
+// ══ DASHBOARD ══
+function renderDashboard(){
+  var j=J();if(!j)return;
+  var pc=getPaidCount(),tot=j.members.length,pct=tot?Math.round(pc/tot*100):0;
+  document.getElementById('st-members').textContent=tot;
+  document.getElementById('st-pending').textContent=(j.pendingMembers||[]).length;
+  document.getElementById('st-paid').textContent=pc;
+  document.getElementById('st-history').textContent=j.history.length;
+  document.getElementById('heroMonthName').textContent=j.monthName||'—';
+  var recM=j.members.find(function(x){return x.id===j.currentReceiverId;});
+  document.getElementById('heroReceiver').textContent=recM?recM.name:'لم يتم التحديد';
+  document.getElementById('heroIban').textContent=recM&&recM.iban?'IBAN: '+recM.iban:'';
+  document.getElementById('heroAmount').textContent=recM&&tot?'سيستلم: '+(j.amount*tot)+' د.إ':'';
+  document.getElementById('progressLabel').textContent=pc+'/'+tot;
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('regLinkDisplay').textContent=window.location.href.split('?')[0];
+  var unpaid=j.members.filter(function(m){return !j.paidMembers[m.id];});
+  var uc=document.getElementById('unpaidCard');
+  if(unpaid.length&&tot){
+    uc.style.display='block';
+    document.getElementById('unpaidList').innerHTML=unpaid.map(function(m){
+      return '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">'
+        +'<div><div style="font-weight:700;font-size:13px">'+esc(m.name)+'</div>'+(m.phone?'<div style="font-size:11px;color:var(--muted)">'+esc(m.phone)+'</div>':'')+'</div>'
+        +'<button class="btn btn-success btn-sm" onclick="togglePaid(\''+m.id+'\')">✓ دفع</button></div>';
+    }).join('');
+  }else uc.style.display='none';
+}
+
+// ══ RECEIPTS TAB ══
+function renderReceipts(){
+  var j=J();if(!j)return;
+  var box=document.getElementById('receiptsList');
+  var allR=[];
+  // collect from approved members
+  j.members.forEach(function(m){
+    var recs=j.receipts[m.id]||[];
+    recs.forEach(function(r){allR.push({member:m,rec:r,memberId:m.id,idx:j.receipts[m.id].indexOf(r)});});
+  });
+  // collect from pending (no member yet)
+  var pubRecs=j.receipts['__public']||[];
+  pubRecs.forEach(function(r,i){allR.push({member:{name:r.memberName||'—',id:'__public'},rec:r,memberId:'__public',idx:i});});
+
+  if(!allR.length){box.innerHTML='<div class="empty"><div class="empty-icon">🧾</div>لا توجد إيصالات بعد</div>';return;}
+
+  box.innerHTML=allR.map(function(item){
+    var m=item.member,r=item.rec;
+    var isPaid=m.id!=='__public'&&!!j.paidMembers[m.id];
+    return '<div class="member-card" style="align-items:flex-start">'
+      +'<div style="display:flex;gap:11px;align-items:center;width:100%">'
+        +'<img src="'+r.data+'" class="receipt-thumb" onclick="viewReceiptModal(\''+item.memberId+'\','+item.idx+')" style="width:64px;height:64px">'
+        +'<div style="flex:1">'
+          +'<div style="font-weight:700;font-size:14px">'+esc(m.name)+'</div>'
+          +(r.note?'<div style="font-size:12px;color:var(--accent2);margin-top:2px">'+esc(r.note)+'</div>':'')
+          +'<div style="font-size:11px;color:var(--muted);margin-top:2px">📅 '+esc(r.date)+'</div>'
+          +'<div style="margin-top:5px">'
+            +(isPaid?'<span class="badge badge-green">✓ مدفوع</span>':'<span class="badge badge-red">⏳ لم يُقبل بعد</span>')
+          +'</div>'
+        +'</div>'
+        +'<div style="display:flex;flex-direction:column;gap:5px;flex-shrink:0">'
+          +'<button class="btn btn-ghost btn-sm" onclick="viewReceiptModal(\''+item.memberId+'\','+item.idx+')">👁 عرض</button>'
+          +(m.id!=='__public'&&!isPaid?'<button class="btn btn-success btn-sm" onclick="togglePaid(\''+m.id+'\');renderReceipts();renderDashboard()">✓ قبول</button>':'')
+          +'<button class="btn btn-danger btn-sm" onclick="deleteReceipt(\''+item.memberId+'\','+item.idx+')">🗑</button>'
+        +'</div>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+}
+
+function viewReceiptModal(memberId,idx){
+  var j=J();if(!j)return;
+  var recs=j.receipts[memberId]||[];
+  var r=recs[idx];if(!r)return;
+  document.getElementById('receiptViewTitle').textContent='🧾 إيصال — '+(memberId==='__public'?(r.memberName||'عضو'):((j.members.find(function(m){return m.id===memberId;})||{}).name||'—'));
+  document.getElementById('receiptViewContent').innerHTML=
+    '<img src="'+r.data+'" style="max-width:100%;border-radius:10px;border:1.5px solid var(--border)">'
+    +(r.note?'<div style="font-size:13px;color:var(--accent2);margin-top:8px">'+esc(r.note)+'</div>':'')
+    +'<div style="font-size:12px;color:var(--muted);margin-top:4px">'+esc(r.date)+'</div>';
+  openModal('modalReceiptView');
+}
+function deleteReceipt(memberId,idx){
+  var j=J();if(!j||!confirm('حذف الإيصال؟'))return;
+  j.receipts[memberId].splice(idx,1);
+  if(!j.receipts[memberId].length)delete j.receipts[memberId];
+  save();syncUp();renderReceipts();renderDashboard();showToast('تم الحذف');
+}
+
+// ══ MEMBERS ══
+function renderMembers(){
+  var j=J();if(!j)return;
+  var box=document.getElementById('membersList');
+  if(!j.members.length){box.innerHTML='<div class="empty"><div class="empty-icon">👤</div>لا يوجد أعضاء</div>';return;}
+  box.innerHTML=j.members.map(function(m){
+    var isRec=j.currentReceiverId===m.id,isPaid=!!j.paidMembers[m.id];
+    var recs=j.receipts[m.id]||[];var hasR=recs.length>0;
+    return '<div class="member-card'+(isRec?' is-receiver':'')+'"><div class="mc-top">'
+      +'<div class="avatar">'+m.name[0]+'</div>'
+      +'<div class="member-info">'
+        +'<div class="member-name-el">'+esc(m.name)+'</div>'
+        +(m.phone?'<div class="member-sub">📞 '+esc(m.phone)+'</div>':'')
+        +(m.iban?'<div class="member-iban" onclick="copyText(\''+esc(m.iban)+'\')" title="نسخ">🏦 '+esc(m.iban)+' 📋</div>':'')
+        +'<div class="member-badges"><span class="badge badge-blue">📅 '+getSlotLabel(m)+'</span>'
+        +(isRec?'<span class="badge badge-gold">⭐ مستلم</span>':'')
+        +(isPaid?'<span class="badge badge-green">✓ دفع</span>':'<span class="badge badge-red">✗ لم يدفع</span>')
+        +(hasR?'<span class="badge badge-purple" onclick="switchTab(\'receipts\')">🧾 '+recs.length+'</span>':'')
+        +'</div>'
+      +'</div>'
+      +(hasR?'<img src="'+recs[recs.length-1].data+'" class="receipt-thumb" onclick="switchTab(\'receipts\')">':'<div class="receipt-placeholder" title="لا يوجد إيصال">📄</div>')
+      +'</div>'
+      +'<div class="member-actions">'
+        +'<button class="btn btn-sm btn-gold" onclick="setReceiver(\''+m.id+'\')">👑</button>'
+        +'<button class="btn btn-sm '+(isPaid?'btn-danger':'btn-success')+'" onclick="togglePaid(\''+m.id+'\')">'+(isPaid?'↩ إلغاء':'✓ دفع')+'</button>'
+        +'<button class="btn btn-sm btn-ghost" onclick="openEditMember(\''+m.id+'\')">✏️</button>'
+        +'<button class="btn btn-sm btn-danger" onclick="deleteMember(\''+m.id+'\')">🗑</button>'
+      +'</div></div>';
+  }).join('');
+}
+
+// ══ PENDING ══
+function renderPending(){
+  var j=J();if(!j)return;
+  var ps=document.getElementById('pendingSection'),pl=document.getElementById('pendingList');
+  if(!(j.pendingMembers||[]).length){ps.style.display='none';return;}
+  ps.style.display='block';
+  pl.innerHTML=j.pendingMembers.map(function(m,i){
+    return '<div class="member-card pending"><div class="mc-top">'
+      +'<div class="avatar av-gold">'+m.name[0]+'</div>'
+      +'<div class="member-info"><div class="member-name-el">'+esc(m.name)+'</div>'
+      +(m.phone?'<div class="member-sub">📞 '+esc(m.phone)+'</div>':'')
+      +(m.iban?'<div class="member-iban">🏦 '+esc(m.iban)+'</div>':'')
+      +'<div class="member-badges"><span class="badge badge-blue">📅 '+getSlotLabel(m)+'</span>'
+      +'<span class="badge badge-orange">⏳ انتظار</span></div></div></div>'
+      +'<div class="member-actions">'
+        +'<button class="btn btn-sm btn-success" onclick="approveMember('+i+')">✅ قبول</button>'
+        +'<button class="btn btn-sm btn-danger" onclick="rejectMember('+i+')">❌ رفض</button>'
+      +'</div></div>';
+  }).join('');
+}
+function approveMember(i){
+  var j=J();if(!j)return;
+  var m=j.pendingMembers[i];m.id='m'+Date.now();
+  j.members.push(m);j.pendingMembers.splice(i,1);
+  save();syncUp();renderAll();renderPending();renderSchedule();updateBadge();
+  showToast('تم قبول '+m.name+' ✓');
+}
+function rejectMember(i){
+  var j=J();if(!j)return;
+  var m=j.pendingMembers[i];if(!confirm('رفض طلب '+m.name+'؟'))return;
+  j.pendingMembers.splice(i,1);save();syncUp();renderPending();updateBadge();showToast('تم الرفض');
+}
+function updateBadge(){
+  var j=J();var cnt=j?(j.pendingMembers||[]).length:0;
+  var b=document.getElementById('tabMembers');
+  // remove old badge
+  var old=b.querySelector('.tab-badge');if(old)old.remove();
+  if(cnt>0){var sp=document.createElement('span');sp.className='tab-badge';sp.textContent=cnt;b.appendChild(sp);}
+  var sp2=document.getElementById('st-pending');if(sp2)sp2.textContent=cnt;
+}
+
+// ══ SCHEDULE ══
+function renderSchedule(){
+  var j=J();if(!j)return;
+  var body=document.getElementById('scheduleBody');
+  var sorted=getSortedMembers();
+  if(!sorted.length){body.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:16px">لا يوجد أعضاء</td></tr>';return;}
+  body.innerHTML=sorted.map(function(m,i){
+    var isDone=j.completedSlots.indexOf(m.id)!==-1;
+    var isCur=!isDone&&j.currentReceiverId===m.id;
+    var amt=j.amount*j.members.length;
+    return '<tr class="'+(isDone?'done-row':isCur?'current-row':'')+'">'
+      +'<td><span class="month-num">'+(i+1)+'</span></td>'
+      +'<td>'+getSlotLabel(m)+'</td>'
+      +'<td><strong>'+esc(m.name)+'</strong>'+(m.phone?'<br><small style="color:var(--muted)">'+esc(m.phone)+'</small>':'')+'</td>'
+      +'<td>'+(m.iban?'<span style="font-family:monospace;font-size:11px;color:var(--accent2);cursor:pointer" onclick="copyText(\''+esc(m.iban)+'\')">'+esc(m.iban)+'</span>':'—')+'</td>'
+      +'<td>'+amt+' د.إ</td>'
+      +'<td>'+(isDone?'<span class="status-dot"><span class="dot dot-green"></span> مكتمل</span>'
+               :isCur?'<span class="status-dot"><span class="dot dot-gold"></span> حالي</span>'
+               :'<span class="status-dot"><span class="dot dot-gray"></span> قادم</span>')+'</td>'
+      +'<td>'+(isCur?'<span style="color:var(--gold);font-size:11px;font-weight:700">▶ حالي</span>'
+                    :(isDone?'':'<button class="btn btn-sm btn-gold" onclick="setReceiver(\''+m.id+'\');switchTab(\'schedule\')">👑</button>'))+'</td>'
+      +'</tr>';
+  }).join('');
+}
+
+// ══ HISTORY ══
+function renderHistory(){
+  var j=J();if(!j)return;
+  var box=document.getElementById('historyList');
+  if(!j.history.length){box.innerHTML='<div class="empty"><div class="empty-icon">📋</div>لا يوجد سجل</div>';return;}
+  box.innerHTML=j.history.map(function(r){
+    return '<div class="history-card"><div class="history-month-badge">'+esc(r.monthName||'—')+'</div>'
+      +'<div><div style="font-weight:700;font-size:13px">المستلم: '+esc(r.receiverName)+'</div>'
+      +(r.receiverIban?'<div style="font-size:11px;font-family:monospace;color:var(--accent2)">'+esc(r.receiverIban)+'</div>':'')
+      +'<div style="color:var(--muted);font-size:11px;margin-top:2px">الدفعات: '+r.paidCount+'/'+r.totalMembers+' · '+(r.monthlyAmount*r.totalMembers)+' د.إ</div>'
+      +(r.note?'<div style="color:var(--muted);font-size:11px">'+esc(r.note)+'</div>':'')
+      +'<div style="color:var(--muted);font-size:10px;margin-top:2px">📅 '+esc(r.savedAt)+'</div></div></div>';
+  }).join('');
+}
+
+// ══ PUBLIC PAGE ══
+function renderPublic(){
+  var j=J();if(!j)return;
+  document.getElementById('pubTopName').textContent=j.name;
+  document.getElementById('pubGroupName').textContent=j.name;
+  document.getElementById('regTopName').textContent='التسجيل في '+j.name;
+  var recM=j.members.find(function(x){return x.id===j.currentReceiverId;}),tot=j.members.length;
+  document.getElementById('pubReceiver').textContent=recM?recM.name:'لم يتم التحديد';
+  document.getElementById('pubMonth').textContent=j.monthName||'';
+  document.getElementById('pubAmount').textContent=(recM&&tot)?'المبلغ: '+(j.amount*tot)+' د.إ':'';
+  var ib=document.getElementById('pubIban');
+  if(recM&&recM.iban){ib.style.display='block';document.getElementById('pubIbanText').textContent=recM.iban;}
+  else ib.style.display='none';
+  var now=new Date(),end=new Date(now.getFullYear(),now.getMonth()+1,0),days=Math.ceil((end-now)/864e5);
+  var cb=document.getElementById('pubCountdown');
+  if(recM){cb.style.display='flex';document.getElementById('countdownDays').textContent=days;}
+  else cb.style.display='none';
+  var sorted=getSortedMembers();
+  var pb=document.getElementById('pubScheduleBody');
+  if(!sorted.length)pb.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:16px">لا يوجد جدول بعد</td></tr>';
+  else pb.innerHTML=sorted.map(function(m,i){
+    var isDone=j.completedSlots.indexOf(m.id)!==-1,isCur=!isDone&&j.currentReceiverId===m.id;
+    return '<tr class="'+(isDone?'done-row':isCur?'current-row':'')+'">'
+      +'<td><span class="month-num">'+(i+1)+'</span></td><td>'+getSlotLabel(m)+'</td>'
+      +'<td><strong>'+esc(m.name)+'</strong></td>'
+      +'<td>'+(m.iban?'<span style="font-family:monospace;font-size:11px;color:var(--accent2);cursor:pointer" onclick="copyText(\''+esc(m.iban)+'\')">'+esc(m.iban)+'</span>':'—')+'</td>'
+      +'<td>'+(isDone?'<span class="status-dot"><span class="dot dot-green"></span> مكتمل</span>'
+               :isCur?'<span class="status-dot"><span class="dot dot-gold"></span> حالي</span>'
+               :'<span class="status-dot"><span class="dot dot-gray"></span> قادم</span>')+'</td></tr>';
+  }).join('');
+  var ph=document.getElementById('pubHistoryList');
+  if(!j.history.length)ph.innerHTML='<div class="empty" style="padding:10px"><div class="empty-icon">📋</div>لا يوجد سجل</div>';
+  else ph.innerHTML=j.history.map(function(r){
+    return '<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)">'
+      +'<div style="background:linear-gradient(135deg,var(--accent),#1a3a8f);border-radius:8px;padding:6px 10px;font-size:11px;font-weight:800;color:#fff;min-width:46px;text-align:center;flex-shrink:0">'+esc(r.monthName)+'</div>'
+      +'<div><div style="font-weight:700;font-size:13px">'+esc(r.receiverName)+'</div>'
+      +(r.receiverIban?'<div style="font-size:10px;font-family:monospace;color:var(--accent2)">'+esc(r.receiverIban)+'</div>':'')
+      +'<div style="font-size:11px;color:var(--muted)">'+(r.monthlyAmount*r.totalMembers)+' د.إ · '+esc(r.savedAt)+'</div></div></div>';
+  }).join('');
+}
+
+// ══ REGISTRATION ══
+var regData={};var regMemberId=null;
+function initRegister(){
+  ['regStep1','regStep2','regSuccess','regLoading','regUpload'].forEach(function(id){
+    document.getElementById(id).style.display=id==='regStep1'?'block':'none';
+  });
+  ['regName','regPhone','regIban'].forEach(function(id){document.getElementById(id).value='';});
+  regData={};regMemberId=null;
+}
+function goToStep2(){
+  var name=document.getElementById('regName').value.trim();
+  var phone=document.getElementById('regPhone').value.trim();
+  if(!name||!phone){showToast('أدخل الاسم والهاتف',true);return;}
+  regData.name=name;regData.phone=phone;
+  regData.iban=document.getElementById('regIban').value.trim().replace(/\s/g,'').toUpperCase();
+  document.getElementById('regStep1').style.display='none';
+  document.getElementById('regStep2').style.display='block';
+  renderRegGrid();
+}
+function backToStep1(){document.getElementById('regStep1').style.display='block';document.getElementById('regStep2').style.display='none';}
+function isSlotBooked(mn,y){
+  var j=J();if(!j)return false;
+  return j.members.some(function(m){return m.dueMonthNum==mn&&m.dueYear==y;})
+    ||(j.pendingMembers||[]).some(function(m){return m.dueMonthNum==mn&&m.dueYear==y;});
+}
+function getSlotOwner(mn,y){
+  var j=J();if(!j)return null;
+  var m=j.members.find(function(m){return m.dueMonthNum==mn&&m.dueYear==y;});if(m)return m.name;
+  m=(j.pendingMembers||[]).find(function(m){return m.dueMonthNum==mn&&m.dueYear==y;});return m?m.name+'⏳':null;
+}
+function renderRegGrid(){
+  var grid=document.getElementById('regMonthGrid');
+  var now=new Date(),sm=now.getMonth()+1,sy=now.getFullYear(),html='';
+  for(var i=0;i<18;i++){
+    var mn=((sm-1+i)%12)+1,yr=sy+Math.floor((sm-1+i)/12);
+    var booked=isSlotBooked(mn,yr),owner=getSlotOwner(mn,yr);
+    html+='<div class="month-slot '+(booked?'booked':'available')+'" onclick="selectMonth('+mn+','+yr+','+booked+',\''+MONTHS[mn-1]+' '+yr+'\')">'
+      +'<div class="slot-month">'+MONTHS[mn-1]+'</div><div class="slot-year">'+yr+'</div>'
+      +(booked&&owner?'<div class="slot-owner">'+esc(owner)+'</div>':'')+'</div>';
+  }
+  grid.innerHTML=html;
+  document.getElementById('regSelectedInfo').style.display='none';
+}
+function selectMonth(mn,yr,booked,label){
+  if(booked){showToast('هذا الشهر محجوز!',true);return;}
+  regData.dueMonthNum=mn;regData.dueYear=yr;
+  document.querySelectorAll('.month-slot').forEach(function(el){el.style.outline='';});
+  event.currentTarget.style.outline='2px solid var(--accent2)';
+  document.getElementById('regSelectedLabel').textContent=label;
+  document.getElementById('regSelectedInfo').style.display='block';
+}
+async function submitRegistration(){
+  if(!regData.dueMonthNum){showToast('اختر شهر الاستلام',true);return;}
+  document.getElementById('regStep2').style.display='none';
+  document.getElementById('regLoading').style.display='block';
+  await publicSync();
+  if(isSlotBooked(regData.dueMonthNum,regData.dueYear)){
+    document.getElementById('regLoading').style.display='none';
+    document.getElementById('regStep2').style.display='block';
+    showToast('الشهر حُجز للتو! اختر آخر',true);renderRegGrid();return;
+  }
+  var j=J();if(!j){showToast('خطأ',true);return;}
+  var nm={id:'p'+Date.now(),name:regData.name,phone:regData.phone,iban:regData.iban,
+    dueMonthNum:parseInt(regData.dueMonthNum),dueYear:parseInt(regData.dueYear),
+    registeredAt:new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'})};
+  j.pendingMembers.push(nm);regMemberId=nm.id;
+  save();await syncUp();
+  document.getElementById('regLoading').style.display='none';
+  document.getElementById('regSuccess').style.display='block';
+  document.getElementById('regSuccessMsg').innerHTML='مرحباً <strong>'+esc(regData.name)+'</strong>! 🎉<br>'
+    +'تم تسجيل طلبك لشهر <strong style="color:var(--gold)">'+MONTHS[regData.dueMonthNum-1]+' '+regData.dueYear+'</strong><br>'
+    +'سيراجعه المدير قريباً. يمكنك رفع إيصال التحويل الآن.';
+}
+function showReceiptUpload(){
+  document.getElementById('regSuccess').style.display='none';
+  document.getElementById('regUpload').style.display='block';
+  document.getElementById('receiptFile').value='';
+  document.getElementById('receiptPreview').style.display='none';
+  document.getElementById('receiptNote').value='';
+  document.getElementById('receiptMemberName').value=regData.name||'';
+}
+function previewReceipt(){
+  var file=document.getElementById('receiptFile').files[0];
+  if(!file)return;
+  if(file.size>4*1024*1024){showToast('الصورة أكبر من 4MB',true);return;}
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var img=document.getElementById('receiptPreview');
+    img.src=e.target.result;img.style.display='block';
+  };
+  reader.readAsDataURL(file);
+}
+async function submitReceiptPublic(){
+  var img=document.getElementById('receiptPreview');
+  if(!img||!img.src||img.style.display==='none'){showToast('اختر صورة الإيصال',true);return;}
+  var note=document.getElementById('receiptNote').value.trim();
+  var mName=document.getElementById('receiptMemberName').value.trim()||regData.name||'—';
+  var j=J();if(!j)return;
+  // store under __public key so admin can see without member approval
+  if(!j.receipts['__public'])j.receipts['__public']=[];
+  j.receipts['__public'].push({
+    data:img.src,note:note,memberName:mName,
+    date:new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'})
+  });
+  save();await syncUp();
+  document.getElementById('regUpload').style.display='none';
+  document.getElementById('regSuccess').style.display='block';
+  document.getElementById('regSuccessMsg').innerHTML='✅ تم رفع الإيصال بنجاح!<br><span style="color:var(--accent2)">سيراجعه المدير ويؤكد دفعتك قريباً.</span>';
+  // hide upload button
+  document.querySelector('#regSuccess .btn-purple').style.display='none';
+  showToast('تم رفع الإيصال ✓');
+}
+
+// ══ MEMBER CRUD ══
+function buildMSel(mId,yId,curM,curY){
+  var ms=document.getElementById(mId),ys=document.getElementById(yId);
+  ms.innerHTML='<option value="">— الشهر —</option>';
+  MONTHS.forEach(function(mn,i){ms.innerHTML+='<option value="'+(i+1)+'"'+((i+1)==curM?' selected':'')+'>'+mn+'</option>';});
+  ys.innerHTML='<option value="">— السنة —</option>';
+  var cy=new Date().getFullYear();
+  for(var y=cy-1;y<=cy+5;y++) ys.innerHTML+='<option value="'+y+'"'+(y==curY?' selected':'')+'>'+y+'</option>';
+}
+function openAddMemberModal(){
+  buildMSel('mDueMonth','mDueYear','','');
+  ['mName','mPhone','mIban'].forEach(function(id){document.getElementById(id).value='';});
+  openModal('modalAddMember');
+}
+function addMember(){
+  var j=J();if(!j)return;
+  var name=document.getElementById('mName').value.trim();
+  if(!name){showToast('أدخل الاسم',true);return;}
+  var dm=document.getElementById('mDueMonth').value,dy=document.getElementById('mDueYear').value;
+  if(dm&&dy&&isSlotBooked(parseInt(dm),parseInt(dy))){showToast('الشهر محجوز!',true);return;}
+  j.members.push({id:'m'+Date.now(),name:name,phone:document.getElementById('mPhone').value.trim(),
+    iban:document.getElementById('mIban').value.trim().replace(/\s/g,'').toUpperCase(),
+    dueMonthNum:dm?parseInt(dm):'',dueYear:dy?parseInt(dy):''});
+  save();syncUp();closeModal('modalAddMember');renderAll();renderSchedule();showToast('تمت الإضافة ✓');
+}
+function openEditMember(id){
+  var j=J();var m=j&&j.members.find(function(x){return x.id===id;});if(!m)return;
+  document.getElementById('editId').value=id;
+  document.getElementById('editName').value=m.name;
+  document.getElementById('editPhone').value=m.phone||'';
+  document.getElementById('editIban').value=m.iban||'';
+  buildMSel('editDueMonth','editDueYear',m.dueMonthNum||'',m.dueYear||'');
+  openModal('modalEditMember');
+}
+function saveEditMember(){
+  var j=J();var id=document.getElementById('editId').value;
+  var m=j&&j.members.find(function(x){return x.id===id;});if(!m)return;
+  m.name=document.getElementById('editName').value.trim()||m.name;
+  m.phone=document.getElementById('editPhone').value.trim();
+  m.iban=document.getElementById('editIban').value.trim().replace(/\s/g,'').toUpperCase();
+  var dm=document.getElementById('editDueMonth').value,dy=document.getElementById('editDueYear').value;
+  m.dueMonthNum=dm?parseInt(dm):'';m.dueYear=dy?parseInt(dy):'';
+  save();syncUp();closeModal('modalEditMember');renderAll();renderSchedule();showToast('تم التعديل ✓');
+}
+function deleteMember(id){
+  var j=J();if(!j||!confirm('حذف العضو؟'))return;
+  j.members=j.members.filter(function(m){return m.id!==id;});
+  if(j.currentReceiverId===id)j.currentReceiverId='';
+  delete j.paidMembers[id];delete j.receipts[id];
+  j.completedSlots=j.completedSlots.filter(function(x){return x!==id;});
+  save();syncUp();renderAll();renderSchedule();showToast('تم الحذف');
+}
+function setReceiver(id){var j=J();if(!j)return;j.currentReceiverId=id;j.monthCompleted=false;save();syncUp();renderAll();showToast('تم التحديد ✓');}
+function togglePaid(id){var j=J();if(!j)return;if(j.paidMembers[id])delete j.paidMembers[id];else j.paidMembers[id]=true;save();syncUp();renderAll();}
+
+// ══ SWAP ══
+var swapSel=[];
+function openSwapModal(){swapSel=[];renderSwapList();openModal('modalSwap');}
+function renderSwapList(){
+  var j=J();document.getElementById('swapStatus').textContent='';
+  var box=document.getElementById('swapList');
+  if(!j||!j.members.length){box.innerHTML='<p style="color:var(--muted)">لا يوجد أعضاء</p>';return;}
+  box.innerHTML=j.members.map(function(m){
+    var sel=swapSel.indexOf(m.id)!==-1;
+    return '<div class="swap-row'+(sel?' selected':'')+'" onclick="toggleSwapSel(\''+m.id+'\')">'
+      +'<div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#1a3a8f);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;flex-shrink:0">'+m.name[0]+'</div>'
+      +'<div style="flex:1"><div style="font-weight:700;font-size:13px">'+esc(m.name)+'</div><div style="font-size:11px;color:var(--muted)">'+getSlotLabel(m)+'</div></div>'
+      +(sel?'<span style="color:var(--gold)">✓</span>':'')+'</div>';
+  }).join('');
+}
+function toggleSwapSel(id){
+  var idx=swapSel.indexOf(id);
+  if(idx===-1){if(swapSel.length>=2){showToast('اختر عضوين فقط',true);return;}swapSel.push(id);}
+  else swapSel.splice(idx,1);
+  renderSwapList();
+  if(swapSel.length===2){
+    var j=J();
+    var a=j.members.find(function(m){return m.id===swapSel[0];});
+    var b=j.members.find(function(m){return m.id===swapSel[1];});
+    document.getElementById('swapStatus').textContent='⇄ '+a.name+' ↔ '+b.name;
+  }
+}
+function confirmSwap(){
+  if(swapSel.length!==2){showToast('اختر عضوين',true);return;}
+  var j=J();
+  var a=j.members.find(function(m){return m.id===swapSel[0];});
+  var b=j.members.find(function(m){return m.id===swapSel[1];});
+  var tm=a.dueMonthNum,ty=a.dueYear;
+  a.dueMonthNum=b.dueMonthNum;a.dueYear=b.dueYear;b.dueMonthNum=tm;b.dueYear=ty;
+  save();syncUp();closeModal('modalSwap');renderAll();renderSchedule();showToast('تم التبديل ✓');
+}
+
+// ══ MONTH MODALS ══
+function buildMonthSelects(){
+  var cy=new Date().getFullYear(),cm=new Date().getMonth()+1;
+  ['completeMonthSel','newMonthSel'].forEach(function(id){
+    var el=document.getElementById(id);
+    el.innerHTML='<option value="">— الشهر —</option>';
+    MONTHS.forEach(function(mn,i){el.innerHTML+='<option value="'+(i+1)+'"'+(i+1===cm?' selected':'')+'>'+mn+'</option>';});
+  });
+  ['completeYearSel','newYearSel'].forEach(function(id){
+    var el=document.getElementById(id);el.innerHTML='';
+    var cy2=new Date().getFullYear();
+    for(var y=cy2-1;y<=cy2+3;y++) el.innerHTML+='<option value="'+y+'"'+(y===cy2?' selected':'')+'>'+y+'</option>';
+  });
+  syncCompleteMonth();syncNewMonth();
+}
+function syncCompleteMonth(){var ms=document.getElementById('completeMonthSel').value,ys=document.getElementById('completeYearSel').value;if(ms&&ys)document.getElementById('completeMonthName').value=MONTHS[ms-1]+' '+ys;}
+function syncNewMonth(){var ms=document.getElementById('newMonthSel').value,ys=document.getElementById('newYearSel').value;if(ms&&ys)document.getElementById('newMonthName').value=MONTHS[ms-1]+' '+ys;}
+function openCompleteModal(){
+  buildMonthSelects();
+  var j=J();if(j&&j.monthName)document.getElementById('completeMonthName').value=j.monthName;
+  document.getElementById('completeReceiver').value=getReceiverName()||'لم يتم التحديد';
+  document.getElementById('completeNote').value='';
+  openModal('modalComplete');
+}
+function completeMonth(){
+  var j=J();if(!j)return;
+  var mn=document.getElementById('completeMonthName').value.trim();
+  if(!mn){showToast('أدخل اسم الشهر',true);return;}
+  var rec=getReceiverName();if(!rec){showToast('حدد المستلم أولاً',true);return;}
+  var recM=j.members.find(function(x){return x.id===j.currentReceiverId;});
+  j.monthName=mn;
+  j.history.unshift({monthName:mn,note:document.getElementById('completeNote').value.trim(),
+    receiverName:rec,receiverIban:recM?recM.iban||'':'',
+    paidCount:getPaidCount(),totalMembers:j.members.length,monthlyAmount:j.amount,
+    savedAt:new Date().toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric'})});
+  j.monthCompleted=true;
+  if(j.currentReceiverId)j.completedSlots.push(j.currentReceiverId);
+  save();syncUp();closeModal('modalComplete');renderAll();renderHistory();showToast('تم إنهاء الشهر ✓');
+}
+function openNewMonthModal(){buildMonthSelects();openModal('modalNewMonth');}
+function confirmNewMonth(){
+  var j=J();if(!j)return;
+  var nm=document.getElementById('newMonthName').value.trim();
+  if(!nm){showToast('أدخل اسم الشهر',true);return;}
+  j.monthName=nm;j.monthNote='';j.currentReceiverId='';j.paidMembers={};j.monthCompleted=false;
+  fillSetup();save();syncUp();closeModal('modalNewMonth');renderAll();showToast('تم فتح شهر جديد ✓');
+}
+
+// ══ SHARE ══
+function getScheduleText(){
+  var j=J();if(!j)return '';
+  var sorted=getSortedMembers();
+  var recM=j.members.find(function(x){return x.id===j.currentReceiverId;});
+  var lines=['🏦 *'+j.name+'*','💰 '+j.amount+' د.إ | إجمالي: '+(j.amount*j.members.length)+' د.إ','━━━━━━━━━━━━━━━━',''];
+  sorted.forEach(function(m,i){
+    var isDone=j.completedSlots.indexOf(m.id)!==-1,isCur=!isDone&&j.currentReceiverId===m.id;
+    var line=(isDone?'✅':isCur?'⭐':'⏳')+' *'+(i+1)+'.* '+m.name+' — '+getSlotLabel(m);
+    if(m.iban)line+='\n     🏦 '+m.iban;
+    lines.push(line);
+  });
+  lines.push('');lines.push('━━━━━━━━━━━━━━━━');
+  if(j.monthName)lines.push('📅 *الشهر الحالي:* '+j.monthName);
+  if(recM){lines.push('🏆 *المستلم:* '+recM.name);if(recM.iban)lines.push('🏦 *الآيبان:* '+recM.iban);}
+  return lines.join('\n');
+}
+function shareWhatsApp(){var j=J();if(!j||!j.members.length){showToast('لا يوجد أعضاء',true);return;}window.open('https://wa.me/?text='+encodeURIComponent(getScheduleText()),'_blank');}
+function copySchedule(){var t=getScheduleText();if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){showToast('تم النسخ ✓');});return;}var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('تم النسخ ✓');}
+function copyRegLink(){copyText(window.location.href.split('?')[0]);}
+function shareRegLink(){var j=J();var link=window.location.href.split('?')[0];window.open('https://wa.me/?text='+encodeURIComponent('🏦 *'+(j?j.name:'الجمعية')+'*\n\nسجّل واحجز شهرك:\n'+link),'_blank');}
+
+// ══ HISTORY ══
+function clearHistory(){var j=J();if(!j||!confirm('حذف السجل؟'))return;j.history=[];j.completedSlots=[];save();syncUp();renderHistory();renderPublic();}
+
+// ══ SETTINGS ══
+function fillSetup(){
+  var j=J();if(!j)return;
+  document.getElementById('cfgName').value=j.name;
+  document.getElementById('cfgAmount').value=j.amount;
+  document.getElementById('cfgMonthName').value=j.monthName||'';
+  document.getElementById('cfgMonthNote').value=j.monthNote||'';
+  if(rootState.apiKey)document.getElementById('cfgApiKey').value=rootState.apiKey;
+  if(rootState.binId){document.getElementById('cfgBinId').value=rootState.binId;document.getElementById('binIdRow').style.display='block';}
+}
+function saveSettings(){
+  var j=J();if(!j)return;
+  j.name=document.getElementById('cfgName').value.trim()||j.name;
+  j.amount=parseFloat(document.getElementById('cfgAmount').value)||j.amount;
+  j.monthName=document.getElementById('cfgMonthName').value.trim();
+  j.monthNote=document.getElementById('cfgMonthNote').value.trim();
+  document.getElementById('topbarName').textContent=j.name;
+  buildJSel();save();syncUp();renderAll();showToast('تم الحفظ ✓');
+}
+function changePass(){
+  var np=document.getElementById('cfgPass').value;
+  if(!np||np.length<3){showToast('كلمة المرور قصيرة',true);return;}
+  rootState.adminPass=np;document.getElementById('cfgPass').value='';save();showToast('تم التغيير ✓');
+}
+function resetAll(){
+  if(!confirm('إعادة ضبط كامل؟'))return;
+  if(!confirm('سيتم حذف كل البيانات!'))return;
+  localStorage.removeItem(SK);location.reload();
+}
+
+// ══ HELPERS ══
+function getReceiverName(){var j=J();var m=j&&j.members.find(function(x){return x.id===j.currentReceiverId;});return m?m.name:'';}
+function getPaidCount(){var j=J();if(!j)return 0;return Object.keys(j.paidMembers).filter(function(k){return j.paidMembers[k];}).length;}
+function getSlotLabel(m){return(m.dueMonthNum&&m.dueYear)?MONTHS[m.dueMonthNum-1]+' '+m.dueYear:'غير محدد';}
+function getSortedMembers(){
+  var j=J();if(!j)return[];
+  return j.members.slice().sort(function(a,b){
+    var ay=parseInt(a.dueYear)||9999,by=parseInt(b.dueYear)||9999;
+    var am=parseInt(a.dueMonthNum)||99,bm=parseInt(b.dueMonthNum)||99;
+    return ay!==by?ay-by:am-bm;
+  });
+}
+function copyText(t){
+  if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){showToast('تم النسخ ✓');});return;}
+  var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('تم النسخ ✓');
+}
+function esc(t){if(!t&&t!==0)return'';return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+// ══ MODALS ══
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-overlay').forEach(function(o){
+  o.addEventListener('click',function(e){if(e.target===o)o.classList.remove('open');});
+});
+
+// ══ TOAST ══
+var toastTimer;
+function showToast(msg,isErr){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.style.background=isErr?'var(--red)':'var(--accent2)';t.style.color=isErr?'#fff':'#07201a';
+  t.classList.add('show');clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){t.classList.remove('show');},2600);
+}
+
+// ══ BOOT ══
+load();
+// Multiple ways to reach admin login:
+// 1. yoursite.com/index.html#admin
+// 2. yoursite.com/index.html?admin
+// 3. yoursite.com/index.html?login
+(function(){
+  var hash=window.location.hash;
+  var search=window.location.search;
+  var isAdmin=hash==='#admin'||hash==='#login'||search.indexOf('admin')!==-1||search.indexOf('login')!==-1;
+  if(isAdmin){
+    // Clean URL without revealing admin path
+    try{history.replaceState(null,null,window.location.pathname);}catch(e){}
+    showScreen('screenLogin');
+  } else {
+    renderJList();
+  }
+})();
+setInterval(function(){publicSync().then(function(){var s=document.getElementById('screenJameiaList');if(s.classList.contains('active'))renderJList();});},30000);
+</script>
+</body>
+</html>
